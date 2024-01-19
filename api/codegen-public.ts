@@ -3,14 +3,14 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: "src/schema/gql/schema.gql",
+  schema: "src/schema/public/gql/schema.gql",
   generates: {
-    "src/types/schema.ts": {
+    "src/schema/public/types/schema.ts": {
       plugins: ["typescript", "typescript-resolvers"]
     },
-    "./graphql.schema.json": {
-      plugins: ["introspection"]
-    }
+    // "./graphql.public.schema.json": {
+    //   plugins: ["introspection"]
+    // }
   }
 };
 

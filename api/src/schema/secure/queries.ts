@@ -1,6 +1,6 @@
-import MatchModel from '../models/Match'
-import UserModel from '../models/User'
-import { QueryResolvers } from '../types/schema'
+import MatchModel from '../../models/Match'
+import UserModel from '../../models/User'
+import { QueryResolvers } from './types/schema'
 
 const queries: QueryResolvers = {
   getUserByEmail: async (_, {email}) => {

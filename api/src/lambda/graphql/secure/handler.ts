@@ -1,5 +1,5 @@
 import { ApolloServer, gql } from 'apollo-server-lambda'
-import schema from '../schema'
+import schema from '../../../schema/secure'
 import types from '../schema/gql/schema.gql'
 
 const server = new ApolloServer({

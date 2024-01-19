@@ -1,5 +1,5 @@
 import TrackUTTable from '../db/TrackUTTable'
-import { User } from '../types/schema'
+import { User } from '../schema/secure/types/schema'
 import { generateUUID } from '../utils/uuid'
 
 export default class UserModel {

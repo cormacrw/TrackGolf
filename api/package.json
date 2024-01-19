@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "deploy": "sls deploy",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "dev": "sls offline --verbose",
+    "graphql:gentypes": "graphql-codegen --config codegen-secure.ts && graphql-codegen --config codegen-public.ts"
   },
   "devDependencies": {
     "@babel/core": "^7.11.0",

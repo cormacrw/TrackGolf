@@ -1,5 +1,5 @@
 import TrackUTTable from '../db/TrackUTTable'
-import { Match, MatchInput } from '../types/schema'
+import { Match, MatchInput } from '../schema/secure/types/schema'
 import { generateUUID } from '../utils/uuid'
 
 export default class MatchModel {
