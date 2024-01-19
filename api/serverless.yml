@@ -1,0 +1,25 @@
+service: track-ut-graphql
+
+provider:
+  name: aws
+  region: us-east-1
+  stage: dev
+  runtime: nodejs20.x
+  iam:
+    role: ${ssm:/role/sls_trackut}
+
+plugins:
+  - serverless-offline
+  - serverless-webpack
+
+functions:
+  graphql_secure:
+    handler: src/lambda/handler.handle
+    timeout: 60
+    events:
+      - http:
+          path: graphql/
+          method: ANY
+      - http:
+          path: graphql/{any+}
+          method: ANY

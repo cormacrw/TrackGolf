@@ -1,0 +1,34 @@
+{
+  "name": "trackut-api",
+  "version": "1.0.0",
+  "scripts": {
+    "deploy": "sls deploy",
+    "codegen": "graphql-codegen --config codegen.ts"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-typescript": "^7.10.4",
+    "@graphql-codegen/cli": "5.0.0",
+    "@graphql-codegen/introspection": "4.0.0",
+    "@graphql-codegen/typescript": "4.0.1",
+    "@graphql-codegen/typescript-resolvers": "4.0.1",
+    "aws-sdk": "^2.1539.0",
+    "babel-loader": "^8.1.0",
+    "fork-ts-checker-webpack-plugin": "^9.0.2",
+    "serverless": "^3.38.0",
+    "serverless-offline": "^13.3.2",
+    "serverless-webpack": "^5.13.0",
+    "typescript": "^5.1.3",
+    "webpack": "^5.76.0",
+    "webpack-node-externals": "^2.5.0"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.495.0",
+    "@graphql-tools/schema": "^10.0.2",
+    "apollo-server-lambda": "^3.13.0",
+    "dynamo-converters": "^8.0.6",
+    "graphql": "^16.8.1",
+    "uuid": "^9.0.1"
+  }
+}
