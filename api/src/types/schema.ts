@@ -16,9 +16,52 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type Match = {
+  __typename?: 'Match';
+  assists?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  matchId?: Maybe<Scalars['String']['output']>;
+  opponentPenalties?: Maybe<Scalars['Int']['output']>;
+  opponentScore?: Maybe<Scalars['Int']['output']>;
+  opponentShots?: Maybe<Scalars['Int']['output']>;
+  opponentXG?: Maybe<Scalars['Float']['output']>;
+  scorers?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  tutPk: Scalars['String']['output'];
+  tutSk: Scalars['String']['output'];
+  userPenalties?: Maybe<Scalars['Int']['output']>;
+  userPossession?: Maybe<Scalars['Int']['output']>;
+  userReds?: Maybe<Scalars['Int']['output']>;
+  userScore?: Maybe<Scalars['Int']['output']>;
+  userShots?: Maybe<Scalars['Int']['output']>;
+  userXG?: Maybe<Scalars['Float']['output']>;
+  userYellows?: Maybe<Scalars['Int']['output']>;
+};
+
+export type MatchInput = {
+  assists?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  opponentPenalties?: InputMaybe<Scalars['Int']['input']>;
+  opponentScore?: InputMaybe<Scalars['Int']['input']>;
+  opponentShots?: InputMaybe<Scalars['Int']['input']>;
+  opponentXG?: InputMaybe<Scalars['Float']['input']>;
+  scorers?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  userId: Scalars['String']['input'];
+  userPenalties?: InputMaybe<Scalars['Int']['input']>;
+  userPossession?: InputMaybe<Scalars['Int']['input']>;
+  userReds?: InputMaybe<Scalars['Int']['input']>;
+  userScore?: InputMaybe<Scalars['Int']['input']>;
+  userShots?: InputMaybe<Scalars['Int']['input']>;
+  userXG?: InputMaybe<Scalars['Float']['input']>;
+  userYellows?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  createMatch?: Maybe<Match>;
   createUser?: Maybe<User>;
+};
+
+
+export type MutationCreateMatchArgs = {
+  input: MatchInput;
 };
 
 
@@ -28,7 +71,13 @@ export type MutationCreateUserArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  getMatchesByUser?: Maybe<Array<Maybe<Match>>>;
   getUserByEmail?: Maybe<User>;
+};
+
+
+export type QueryGetMatchesByUserArgs = {
+  userId: Scalars['String']['input'];
 };
 
 
@@ -42,6 +91,7 @@ export type User = {
   googleId?: Maybe<Scalars['String']['output']>;
   tutPk: Scalars['String']['output'];
   tutSk: Scalars['String']['output'];
+  userId?: Maybe<Scalars['String']['output']>;
   username?: Maybe<Scalars['String']['output']>;
 };
 
@@ -123,6 +173,10 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
+  Float: ResolverTypeWrapper<Scalars['Float']['output']>;
+  Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+  Match: ResolverTypeWrapper<Match>;
+  MatchInput: MatchInput;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
@@ -133,6 +187,10 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output'];
+  Float: Scalars['Float']['output'];
+  Int: Scalars['Int']['output'];
+  Match: Match;
+  MatchInput: MatchInput;
   Mutation: {};
   Query: {};
   String: Scalars['String']['output'];
@@ -140,11 +198,33 @@ export type ResolversParentTypes = {
   UserInput: UserInput;
 };
 
+export type MatchResolvers<ContextType = any, ParentType extends ResolversParentTypes['Match'] = ResolversParentTypes['Match']> = {
+  assists?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  matchId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  opponentPenalties?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  opponentScore?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  opponentShots?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  opponentXG?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  scorers?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  tutPk?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  tutSk?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  userPenalties?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  userPossession?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  userReds?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  userScore?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  userShots?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  userXG?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  userYellows?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  createMatch?: Resolver<Maybe<ResolversTypes['Match']>, ParentType, ContextType, RequireFields<MutationCreateMatchArgs, 'input'>>;
   createUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  getMatchesByUser?: Resolver<Maybe<Array<Maybe<ResolversTypes['Match']>>>, ParentType, ContextType, RequireFields<QueryGetMatchesByUserArgs, 'userId'>>;
   getUserByEmail?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserByEmailArgs, 'email'>>;
 };
 
@@ -153,11 +233,13 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   googleId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   tutPk?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   tutSk?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  userId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = any> = {
+  Match?: MatchResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;

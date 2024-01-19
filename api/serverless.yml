@@ -15,7 +15,7 @@ plugins:
 functions:
   graphql_secure:
     handler: src/lambda/handler.handle
-    timeout: 60
+    timeout: 30
     events:
       - http:
           path: graphql/

@@ -4,9 +4,11 @@ import { generateUUID } from '../utils/uuid'
 
 export default class UserModel {
   static async createGoogleUser (email: string, username: string, googleId: string): Promise<User> {
+    const userId = generateUUID()
     const user: User = {
-      tutPk: `user:${generateUUID()}`,
+      tutPk: `user:${userId}`,
       tutSk: 'metadata:user',
+      userId,
       email,
       username,
       googleId

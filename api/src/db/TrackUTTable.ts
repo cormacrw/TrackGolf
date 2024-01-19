@@ -1,4 +1,4 @@
-import { AttributeValue, DynamoDBClient, PutItemCommand, ScanCommand } from '@aws-sdk/client-dynamodb'
+import { AttributeValue, DynamoDBClient, PutItemCommand, QueryCommand, ScanCommand } from '@aws-sdk/client-dynamodb'
 import { dataToItem, itemToData } from 'dynamo-converters'
 import { EntityI } from './EntityI'
 
@@ -37,6 +37,17 @@ export default class TrackUTTable {
     })
     const res = await this.getConnection().send(command)
 
+    return this.itemsToData(res.Items || [])
+  }
+
+  static async queryPKBeginsWithSK (pk: string, skBeginsWith: string) {
+    const command = new QueryCommand({
+      TableName: TABLE_NAME,
+      KeyConditionExpression: 'tutPk = :pk AND begins_with(tutSk, :sk)',
+      ExpressionAttributeValues: { ':pk': { S: pk }, ':sk': { S: skBeginsWith } }
+    })
+    const res = await this.getConnection().send(command)
+    
     return this.itemsToData(res.Items || [])
   }
 

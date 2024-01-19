@@ -47,8 +47,59 @@ class TrackUTTable {
     const res = await this.getConnection().send(command);
     return this.itemsToData(res.Items || []);
   }
+  static async queryPKBeginsWithSK(pk, skBeginsWith) {
+    const command = new _aws_sdk_client_dynamodb__WEBPACK_IMPORTED_MODULE_0__.QueryCommand({
+      TableName: TABLE_NAME,
+      KeyConditionExpression: 'tutPk = :pk AND begins_with(tutSk, :sk)',
+      ExpressionAttributeValues: {
+        ':pk': {
+          S: pk
+        },
+        ':sk': {
+          S: skBeginsWith
+        }
+      }
+    });
+    const res = await this.getConnection().send(command);
+    return this.itemsToData(res.Items || []);
+  }
   static itemsToData(items) {
     return items.map(item => (0,dynamo_converters__WEBPACK_IMPORTED_MODULE_1__.itemToData)(item));
+  }
+}
+
+/***/ }),
+
+/***/ "./src/models/Match.ts":
+/*!*****************************!*\
+  !*** ./src/models/Match.ts ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ MatchModel)
+/* harmony export */ });
+/* harmony import */ var _db_TrackUTTable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../db/TrackUTTable */ "./src/db/TrackUTTable.ts");
+/* harmony import */ var _utils_uuid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/uuid */ "./src/utils/uuid.ts");
+
+
+class MatchModel {
+  static async createMatch(input) {
+    const matchId = (0,_utils_uuid__WEBPACK_IMPORTED_MODULE_1__.generateUUID)();
+    const match = {
+      tutPk: `user:${input.userId}`,
+      tutSk: `match:${matchId}`,
+      matchId,
+      ...input
+    };
+    await _db_TrackUTTable__WEBPACK_IMPORTED_MODULE_0__["default"].putItem(match);
+    return match;
+  }
+  static async findByUserId(userId) {
+    const matches = await _db_TrackUTTable__WEBPACK_IMPORTED_MODULE_0__["default"].queryPKBeginsWithSK(`user:${userId}`, 'match:');
+    return matches;
   }
 }
 
@@ -71,9 +122,11 @@ __webpack_require__.r(__webpack_exports__);
 
 class UserModel {
   static async createGoogleUser(email, username, googleId) {
+    const userId = (0,_utils_uuid__WEBPACK_IMPORTED_MODULE_1__.generateUUID)();
     const user = {
-      tutPk: `user:${(0,_utils_uuid__WEBPACK_IMPORTED_MODULE_1__.generateUUID)()}`,
+      tutPk: `user:${userId}`,
       tutSk: 'metadata:user',
+      userId,
       email,
       username,
       googleId
@@ -128,14 +181,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _models_User__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../models/User */ "./src/models/User.ts");
+/* harmony import */ var _models_Match__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../models/Match */ "./src/models/Match.ts");
+/* harmony import */ var _models_User__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/User */ "./src/models/User.ts");
+
 
 const mutations = {
   createUser: async (_, {
     input
   }) => {
-    const user = await _models_User__WEBPACK_IMPORTED_MODULE_0__["default"].createGoogleUser(input.email, input.username, input.googleId);
+    const user = await _models_User__WEBPACK_IMPORTED_MODULE_1__["default"].createGoogleUser(input.email, input.username, input.googleId);
     return user;
+  },
+  createMatch: async (_, {
+    input
+  }) => {
+    const match = await _models_Match__WEBPACK_IMPORTED_MODULE_0__["default"].createMatch(input);
+    return match;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (mutations);
@@ -153,14 +214,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _models_User__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../models/User */ "./src/models/User.ts");
+/* harmony import */ var _models_Match__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../models/Match */ "./src/models/Match.ts");
+/* harmony import */ var _models_User__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/User */ "./src/models/User.ts");
+
 
 const queries = {
   getUserByEmail: async (_, {
     email
-  }, {}) => {
-    const user = await _models_User__WEBPACK_IMPORTED_MODULE_0__["default"].findByEmail(email);
+  }) => {
+    const user = await _models_User__WEBPACK_IMPORTED_MODULE_1__["default"].findByEmail(email);
     return user;
+  },
+  getMatchesByUser: async (_, {
+    userId
+  }) => {
+    const matches = await _models_Match__WEBPACK_IMPORTED_MODULE_0__["default"].findByUserId(userId);
+    return matches;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (queries);
@@ -194,8 +263,8 @@ const generateUUID = () => {
 /***/ ((module) => {
 
 
-    var doc = {"kind":"Document","definitions":[{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"User"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"tutPk"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"tutSk"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"email"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"username"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"googleId"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}]},{"kind":"InputObjectTypeDefinition","name":{"kind":"Name","value":"UserInput"},"directives":[],"fields":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"email"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"username"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"googleId"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Query"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"getUserByEmail"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"email"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Mutation"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"createUser"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"input"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserInput"}}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"directives":[]}]}],"loc":{"start":0,"end":291}};
-    doc.loc.source = {"body":"type User {\n  tutPk: String!\n  tutSk: String!\n  email: String\n  username: String\n  googleId: String\n}\n\ninput UserInput {\n  email: String!\n  username: String!\n  googleId: String!\n}\n\ntype Query {\n  getUserByEmail(email: String!): User\n}\n\ntype Mutation {\n  createUser(input: UserInput!): User\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+    var doc = {"kind":"Document","definitions":[{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"User"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"tutPk"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"tutSk"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"userId"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"email"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"username"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"googleId"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}]},{"kind":"InputObjectTypeDefinition","name":{"kind":"Name","value":"UserInput"},"directives":[],"fields":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"email"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"username"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"googleId"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Match"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"tutPk"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"tutSk"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"matchId"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"userScore"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"userPossession"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"userXG"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"userShots"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"userPenalties"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"opponentScore"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"opponentXG"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"opponentShots"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"opponentPenalties"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"userYellows"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"userReds"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"scorers"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"assists"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}]},{"kind":"InputObjectTypeDefinition","name":{"kind":"Name","value":"MatchInput"},"directives":[],"fields":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"userId"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"userScore"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"userPossession"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"userXG"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"userShots"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"userPenalties"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"opponentScore"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"opponentXG"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"opponentShots"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"opponentPenalties"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"userYellows"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"userReds"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"scorers"},"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"assists"},"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Query"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"getUserByEmail"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"email"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"getMatchesByUser"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"userId"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Match"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Mutation"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"createUser"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"input"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserInput"}}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"createMatch"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"input"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MatchInput"}}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Match"}},"directives":[]}]}],"loc":{"start":0,"end":1012}};
+    doc.loc.source = {"body":"type User {\n  tutPk: String!\n  tutSk: String!\n  userId: String\n  email: String\n  username: String\n  googleId: String\n}\n\ninput UserInput {\n  email: String!\n  username: String!\n  googleId: String!\n}\n\ntype Match {\n  tutPk: String!\n  tutSk: String!\n  matchId: String\n  userScore: Int\n  userPossession: Int\n  userXG: Float\n  userShots: Int\n  userPenalties: Int\n  opponentScore: Int\n  opponentXG: Float\n  opponentShots: Int\n  opponentPenalties: Int\n  userYellows: Int\n  userReds: Int\n  scorers: [String]\n  assists: [String]\n}\n\ninput MatchInput {\n  userId: String!\n  userScore: Int\n  userPossession: Int\n  userXG: Float\n  userShots: Int\n  userPenalties: Int\n  opponentScore: Int\n  opponentXG: Float\n  opponentShots: Int\n  opponentPenalties: Int\n  userYellows: Int\n  userReds: Int\n  scorers: [String]\n  assists: [String]\n}\n\ntype Query {\n  getUserByEmail(email: String!): User\n  getMatchesByUser(userId: String!): [Match]\n}\n\ntype Mutation {\n  createUser(input: UserInput!): User\n  createMatch(input: MatchInput!): Match\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
   
 
     var names = {};

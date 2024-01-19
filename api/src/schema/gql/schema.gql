@@ -1,6 +1,7 @@
 type User {
   tutPk: String!
   tutSk: String!
+  userId: String
   email: String
   username: String
   googleId: String
@@ -12,10 +13,48 @@ input UserInput {
   googleId: String!
 }
 
+type Match {
+  tutPk: String!
+  tutSk: String!
+  matchId: String
+  userScore: Int
+  userPossession: Int
+  userXG: Float
+  userShots: Int
+  userPenalties: Int
+  opponentScore: Int
+  opponentXG: Float
+  opponentShots: Int
+  opponentPenalties: Int
+  userYellows: Int
+  userReds: Int
+  scorers: [String]
+  assists: [String]
+}
+
+input MatchInput {
+  userId: String!
+  userScore: Int
+  userPossession: Int
+  userXG: Float
+  userShots: Int
+  userPenalties: Int
+  opponentScore: Int
+  opponentXG: Float
+  opponentShots: Int
+  opponentPenalties: Int
+  userYellows: Int
+  userReds: Int
+  scorers: [String]
+  assists: [String]
+}
+
 type Query {
   getUserByEmail(email: String!): User
+  getMatchesByUser(userId: String!): [Match]
 }
 
 type Mutation {
   createUser(input: UserInput!): User
+  createMatch(input: MatchInput!): Match
 }
