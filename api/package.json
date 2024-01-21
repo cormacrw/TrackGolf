@@ -27,9 +27,11 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.495.0",
     "@graphql-tools/schema": "^10.0.2",
+    "@types/jsonwebtoken": "^9.0.5",
     "apollo-server-lambda": "^3.13.0",
     "dynamo-converters": "^8.0.6",
     "graphql": "^16.8.1",
+    "jsonwebtoken": "^9.0.2",
     "uuid": "^9.0.1"
   }
 }

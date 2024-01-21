@@ -30,6 +30,9 @@ import { customFontsToLoad } from "./theme"
 import Config from "./config"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { ViewStyle } from "react-native"
+import { Amplify } from 'aws-amplify';
+import amplifyconfig from './config/amplifyconfiguration.json';
+Amplify.configure(amplifyconfig);
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -93,7 +96,7 @@ function App(props: AppProps) {
     prefixes: [prefix],
     config,
   }
-
+  
   // otherwise, we're ready to render the app
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>

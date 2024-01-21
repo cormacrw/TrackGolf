@@ -17,6 +17,7 @@ import * as Screens from "app/screens"
 import Config from "../config"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { colors } from "app/theme"
+import { useStores } from 'app/models'
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -33,8 +34,9 @@ import { colors } from "app/theme"
  */
 export type AppStackParamList = {
   Home: undefined
+  SignIn: undefined
   // 🔥 Your screens go here
-  // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
+	// IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
 
 /**
@@ -52,13 +54,21 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStack
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
 const AppStack = observer(function AppStack() {
+  const { authStore } = useStores()
+
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false, navigationBarColor: colors.background }}
     >
-          <Stack.Screen name="Home" component={Screens.HomeScreen} />
+      { authStore.isLoggedIn
+      ? (
+        <Stack.Screen name="Home" component={Screens.HomeScreen} />
+        ) : (
+        <Stack.Screen name="SignIn" component={Screens.SignInScreen} />
+      )
+      }
       {/** 🔥 Your screens go here */}
-      {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
+			{/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )
 })

@@ -1,0 +1,26 @@
+type User {
+  tutPk: String!
+  tutSk: String!
+  userId: String
+  email: String
+  username: String
+  googleId: String
+}
+
+type Auth {
+  accessToken: String!
+  refreshToken: String!
+}
+
+type SignInGoogleUser {
+  user: User!
+  auth: Auth!
+}
+
+type Query {
+  readVersion: String
+}
+
+type Mutation {
+  signInGoogleUser(googleId: String!, email: String!): SignInGoogleUser
+}

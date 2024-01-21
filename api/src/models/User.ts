@@ -1,16 +1,30 @@
 import TrackUTTable from '../db/TrackUTTable'
+import { SignInGoogleUser } from '../schema/public/types/schema'
 import { User } from '../schema/secure/types/schema'
 import { generateUUID } from '../utils/uuid'
+import AuthModel from './Auth'
 
 export default class UserModel {
-  static async createGoogleUser (email: string, username: string, googleId: string): Promise<User> {
+  static async signInGoogleUser (email: string, googleId: string): Promise<SignInGoogleUser> {
+    let user = await this.findByEmail(email)
+    if (!user) {
+      user = await this.createGoogleUser(email, googleId)
+    }
+
+    return {
+      user,
+      auth: AuthModel.createTokens(user)
+    }
+  }
+
+  static async createGoogleUser (email: string, googleId: string): Promise<User> {
     const userId = generateUUID()
     const user: User = {
       tutPk: `user:${userId}`,
       tutSk: 'metadata:user',
       userId,
       email,
-      username,
+      username: '',
       googleId
     }
 

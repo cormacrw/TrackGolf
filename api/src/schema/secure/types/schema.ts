@@ -56,17 +56,11 @@ export type MatchInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createMatch?: Maybe<Match>;
-  createUser?: Maybe<User>;
 };
 
 
 export type MutationCreateMatchArgs = {
   input: MatchInput;
-};
-
-
-export type MutationCreateUserArgs = {
-  input: UserInput;
 };
 
 export type Query = {
@@ -93,12 +87,6 @@ export type User = {
   tutSk: Scalars['String']['output'];
   userId?: Maybe<Scalars['String']['output']>;
   username?: Maybe<Scalars['String']['output']>;
-};
-
-export type UserInput = {
-  email: Scalars['String']['input'];
-  googleId: Scalars['String']['input'];
-  username: Scalars['String']['input'];
 };
 
 
@@ -181,7 +169,6 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   User: ResolverTypeWrapper<User>;
-  UserInput: UserInput;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -195,7 +182,6 @@ export type ResolversParentTypes = {
   Query: {};
   String: Scalars['String']['output'];
   User: User;
-  UserInput: UserInput;
 };
 
 export type MatchResolvers<ContextType = any, ParentType extends ResolversParentTypes['Match'] = ResolversParentTypes['Match']> = {
@@ -220,7 +206,6 @@ export type MatchResolvers<ContextType = any, ParentType extends ResolversParent
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createMatch?: Resolver<Maybe<ResolversTypes['Match']>, ParentType, ContextType, RequireFields<MutationCreateMatchArgs, 'input'>>;
-  createUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {

@@ -7,12 +7,6 @@ type User {
   googleId: String
 }
 
-input UserInput {
-  email: String!
-  username: String!
-  googleId: String!
-}
-
 type Match {
   tutPk: String!
   tutSk: String!
@@ -55,6 +49,5 @@ type Query {
 }
 
 type Mutation {
-  createUser(input: UserInput!): User
   createMatch(input: MatchInput!): Match
 }

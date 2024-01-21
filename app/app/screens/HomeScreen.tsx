@@ -2,42 +2,25 @@ import { observer } from "mobx-react-lite"
 import React, { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import {
+  SafeAreaLayout,
+  Screen,
   Text,
 } from "app/components"
 import { isRTL } from "../i18n"
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
-import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
-
-const welcomeLogo = require("../../assets/images/logo.png")
-const welcomeFace = require("../../assets/images/welcome-face.png")
 
 interface HomeScreenProps extends AppStackScreenProps<"Home"> {}
 
-export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(
-) {
-
-  const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
-
+export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(props) {
+  const {
+    navigation
+  } = props
   return (
-    <View style={$container}>
-      <View style={$topContainer}>
-        <Image style={$welcomeLogo} source={welcomeLogo} resizeMode="contain" />
-        <Text
-          testID="welcome-heading"
-          style={$welcomeHeading}
-          tx="homeScreen.readyForLaunch"
-          preset="heading"
-        />
-        <Text tx="homeScreen.exciting" preset="subheading" />
-        <Image style={$welcomeFace} source={welcomeFace} resizeMode="contain" />
-      </View>
-
-      <View style={[$bottomContainer, $bottomContainerInsets]}>
-        <Text tx="homeScreen.postscript" size="md" />
-      </View>
-    </View>
-  )
+    <Screen style={{flex: 1}} preset="fixed">
+      <Text text="Home" />
+    </Screen>
+    )
 })
 
 const $container: ViewStyle = {

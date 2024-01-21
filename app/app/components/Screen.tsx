@@ -14,6 +14,7 @@ import {
 } from "react-native"
 import { colors } from "../theme"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 interface BaseScreenProps {
   /**
@@ -194,14 +195,12 @@ export function Screen(props: ScreenProps) {
     keyboardOffset = 0,
     safeAreaEdges,
     StatusBarProps,
-    statusBarStyle = "dark",
+    statusBarStyle = "auto",
   } = props
 
-  const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)
-
   return (
-    <View style={[$containerStyle, { backgroundColor }, $containerInsets]}>
-      <StatusBar style={statusBarStyle} {...StatusBarProps} />
+    <SafeAreaView style={[$containerStyle, { backgroundColor }]}>
+      <StatusBar style='auto' {...StatusBarProps} />
 
       <KeyboardAvoidingView
         behavior={isIos ? "padding" : "height"}
@@ -215,7 +214,7 @@ export function Screen(props: ScreenProps) {
           <ScreenWithScrolling {...props} />
         )}
       </KeyboardAvoidingView>
-    </View>
+    </SafeAreaView>
   )
 }
 

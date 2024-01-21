@@ -156,12 +156,12 @@ export function Button(props: ButtonProps) {
 
 const $baseViewStyle: ViewStyle = {
   minHeight: 56,
-  borderRadius: 4,
+  borderRadius: 28,
   justifyContent: "center",
   alignItems: "center",
   flexDirection: "row",
   paddingVertical: spacing.sm,
-  paddingHorizontal: spacing.sm,
+  paddingHorizontal: spacing.md,
   overflow: "hidden",
 }
 
