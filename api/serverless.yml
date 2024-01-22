@@ -4,9 +4,23 @@ provider:
   name: aws
   region: us-east-1
   stage: dev
-  runtime: nodejs20.x
+  runtime: nodejs18.x
   iam:
-    role: ${ssm:/role/sls_trackut}
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - 'dynamodb:BatchGetItem'
+            - 'dynamodb:BatchWriteItem'
+            - 'dynamodb:DeleteItem'
+            - 'dynamodb:GetItem'
+            - 'dynamodb:PutItem'
+            - 'dynamodb:Query'
+            - 'dynamodb:Scan'
+          Resource: ${ssm:/database/trackut/arn}
+custom:
+  webpack:
+    includeModules: true
 
 plugins:
   - serverless-offline

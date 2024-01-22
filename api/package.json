@@ -4,7 +4,7 @@
   "scripts": {
     "deploy": "sls deploy",
     "dev": "sls offline --verbose",
-    "graphql:gentypes": "graphql-codegen --config codegen-secure.ts && graphql-codegen --config codegen-public.ts"
+    "graphql:gentypes": "graphql-codegen --config ./src/codegen-secure.ts && graphql-codegen --config ./src/codegen-public.ts"
   },
   "devDependencies": {
     "@babel/core": "^7.11.0",
