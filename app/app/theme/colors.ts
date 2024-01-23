@@ -38,6 +38,7 @@ const palette = {
 
   ironOre: "#1E1F23",
   lightIronOre: '#2C2D31',
+  darkIronOre: '#121212',
   white: '#FFFFFF',
 
   tealGreen: '#00F3AD'
@@ -70,6 +71,8 @@ export const colors = {
   background: palette.ironOre,
 
   lightBackground: palette.lightIronOre,
+
+  darkBackground: palette.darkIronOre,
   /**
    * The default border color.
    */

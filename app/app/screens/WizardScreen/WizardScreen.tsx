@@ -1,10 +1,11 @@
-import React, { FC, useState } from "react"
+import React, { FC, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { AppStackScreenProps } from "app/navigators"
 import { Button, Screen, Text } from "app/components"
 import steps from './steps'
 import { colors } from 'app/theme'
+import { useStores } from 'app/models'
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "app/models"
 
@@ -12,18 +13,21 @@ interface WizardScreenProps extends AppStackScreenProps<"Wizard"> {}
 
 export const WizardScreen: FC<WizardScreenProps> = observer(function WizardScreen() {
   // Pull in one of our MST stores
-  // const { someStore, anotherStore } = useStores()
+  const { wizardStore } = useStores()
   const [step, setStep] = useState(0)
   const Question = steps[step].component
   // Pull in navigation via hook
   // const navigation = useNavigation()
+  useEffect(() => {
+    wizardStore.default()
+  }, [])
 
   const backStep = () => {
-
+    setStep(step - 1)
   }
 
   const nextStep = () => {
-
+    setStep(step + 1)
   }
 
   return (
@@ -32,7 +36,11 @@ export const WizardScreen: FC<WizardScreenProps> = observer(function WizardScree
         <Question />
       </View>
       <View style={$navContainer}>
-        <Button text="Back" style={$button} textStyle={$buttonText} onPress={backStep} />
+        {
+          step > 0
+          ? <Button text="Back" style={$button} textStyle={$buttonText} onPress={backStep} />
+          : <View style={$button}></View>
+        }
         <Button text="Next" style={[$button, $buttonNext]} textStyle={$buttonText} onPress={nextStep} />
       </View>
       

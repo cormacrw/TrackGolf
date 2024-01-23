@@ -3,6 +3,7 @@ import React from "react"
 import { Text, TextStyle, View, ViewStyle } from 'react-native'
 import { OptionPill } from './OptionPill'
 import { useStores } from 'app/models'
+import { observer } from 'mobx-react-lite'
 
 const MATCH_TYPES = [
   'Champions Qualification',
@@ -11,12 +12,13 @@ const MATCH_TYPES = [
   'Friendly'
 ]
 
-export function MatchType () {
+export const MatchType = observer(function MatchType () {
   const { wizardStore } = useStores()
 
   const setType = (type: string) => {
-    wizardStore.setMatchType(type)
+    wizardStore.setProp('type', type)
   }
+
   return (
     <View>
       <Text style={$question}>What type of game did you play?</Text>
@@ -32,7 +34,7 @@ export function MatchType () {
       </View>
     </View>
   )
-}
+})
 
 const $question: TextStyle = {
   color: colors.text,

@@ -10,11 +10,11 @@ export const WizardStoreModel = types
     type: types.maybe(types.string),
     userScore: types.maybe(types.number),
     userPossession: types.maybe(types.number),
-    userXG: types.maybe(types.float),
+    userXG: types.maybe(types.number),
     userShots: types.maybe(types.number),
     userPenalties: types.maybe(types.number),
     opponentScore: types.maybe(types.number),
-    opponentXG: types.maybe(types.float),
+    opponentXG: types.maybe(types.number),
     opponentShots: types.maybe(types.number),
     opponentPenalties: types.maybe(types.number),
     userYellows: types.maybe(types.number),
@@ -25,8 +25,21 @@ export const WizardStoreModel = types
   .actions(withSetPropAction)
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({
-    setMatchType (type: string) {
-      self.type = type
+    default () {
+      self.type = undefined
+      self.userScore = 0
+      self.userPossession = 50
+      self.userXG = 0
+      self.userShots = 0
+      self.userPenalties = 0
+      self.opponentScore = 0
+      self.opponentXG = 0
+      self.opponentShots = 0
+      self.opponentPenalties = 0
+      self.userYellows = 0
+      self.userReds = 0
+      self.scorers?.clear()
+      self.assists?.clear()
     }
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 
