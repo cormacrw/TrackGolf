@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite"
 import React, { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import {
+  Button,
   SafeAreaLayout,
   Screen,
   Text,
@@ -9,6 +10,8 @@ import {
 import { isRTL } from "../i18n"
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
+import { signOut } from "aws-amplify/auth"
+import { useStores } from 'app/models'
 
 interface HomeScreenProps extends AppStackScreenProps<"Home"> {}
 
@@ -16,24 +19,27 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
   const {
     navigation
   } = props
+  
+  
   return (
-    <Screen style={{flex: 1}} preset="fixed">
+    <Screen style={$container} preset="fixed">
       <Text text="Home" />
+      <Button text="New Match" style={$button} textStyle={$buttonText} onPress={() => navigation.navigate('Wizard')} />
+      <Button text="Settings" style={$button} textStyle={$buttonText} onPress={() => navigation.navigate('Settings')} />
     </Screen>
     )
 })
 
 const $container: ViewStyle = {
-  flex: 1,
-  backgroundColor: colors.background,
+  flex: 1
 }
 
-const $topContainer: ViewStyle = {
-  flexShrink: 1,
-  flexGrow: 1,
-  flexBasis: "57%",
-  justifyContent: "center",
-  paddingHorizontal: spacing.lg,
+const $button: ViewStyle = {
+  
+}
+
+const $buttonText: TextStyle = {
+  color: colors.textDim
 }
 
 const $bottomContainer: ViewStyle = {

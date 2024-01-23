@@ -64,6 +64,8 @@ export const useInitialRootStore = (callback: () => void | Promise<void>) => {
         console.tron.trackMstNode(rootStore)
       }
 
+      // TODO CHECK IF USER IS LOGGED IN
+
       // let the app know we've finished rehydrating
       setRehydrated(true)
 

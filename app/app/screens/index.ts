@@ -2,3 +2,5 @@ export * from "./HomeScreen"
 export * from "./ErrorScreen/ErrorBoundary"
 // export other screens here
 export * from "./SignInScreen"
+export * from "./SettingsScreen"
+export * from "./WizardScreen/WizardScreen"

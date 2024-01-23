@@ -15,6 +15,8 @@ import {
 import { colors } from "../theme"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Text } from './Text'
+import { useStores } from 'app/models'
 
 interface BaseScreenProps {
   /**
@@ -193,14 +195,15 @@ export function Screen(props: ScreenProps) {
     backgroundColor = colors.background,
     KeyboardAvoidingViewProps,
     keyboardOffset = 0,
-    safeAreaEdges,
     StatusBarProps,
     statusBarStyle = "auto",
   } = props
 
+  const { appStore } = useStores()
+
   return (
     <SafeAreaView style={[$containerStyle, { backgroundColor }]}>
-      <StatusBar style='auto' {...StatusBarProps} />
+      <StatusBar style={statusBarStyle} {...StatusBarProps} />
 
       <KeyboardAvoidingView
         behavior={isIos ? "padding" : "height"}
@@ -214,6 +217,11 @@ export function Screen(props: ScreenProps) {
           <ScreenWithScrolling {...props} />
         )}
       </KeyboardAvoidingView>
+      {appStore.loading &&
+        <View style={$loadingContainer} >
+          <Text text="Loading!"></Text>
+        </View>
+      }
     </SafeAreaView>
   )
 }
@@ -237,4 +245,16 @@ const $outerStyle: ViewStyle = {
 const $innerStyle: ViewStyle = {
   justifyContent: "flex-start",
   alignItems: "stretch",
+}
+
+const $loadingContainer: ViewStyle = {
+  position: 'absolute',
+  top: 0,
+  right: 0,
+  bottom: 0,
+  left: 0,
+  backgroundColor: 'black',
+  opacity: 0.5,
+  justifyContent: 'center',
+  alignItems: 'center'
 }

@@ -4,23 +4,28 @@ import { View, ViewStyle } from 'react-native'
 import { AppStackScreenProps } from 'app/navigators'
 import { Button, Screen, Text } from 'app/components'
 import { colors } from 'app/theme'
-import { AuthUser, getCurrentUser, signInWithRedirect, signOut, fetchUserAttributes } from "aws-amplify/auth"
+import { getCurrentUser, signInWithRedirect, fetchUserAttributes } from "aws-amplify/auth"
 import { Hub } from "@aws-amplify/core";
+import { useMutation } from '@apollo/client'
+import { SIGN_IN_GOOGLE_USER, SignInGoogleUserResponse } from '../services/api/gql/mutations/signInGoogleUser'
+import { api } from 'app/services/api'
+import { useStores } from 'app/models'
 
 interface SignInScreenProps extends AppStackScreenProps<'SignIn'> {}
 
 export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScreen(props) {
   // Pull in one of our MST stores
-  // const { someStore, anotherStore } = useStores()
+  const { authStore, userStore, appStore } = useStores()
+  const [signInGoogleUser] = useMutation<SignInGoogleUserResponse>(SIGN_IN_GOOGLE_USER, { client: api.clientInst })
 
   // Pull in navigation via hook
   // const navigation = useNavigation()
   useEffect(() => {
     const unsubscribe = Hub.listen("auth", ({ payload }) => {
+      console.log(payload)
       switch (payload.event) {
         case "signInWithRedirect":
-          console.log(payload)
-          getUser();
+          signIn();
           break;
         case "signInWithRedirect_failure":
           console.log('ERROR')
@@ -32,24 +37,36 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
       }
     });
 
-    signIn();
+    // signIn();
 
     return unsubscribe;
   }, []);
   
   const signIn = async (): Promise<void> => {
     try {
-      const currentUser = await getCurrentUser();
-      const attr = await fetchUserAttributes();
-      console.log(currentUser)
+      appStore.setLoading(true)
+      const cognitoUser = await getCurrentUser()
+      const attr = await fetchUserAttributes()
+      console.log(cognitoUser)
       console.log(attr.email)
+      const { data, errors } = await signInGoogleUser({variables: {email: attr.email, googleId: cognitoUser.username}})
+
+      if (errors && errors.length) {
+        console.error(errors)
+      }
+
+      if (data) {
+        authStore.setTokens(data.signInGoogleUser.auth.accessToken, data.signInGoogleUser.auth.refreshToken)
+        userStore.setUser(data.signInGoogleUser.user)
+        appStore.setLoading(false)
+        authStore.login()
+      }
       // setUser(currentUser);
     } catch (error) {
-      console.error(error);
+      console.log(error);
       console.log("Not signed in");
     }
   };
-  console.log('test')
   return (
     <Screen style={$root} preset='auto'>
       <View
@@ -62,12 +79,6 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
           onPress={() => signInWithRedirect({ provider: 'Google' })}
           style={{marginTop: 10}}
         />
-
-        {/* <Button
-          text="Sign Out"
-          textStyle={{color: colors.textDim}}
-          onPress={() => signOut()}
-        /> */}
       </View>
     </Screen>
   )

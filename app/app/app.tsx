@@ -32,6 +32,9 @@ import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { ViewStyle } from "react-native"
 import { Amplify } from 'aws-amplify';
 import amplifyconfig from './config/amplifyconfiguration.json';
+import { ApolloProvider } from '@apollo/client';
+import { api as privateAPI } from './services/api/apiSecure'
+
 Amplify.configure(amplifyconfig);
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
@@ -101,13 +104,15 @@ function App(props: AppProps) {
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ErrorBoundary catchErrors={Config.catchErrors}>
-        <GestureHandlerRootView style={$container}>
-          <AppNavigator
-            linking={linking}
-            initialState={initialNavigationState}
-            onStateChange={onNavigationStateChange}
-          />
-        </GestureHandlerRootView>
+        <ApolloProvider client={privateAPI.clientInst} >
+          <GestureHandlerRootView style={$container}>
+            <AppNavigator
+              linking={linking}
+              initialState={initialNavigationState}
+              onStateChange={onNavigationStateChange}
+            />
+          </GestureHandlerRootView>
+        </ApolloProvider>
       </ErrorBoundary>
     </SafeAreaProvider>
   )

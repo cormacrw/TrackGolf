@@ -37,7 +37,10 @@ const palette = {
   overlay50: "rgba(25, 16, 21, 0.5)",
 
   ironOre: "#1E1F23",
-  white: '#FFFFFF'
+  lightIronOre: '#2C2D31',
+  white: '#FFFFFF',
+
+  tealGreen: '#00F3AD'
 } as const
 
 export const colors = {
@@ -51,6 +54,8 @@ export const colors = {
    * A helper for making something see-thru.
    */
   transparent: "rgba(0, 0, 0, 0)",
+
+  primary: palette.tealGreen,
   /**
    * The default text color in many components.
    */
@@ -58,11 +63,13 @@ export const colors = {
   /**
    * Secondary text information.
    */
-  textDim: palette.neutral600,
+  textDim: palette.ironOre,
   /**
    * The default color of the screen background.
    */
   background: palette.ironOre,
+
+  lightBackground: palette.lightIronOre,
   /**
    * The default border color.
    */

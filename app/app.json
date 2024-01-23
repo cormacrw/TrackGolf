@@ -1,11 +1,11 @@
 {
-  "name": "app",
-  "displayName": "app",
+  "name": "TrackUT",
+  "displayName": "TrackUT",
   "expo": {
-    "name": "app",
-    "slug": "app",
+    "name": "TrackUT",
+    "slug": "TrackUT",
     "scheme": "app",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/app-icon-all.png",
     "splash": {

@@ -36,6 +36,8 @@ export type AppStackParamList = {
   Home: undefined
   SignIn: undefined
   // 🔥 Your screens go here
+	Settings: undefined
+	Wizard: undefined
 	// IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
 
@@ -62,12 +64,16 @@ const AppStack = observer(function AppStack() {
     >
       { authStore.isLoggedIn
       ? (
-        <Stack.Screen name="Home" component={Screens.HomeScreen} />
+        <>
+          <Stack.Screen name="Home" component={Screens.HomeScreen} />
+          <Stack.Screen name="Settings" component={Screens.SettingsScreen} />
+        </>
         ) : (
         <Stack.Screen name="SignIn" component={Screens.SignInScreen} />
       )
       }
       {/** 🔥 Your screens go here */}
+			<Stack.Screen name="Wizard" component={Screens.WizardScreen} />
 			{/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )

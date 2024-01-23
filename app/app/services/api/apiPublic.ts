@@ -5,14 +5,11 @@
  * See the [Backend API Integration](https://github.com/infinitered/ignite/blob/master/docs/Backend-API-Integration.md)
  * documentation for more details.
  */
-import {
-  ApisauceInstance,
-  create,
-} from "apisauce"
 import Config from "../../config"
 import type {
   ApiConfig,
 } from "./api.types"
+import { ApolloClient, InMemoryCache, NormalizedCacheObject } from '@apollo/client' 
 
 /**
  * Configuring the apisauce instance.
@@ -26,8 +23,8 @@ export const DEFAULT_API_CONFIG: ApiConfig = {
  * Manages all requests to the API. You can use this class to build out
  * various requests that you need to call from your backend API.
  */
-export class Api {
-  apisauce: ApisauceInstance
+export class PublicAPI {
+  clientInst: ApolloClient<NormalizedCacheObject>
   config: ApiConfig
 
   /**
@@ -35,16 +32,13 @@ export class Api {
    */
   constructor(config: ApiConfig = DEFAULT_API_CONFIG) {
     this.config = config
-    this.apisauce = create({
-      baseURL: this.config.url,
-      timeout: this.config.timeout,
-      headers: {
-        Accept: "application/json",
-      },
+    this.clientInst = new ApolloClient({
+      uri: config.url + '/graphql',
+      cache: new InMemoryCache()
     })
   }
 
 }
 
 // Singleton instance of the API for convenience
-export const api = new Api()
+export const api = new PublicAPI()

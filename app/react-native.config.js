@@ -18,5 +18,8 @@ module.exports = {
     ios: {
       unstable_reactLegacyComponentNames: ["CellContainer", "AutoLayoutView"],
     },
+    dependencies: {
+      ...require('expo-dev-client/dependencies'),
+    }
   },
 }
