@@ -1,3 +1,4 @@
+import { MatchSummary } from 'app/components/wizard/MatchSummary'
 import { MatchCards } from 'app/components/wizard/questions/cards/MatchCards'
 import { MatchMinutes } from 'app/components/wizard/questions/minutes/MatchMinutes'
 import { MatchPenalties } from 'app/components/wizard/questions/penalties/MatchPenalties'
@@ -61,6 +62,13 @@ export default [
   {
     name: 'CARDS',
     component: MatchCards,
+    showNext: (wizard: WizardStore) => { // eslint-disable-line @typescript-eslint/no-unused-vars
+      return true
+    }
+  },
+  {
+    name: 'SUMMARY',
+    component: MatchSummary,
     showNext: (wizard: WizardStore) => { // eslint-disable-line @typescript-eslint/no-unused-vars
       return true
     }

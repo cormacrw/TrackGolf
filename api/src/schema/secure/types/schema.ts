@@ -38,11 +38,13 @@ export type Match = {
 
 export type MatchInput = {
   assists?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  minutes?: InputMaybe<Scalars['Int']['input']>;
   opponentPenalties?: InputMaybe<Scalars['Int']['input']>;
   opponentScore?: InputMaybe<Scalars['Int']['input']>;
   opponentShots?: InputMaybe<Scalars['Int']['input']>;
   opponentXG?: InputMaybe<Scalars['Float']['input']>;
   scorers?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  type?: InputMaybe<Scalars['String']['input']>;
   userId: Scalars['String']['input'];
   userPenalties?: InputMaybe<Scalars['Int']['input']>;
   userPossession?: InputMaybe<Scalars['Int']['input']>;

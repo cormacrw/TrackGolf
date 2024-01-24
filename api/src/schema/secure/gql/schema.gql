@@ -22,16 +22,20 @@ type Match {
   opponentPenalties: Int
   userYellows: Int
   userReds: Int
+  minutes: Int
+  type: String
   scorers: [String]
   assists: [String]
 }
 
 input MatchInput {
   userId: String!
+  type: String
   userScore: Int
   userPossession: Int
   userXG: Float
   userShots: Int
+  minutes: Int
   userPenalties: Int
   opponentScore: Int
   opponentXG: Float

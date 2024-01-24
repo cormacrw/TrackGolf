@@ -108,7 +108,6 @@ function App(props: AppProps) {
           <GestureHandlerRootView style={$container}>
             <AppNavigator
               linking={linking}
-              initialState={initialNavigationState}
               onStateChange={onNavigationStateChange}
             />
           </GestureHandlerRootView>

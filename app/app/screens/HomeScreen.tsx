@@ -1,72 +1,37 @@
 import { observer } from "mobx-react-lite"
-import React, { FC } from "react"
-import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
+import React, { FC, useEffect } from "react"
+import { TextStyle, ViewStyle, Text } from "react-native"
 import {
-  Button,
-  SafeAreaLayout,
-  Screen,
-  Text,
+  Screen
 } from "app/components"
-import { isRTL } from "../i18n"
 import { AppStackScreenProps } from "../navigators"
-import { colors, spacing } from "../theme"
-import { signOut } from "aws-amplify/auth"
 import { useStores } from 'app/models'
+import { colors, typography } from 'app/theme'
 
 interface HomeScreenProps extends AppStackScreenProps<"Home"> {}
 
-export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(props) {
-  const {
-    navigation
-  } = props
+export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen() {
+  const { appStore, userStore } = useStores()
   
+  useEffect(() => {
+    appStore.setLoading(false)
+    console.log('USERID', userStore.userId)
+  }, [])
   
   return (
     <Screen style={$container} preset="fixed">
-      <Text text="Home" />
-      <Button text="New Match" style={$button} textStyle={$buttonText} onPress={() => navigation.navigate('Wizard')} />
-      <Button text="Settings" style={$button} textStyle={$buttonText} onPress={() => navigation.navigate('Settings')} />
+      <Text style={$heading}>Dashboard</Text>
     </Screen>
     )
 })
 
+const $heading: TextStyle = {
+  color: colors.primary,
+  fontFamily: typography.primary.bold,
+  fontSize: 22
+}
+
 const $container: ViewStyle = {
-  flex: 1
-}
-
-const $button: ViewStyle = {
-  
-}
-
-const $buttonText: TextStyle = {
-  color: colors.textDim
-}
-
-const $bottomContainer: ViewStyle = {
-  flexShrink: 1,
-  flexGrow: 0,
-  flexBasis: "43%",
-  backgroundColor: colors.palette.neutral100,
-  borderTopLeftRadius: 16,
-  borderTopRightRadius: 16,
-  paddingHorizontal: spacing.lg,
-  justifyContent: "space-around",
-}
-const $welcomeLogo: ImageStyle = {
-  height: 88,
-  width: "100%",
-  marginBottom: spacing.xxl,
-}
-
-const $welcomeFace: ImageStyle = {
-  height: 169,
-  width: 269,
-  position: "absolute",
-  bottom: -47,
-  right: -80,
-  transform: [{ scaleX: isRTL ? -1 : 1 }],
-}
-
-const $welcomeHeading: TextStyle = {
-  marginBottom: spacing.md,
+  flex: 1,
+  marginHorizontal: 20
 }

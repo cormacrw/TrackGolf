@@ -2,23 +2,26 @@ import React, { FC, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { AppStackScreenProps } from "app/navigators"
-import { Button, Screen } from "app/components"
+import { BackArrow, Button, Screen } from "app/components"
 import steps from './steps'
 import { colors } from 'app/theme'
 import { useStores } from 'app/models'
 import { Progress } from 'app/components/wizard/Progress'
-// import { useNavigation } from "@react-navigation/native"
-// import { useStores } from "app/models"
+import { CREATE_MATCH, CreateMatchResponse } from 'app/services/api/gql/mutations/createMatch'
+import { ApolloError, useMutation } from '@apollo/client'
+import { MatchInput } from 'app/services/api/gql/secureSchema'
 
 interface WizardScreenProps extends AppStackScreenProps<"Wizard"> {}
 
-export const WizardScreen: FC<WizardScreenProps> = observer(function WizardScreen() {
-  // Pull in one of our MST stores
-  const { wizardStore } = useStores()
+export const WizardScreen: FC<WizardScreenProps> = observer(function WizardScreen(props) {
+  const {
+    navigation
+  } = props
+  const { wizardStore, userStore, appStore } = useStores()
   const [step, setStep] = useState(0)
+  const [createMatch] = useMutation<CreateMatchResponse, MatchInput>(CREATE_MATCH)
+
   const Question = steps[step].component
-  // Pull in navigation via hook
-  // const navigation = useNavigation()
   useEffect(() => {
     wizardStore.default()
   }, [])
@@ -28,13 +31,73 @@ export const WizardScreen: FC<WizardScreenProps> = observer(function WizardScree
   }
 
   const nextStep = () => {
-    setStep(step + 1)
+    // if we are on the last step, submit
+    if (step === steps.length - 1) {
+      finishWizard()
+    } else {
+      setStep(step + 1)
+    }
+  }
+
+  const finishWizard = async () => {
+    try {
+      appStore.setLoading(true)
+      console.log({
+        userId: userStore.userId || '',
+        type: wizardStore.type,
+        userScore: wizardStore.userScore,
+        userPossession: wizardStore.userPossession,
+        userXG: wizardStore.userXG,
+        userShots: wizardStore.userShots,
+        minutes: wizardStore.minutes,
+        userPenalties: wizardStore.userPenalties,
+        opponentScore: wizardStore.opponentScore,
+        opponentXG: wizardStore.opponentXG,
+        opponentShots: wizardStore.opponentShots,
+        opponentPenalties: wizardStore.opponentPenalties,
+        userYellows: wizardStore.userYellows,
+        userReds: wizardStore.userReds,
+      })
+      const res = await createMatch({variables: {
+        userId: userStore.userId || '',
+        type: wizardStore.type,
+        userScore: wizardStore.userScore,
+        userPossession: wizardStore.userPossession,
+        userXG: wizardStore.userXG,
+        userShots: wizardStore.userShots,
+        minutes: wizardStore.minutes,
+        userPenalties: wizardStore.userPenalties,
+        opponentScore: wizardStore.opponentScore,
+        opponentXG: wizardStore.opponentXG,
+        opponentShots: wizardStore.opponentShots,
+        opponentPenalties: wizardStore.opponentPenalties,
+        userYellows: wizardStore.userYellows,
+        userReds: wizardStore.userReds,
+      }})
+
+
+      console.log(res)
+      
+      // reset the wizard
+      wizardStore.default()
+  
+      appStore.setLoading(false)
+      navigation.navigate('Home')
+    } catch (error) {
+      appStore.setLoading(false)
+      if (error instanceof ApolloError) {
+        console.log(error.message)
+      }
+    }
   }
 
   const showNext = steps[step].showNext(wizardStore)
 
   return (
     <Screen contentContainerStyle={$root} preset="fixed" statusBarStyle='light'>
+      <View style={$back}>
+        <BackArrow />
+      </View>
       <Progress stepCount={steps.length} step={step} />
       <View style={$questionContainer}>
         <Question />
@@ -47,7 +110,7 @@ export const WizardScreen: FC<WizardScreenProps> = observer(function WizardScree
         }
         {
           showNext
-          ? <Button text="Next" style={[$button, $buttonNext]} textStyle={$buttonText} onPress={nextStep} />
+          ? <Button text={steps[step].name === 'SUMMARY' ? 'Finish' : 'Next'} style={[$button, $buttonNext]} textStyle={$buttonText} onPress={nextStep} />
           : <View style={$button}></View>
         }
       </View>
@@ -64,6 +127,12 @@ const $button: ViewStyle = {
   width: 150,
   height: 50
 }
+
+const $back: ViewStyle = {
+  marginTop: 10,
+  marginLeft: 30
+}
+
 
 const $buttonNext: ViewStyle = {
   backgroundColor: colors.primary,

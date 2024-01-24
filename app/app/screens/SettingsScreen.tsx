@@ -1,11 +1,11 @@
 import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle } from "react-native"
+import { ViewStyle, Text, TextStyle } from "react-native"
 import { AppStackScreenProps } from "app/navigators"
-import { Button, Screen, Text } from "app/components"
+import { Button, Screen } from "app/components"
 import { signOut } from 'aws-amplify/auth'
 import { useStores } from 'app/models'
-import { colors } from 'app/theme'
+import { colors, typography } from 'app/theme'
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "app/models"
 
@@ -24,7 +24,7 @@ export const SettingsScreen: FC<SettingsScreenProps> = observer(function Setting
 
   return (
     <Screen style={$root} preset="scroll">
-      <Text text="settings" />
+      <Text style={$heading}>Settings</Text>
       <Button
         text="Sign Out"
         textStyle={{color: colors.textDim}}
@@ -34,6 +34,13 @@ export const SettingsScreen: FC<SettingsScreenProps> = observer(function Setting
   )
 })
 
+const $heading: TextStyle = {
+  color: colors.primary,
+  fontFamily: typography.primary.bold,
+  fontSize: 22
+}
+
 const $root: ViewStyle = {
   flex: 1,
+  marginHorizontal: 20
 }

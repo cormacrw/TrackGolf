@@ -9,15 +9,16 @@ import {
   DefaultTheme,
   NavigationContainer,
 } from "@react-navigation/native"
-import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
+import { NativeStackScreenProps, createNativeStackNavigator } from "@react-navigation/native-stack"
 import { observer } from "mobx-react-lite"
 import React from "react"
 import { useColorScheme } from "react-native"
 import * as Screens from "app/screens"
 import Config from "../config"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
-import { colors } from "app/theme"
 import { useStores } from 'app/models'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { NavTabs } from 'app/components'
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -38,6 +39,9 @@ export type AppStackParamList = {
   // 🔥 Your screens go here
 	Settings: undefined
 	Wizard: undefined
+	Matches: undefined
+	Follow: undefined
+  TabsNav: undefined
 	// IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
 
@@ -51,34 +55,54 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStack
   AppStackParamList,
   T
 >
+const Tabs = createBottomTabNavigator<AppStackParamList>()
+
+const AppTabs = observer(function AppTabs() {
+
+  return (
+    <Tabs.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName='Home'
+      tabBar={props => <NavTabs {...props} />}
+    >
+      <>
+        <Tabs.Screen name="Home" component={Screens.HomeScreen} />
+        <Tabs.Screen name="Settings" component={Screens.SettingsScreen} />
+        <Tabs.Screen name="Matches" component={Screens.MatchesScreen} />
+        <Tabs.Screen name="Follow" component={Screens.FollowScreen} />
+      </>
+    </Tabs.Navigator>
+  )
+})
+
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
 const AppStack = observer(function AppStack() {
   const { authStore } = useStores()
-
+  
   return (
     <Stack.Navigator
-      screenOptions={{ headerShown: false, navigationBarColor: colors.background }}
+      screenOptions={{ headerShown: false, animation: 'slide_from_bottom' }}
       initialRouteName='Home'
     >
       { authStore.isLoggedIn
       ? (
         <>
-          <Stack.Screen name="Home" component={Screens.HomeScreen} />
-          <Stack.Screen name="Settings" component={Screens.SettingsScreen} />
+          <Stack.Screen name="TabsNav" component={AppTabs} />
           <Stack.Screen name="Wizard" component={Screens.WizardScreen} />
         </>
         ) : (
-        <Stack.Screen name="SignIn" component={Screens.SignInScreen} />
-      )
-      }
+          <Stack.Screen name="SignIn" component={Screens.SignInScreen} />
+          )
+        }
       {/** 🔥 Your screens go here */}
-			{/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
+			{/* IGNITE_GENERATOR_ANCHOR_APP_Tabs_SCREENS */}
     </Stack.Navigator>
   )
 })
+
 
 export interface NavigationProps
   extends Partial<React.ComponentProps<typeof NavigationContainer>> {}

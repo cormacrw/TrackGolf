@@ -13,10 +13,11 @@ import {
   ViewStyle,
 } from "react-native"
 import { colors } from "../theme"
-import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
+import { ExtendedEdge } from "../utils/useSafeAreaInsetsStyle"
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Text } from './Text'
 import { useStores } from 'app/models'
+import { observer } from 'mobx-react-lite'
 
 interface BaseScreenProps {
   /**
@@ -190,13 +191,13 @@ function ScreenWithScrolling(props: ScreenProps) {
   )
 }
 
-export function Screen(props: ScreenProps) {
+export const Screen = observer(function Screen(props: ScreenProps) {
   const {
     backgroundColor = colors.background,
     KeyboardAvoidingViewProps,
     keyboardOffset = 0,
     StatusBarProps,
-    statusBarStyle = "auto",
+    statusBarStyle = "light",
   } = props
 
   const { appStore } = useStores()
@@ -224,7 +225,7 @@ export function Screen(props: ScreenProps) {
       }
     </SafeAreaView>
   )
-}
+})
 
 const $containerStyle: ViewStyle = {
   flex: 1,

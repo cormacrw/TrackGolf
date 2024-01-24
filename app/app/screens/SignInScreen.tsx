@@ -47,8 +47,6 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
       appStore.setLoading(true)
       const cognitoUser = await getCurrentUser()
       const attr = await fetchUserAttributes()
-      console.log(cognitoUser)
-      console.log(attr.email)
       const { data, errors } = await signInGoogleUser({variables: {email: attr.email, googleId: cognitoUser.username}})
 
       if (errors && errors.length) {
