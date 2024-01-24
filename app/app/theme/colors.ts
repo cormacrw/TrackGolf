@@ -41,7 +41,8 @@ const palette = {
   darkIronOre: '#121212',
   white: '#FFFFFF',
 
-  tealGreen: '#00F3AD'
+  tealGreen: '#00F3AD',
+  tealGreenTransparent: '#00F3AD55'
 } as const
 
 export const colors = {
@@ -57,6 +58,7 @@ export const colors = {
   transparent: "rgba(0, 0, 0, 0)",
 
   primary: palette.tealGreen,
+  primaryTransparent: palette.tealGreenTransparent,
   /**
    * The default text color in many components.
    */

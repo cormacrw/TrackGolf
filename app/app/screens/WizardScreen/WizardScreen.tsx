@@ -2,10 +2,11 @@ import React, { FC, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { AppStackScreenProps } from "app/navigators"
-import { Button, Screen, Text } from "app/components"
+import { Button, Screen } from "app/components"
 import steps from './steps'
 import { colors } from 'app/theme'
 import { useStores } from 'app/models'
+import { Progress } from 'app/components/wizard/Progress'
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "app/models"
 
@@ -30,8 +31,11 @@ export const WizardScreen: FC<WizardScreenProps> = observer(function WizardScree
     setStep(step + 1)
   }
 
+  const showNext = steps[step].showNext(wizardStore)
+
   return (
-    <Screen style={$root} preset="fixed" statusBarStyle='light'>
+    <Screen contentContainerStyle={$root} preset="fixed" statusBarStyle='light'>
+      <Progress stepCount={steps.length} step={step} />
       <View style={$questionContainer}>
         <Question />
       </View>
@@ -41,7 +45,11 @@ export const WizardScreen: FC<WizardScreenProps> = observer(function WizardScree
           ? <Button text="Back" style={$button} textStyle={$buttonText} onPress={backStep} />
           : <View style={$button}></View>
         }
-        <Button text="Next" style={[$button, $buttonNext]} textStyle={$buttonText} onPress={nextStep} />
+        {
+          showNext
+          ? <Button text="Next" style={[$button, $buttonNext]} textStyle={$buttonText} onPress={nextStep} />
+          : <View style={$button}></View>
+        }
       </View>
       
     </Screen>
@@ -54,6 +62,7 @@ const $root: ViewStyle = {
 
 const $button: ViewStyle = {
   width: 150,
+  height: 50
 }
 
 const $buttonNext: ViewStyle = {
@@ -67,7 +76,7 @@ const $buttonText: TextStyle = {
 }
 
 const $questionContainer: ViewStyle = {
-  height: '90%',
+  flex: 1,
   justifyContent: 'center'
 }
 
@@ -75,5 +84,6 @@ const $questionContainer: ViewStyle = {
 const $navContainer: ViewStyle = {
   flexDirection: 'row',
   justifyContent: 'space-between',
-  marginHorizontal: 50
+  marginHorizontal: 50,
+  height: 100
 }

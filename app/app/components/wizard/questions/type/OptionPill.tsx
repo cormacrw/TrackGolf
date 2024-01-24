@@ -1,7 +1,7 @@
 import { TextProps } from 'app/components/Text'
 import { colors, typography } from 'app/theme'
 import React from "react"
-import { Pressable, PressableProps, PressableStateCallbackType, Text, TextStyle, View, ViewStyle } from 'react-native'
+import { Pressable, PressableProps, PressableStateCallbackType, Text, TextStyle, ViewStyle } from 'react-native'
 
 export interface OptionPillProps extends PressableProps {
   label?: TextProps["text"]

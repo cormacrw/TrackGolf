@@ -61,19 +61,20 @@ const AppStack = observer(function AppStack() {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false, navigationBarColor: colors.background }}
+      initialRouteName='Home'
     >
       { authStore.isLoggedIn
       ? (
         <>
           <Stack.Screen name="Home" component={Screens.HomeScreen} />
           <Stack.Screen name="Settings" component={Screens.SettingsScreen} />
+          <Stack.Screen name="Wizard" component={Screens.WizardScreen} />
         </>
         ) : (
         <Stack.Screen name="SignIn" component={Screens.SignInScreen} />
       )
       }
       {/** 🔥 Your screens go here */}
-			<Stack.Screen name="Wizard" component={Screens.WizardScreen} />
 			{/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )

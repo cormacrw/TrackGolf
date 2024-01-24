@@ -8,6 +8,7 @@ export const WizardStoreModel = types
   .model("WizardStore")
   .props({
     type: types.maybe(types.string),
+    minutes: types.maybe(types.number),
     userScore: types.maybe(types.number),
     userPossession: types.maybe(types.number),
     userXG: types.maybe(types.number),
@@ -27,6 +28,7 @@ export const WizardStoreModel = types
   .actions((self) => ({
     default () {
       self.type = undefined
+      self.minutes = 90
       self.userScore = 0
       self.userPossession = 50
       self.userXG = 0

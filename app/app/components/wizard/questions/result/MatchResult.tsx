@@ -3,7 +3,7 @@ import React from "react"
 import { Text, TextStyle, View, ViewStyle } from 'react-native'
 import { useStores } from 'app/models'
 import { observer } from 'mobx-react-lite'
-import { NumberPicker } from '../../NumberPicker'
+import { NumberPicker } from '../NumberPicker'
 
 export const MatchResult = observer(function MatchResult () {
   const { wizardStore } = useStores()
@@ -19,8 +19,8 @@ export const MatchResult = observer(function MatchResult () {
     <View>
       <Text style={$question}>What was the result?</Text>
       <View style={$pickerContainer}>
-        <NumberPicker label="You" value={wizardStore.userScore} onChange={setUserScore} />
-        <NumberPicker label="Opponent" value={wizardStore.opponentScore} onChange={setOpponentScore} />
+        <NumberPicker label="You" value={wizardStore.userScore || 0} onChange={setUserScore} />
+        <NumberPicker label="Opponent" value={wizardStore.opponentScore || 0} onChange={setOpponentScore} />
       </View>
     </View>
   )

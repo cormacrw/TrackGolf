@@ -37,7 +37,7 @@ import { api as privateAPI } from './services/api/apiSecure'
 
 Amplify.configure(amplifyconfig);
 
-export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
+export const NAVIGATION_PERSISTENCE_KEY = "TRACKUT_NAV_STATE"
 
 // Web linking configuration
 const prefix = Linking.createURL("/")
