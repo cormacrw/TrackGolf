@@ -56,6 +56,8 @@ interface BaseScreenProps {
    * Pass any additional props directly to the KeyboardAvoidingView component.
    */
   KeyboardAvoidingViewProps?: KeyboardAvoidingViewProps
+
+  loading?: boolean
 }
 
 interface FixedScreenProps extends BaseScreenProps {
@@ -198,6 +200,7 @@ export const Screen = observer(function Screen(props: ScreenProps) {
     keyboardOffset = 0,
     StatusBarProps,
     statusBarStyle = "light",
+    loading
   } = props
 
   const { appStore } = useStores()
@@ -218,7 +221,7 @@ export const Screen = observer(function Screen(props: ScreenProps) {
           <ScreenWithScrolling {...props} />
         )}
       </KeyboardAvoidingView>
-      {appStore.loading &&
+      {(appStore.loading || loading) &&
         <View style={$loadingContainer} >
           <Text text="Loading!"></Text>
         </View>

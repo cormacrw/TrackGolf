@@ -42,7 +42,11 @@ const palette = {
   white: '#FFFFFF',
 
   tealGreen: '#00F3AD',
-  tealGreenTransparent: '#00F3AD55'
+  tealGreenTransparent: '#00F3AD55',
+
+  orange: '#fcba03',
+  winGreen: '#03fc30',
+  red: '#fc032d'
 } as const
 
 export const colors = {
@@ -96,4 +100,8 @@ export const colors = {
    *
    */
   errorBackground: palette.angry100,
+
+  loss: palette.angry500,
+  win: palette.tealGreen,
+  draw: palette.orange
 }

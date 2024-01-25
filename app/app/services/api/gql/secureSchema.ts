@@ -20,6 +20,7 @@ export type Match = {
   __typename?: 'Match';
   assists?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   matchId?: Maybe<Scalars['String']['output']>;
+  minutes?: Maybe<Scalars['Int']['output']>;
   opponentPenalties?: Maybe<Scalars['Int']['output']>;
   opponentScore?: Maybe<Scalars['Int']['output']>;
   opponentShots?: Maybe<Scalars['Int']['output']>;
@@ -27,6 +28,7 @@ export type Match = {
   scorers?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   tutPk: Scalars['String']['output'];
   tutSk: Scalars['String']['output'];
+  type?: Maybe<Scalars['String']['output']>;
   userPenalties?: Maybe<Scalars['Int']['output']>;
   userPossession?: Maybe<Scalars['Int']['output']>;
   userReds?: Maybe<Scalars['Int']['output']>;
@@ -189,6 +191,7 @@ export type ResolversParentTypes = {
 export type MatchResolvers<ContextType = any, ParentType extends ResolversParentTypes['Match'] = ResolversParentTypes['Match']> = {
   assists?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   matchId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  minutes?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   opponentPenalties?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   opponentScore?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   opponentShots?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
@@ -196,6 +199,7 @@ export type MatchResolvers<ContextType = any, ParentType extends ResolversParent
   scorers?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   tutPk?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   tutSk?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   userPenalties?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   userPossession?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   userReds?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;

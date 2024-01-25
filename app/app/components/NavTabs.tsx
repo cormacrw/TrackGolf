@@ -4,16 +4,13 @@ import { observer } from "mobx-react-lite"
 import { colors } from "app/theme"
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs'
 import Icon from 'react-native-vector-icons/Feather'
-/*
- * Describe your component here
- */
+
 export const NavTabs = observer(function NavTabs(props: BottomTabBarProps) {
   const {
     state,
     navigation
   } = props
 
-  console.log(state)
   const $styles = [$container]
 
   const isFocused = (routeName: string) => {
