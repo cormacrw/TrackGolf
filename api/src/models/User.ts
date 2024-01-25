@@ -1,8 +1,10 @@
 import TrackUTTable from '../db/TrackUTTable'
 import { SignInGoogleUser } from '../schema/public/types/schema'
-import { User } from '../schema/secure/types/schema'
+import { User, UserStats } from '../schema/secure/types/schema'
+import UserStatsTracker from '../utils/UserStatsTracker'
 import { generateUUID } from '../utils/uuid'
 import AuthModel from './Auth'
+import MatchModel from './Match'
 
 export default class UserModel {
   static async signInGoogleUser (email: string, googleId: string): Promise<SignInGoogleUser> {
@@ -44,5 +46,13 @@ export default class UserModel {
     const res = await TrackUTTable.scan(filterExpression, expressionValues)
 
     return res[0] as User
+  }
+
+  static async getMatchStats (userId: string): Promise<UserStats> {
+    const matches = await MatchModel.findByUserId(userId)
+    const statTracker = new UserStatsTracker()
+
+    statTracker.processMatches(matches)
+    return statTracker.getUserStats()
   }
 }

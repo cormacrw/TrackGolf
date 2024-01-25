@@ -20,7 +20,7 @@ export const MatchesScreen: FC<MatchesScreenProps> = observer(function MatchesSc
   // Pull in one of our MST stores
   const { userStore } = useStores()
   const { loading, data, refetch } = useQuery<GetMatchesByUserResponse>(GET_MATCHES_BY_USER, { variables: { userId: userStore.userId } })
-  const matches = []
+  const matches = data?.getMatchesByUser
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {

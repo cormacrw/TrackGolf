@@ -28,6 +28,28 @@ type Match {
   assists: [String]
 }
 
+type UserStats {
+  gamesCount: Int
+  wins: Int
+  draws: Int
+  losses: Int
+  winRate: Float
+  averagePossession: Float
+  rageQuits: Int
+  averageUserXG: Float
+  averageOpponentXG: Float
+  averageUserShots: Float
+  averageOpponentShots: Float
+  averageUserGoals: Float
+  averageOpponentGoals: Float
+  totalUserXG: Float
+  totalOpponentXG: Float
+  totalUserShots: Int
+  totalOpponentShots: Int
+  totalUserGoals: Int
+  totalOpponentGoals: Int
+}
+
 input MatchInput {
   userId: String!
   type: String
@@ -50,6 +72,7 @@ input MatchInput {
 type Query {
   getUserByEmail(email: String!): User
   getMatchesByUser(userId: String!): [Match]
+  getUserStats(userId: String!): UserStats
 }
 
 type Mutation {

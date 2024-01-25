@@ -71,6 +71,7 @@ export type Query = {
   __typename?: 'Query';
   getMatchesByUser?: Maybe<Array<Maybe<Match>>>;
   getUserByEmail?: Maybe<User>;
+  getUserStats?: Maybe<UserStats>;
 };
 
 
@@ -83,6 +84,11 @@ export type QueryGetUserByEmailArgs = {
   email: Scalars['String']['input'];
 };
 
+
+export type QueryGetUserStatsArgs = {
+  userId: Scalars['String']['input'];
+};
+
 export type User = {
   __typename?: 'User';
   email?: Maybe<Scalars['String']['output']>;
@@ -91,6 +97,29 @@ export type User = {
   tutSk: Scalars['String']['output'];
   userId?: Maybe<Scalars['String']['output']>;
   username?: Maybe<Scalars['String']['output']>;
+};
+
+export type UserStats = {
+  __typename?: 'UserStats';
+  averageOpponentGoals?: Maybe<Scalars['Float']['output']>;
+  averageOpponentShots?: Maybe<Scalars['Float']['output']>;
+  averageOpponentXG?: Maybe<Scalars['Float']['output']>;
+  averagePossession?: Maybe<Scalars['Float']['output']>;
+  averageUserGoals?: Maybe<Scalars['Float']['output']>;
+  averageUserShots?: Maybe<Scalars['Float']['output']>;
+  averageUserXG?: Maybe<Scalars['Float']['output']>;
+  draws?: Maybe<Scalars['Int']['output']>;
+  gamesCount?: Maybe<Scalars['Int']['output']>;
+  losses?: Maybe<Scalars['Int']['output']>;
+  rageQuits?: Maybe<Scalars['Int']['output']>;
+  totalOpponentGoals?: Maybe<Scalars['Int']['output']>;
+  totalOpponentShots?: Maybe<Scalars['Int']['output']>;
+  totalOpponentXG?: Maybe<Scalars['Float']['output']>;
+  totalUserGoals?: Maybe<Scalars['Int']['output']>;
+  totalUserShots?: Maybe<Scalars['Int']['output']>;
+  totalUserXG?: Maybe<Scalars['Float']['output']>;
+  winRate?: Maybe<Scalars['Float']['output']>;
+  wins?: Maybe<Scalars['Int']['output']>;
 };
 
 
@@ -173,6 +202,7 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   User: ResolverTypeWrapper<User>;
+  UserStats: ResolverTypeWrapper<UserStats>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -186,6 +216,7 @@ export type ResolversParentTypes = {
   Query: {};
   String: Scalars['String']['output'];
   User: User;
+  UserStats: UserStats;
 };
 
 export type MatchResolvers<ContextType = any, ParentType extends ResolversParentTypes['Match'] = ResolversParentTypes['Match']> = {
@@ -217,6 +248,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   getMatchesByUser?: Resolver<Maybe<Array<Maybe<ResolversTypes['Match']>>>, ParentType, ContextType, RequireFields<QueryGetMatchesByUserArgs, 'userId'>>;
   getUserByEmail?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserByEmailArgs, 'email'>>;
+  getUserStats?: Resolver<Maybe<ResolversTypes['UserStats']>, ParentType, ContextType, RequireFields<QueryGetUserStatsArgs, 'userId'>>;
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
@@ -229,10 +261,34 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type UserStatsResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserStats'] = ResolversParentTypes['UserStats']> = {
+  averageOpponentGoals?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  averageOpponentShots?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  averageOpponentXG?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  averagePossession?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  averageUserGoals?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  averageUserShots?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  averageUserXG?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  draws?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  gamesCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  losses?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  rageQuits?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  totalOpponentGoals?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  totalOpponentShots?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  totalOpponentXG?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  totalUserGoals?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  totalUserShots?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  totalUserXG?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  winRate?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  wins?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = any> = {
   Match?: MatchResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
+  UserStats?: UserStatsResolvers<ContextType>;
 };
 

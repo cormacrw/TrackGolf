@@ -1,26 +1,77 @@
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect } from "react"
-import { TextStyle, ViewStyle, Text } from "react-native"
+import { TextStyle, ViewStyle, Text, View, ScrollView } from "react-native"
 import {
-  Screen
+  RecentFormCard,
+  Screen,
+  StatCard
 } from "app/components"
 import { AppStackScreenProps } from "../navigators"
 import { useStores } from 'app/models'
 import { colors, typography } from 'app/theme'
+import { GET_USER_STATS, GetUserStatsResponse } from 'app/services/api/gql/queries/getUserStats'
+import { useQuery } from '@apollo/client'
 
 interface HomeScreenProps extends AppStackScreenProps<"Home"> {}
 
-export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen() {
-  const { appStore, userStore } = useStores()
+export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(props: HomeScreenProps) {
+  const {
+    navigation
+  } = props
+  const { userStore, appStore } = useStores()
   
   useEffect(() => {
     appStore.setLoading(false)
     console.log('USERID', userStore.userId)
   }, [])
+  const { loading, data, refetch } = useQuery<GetUserStatsResponse>(GET_USER_STATS, { variables: { userId: userStore.userId } })
+  const stats = data?.getUserStats
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      refetch()
+    });
+
+    return unsubscribe;
+  }, [navigation])
+
+  const toPercent = (number?: number | null) => {
+    if (!number) {
+      return '0%'
+    }
+
+    return (number * 100) + '%'
+  }
+
   
   return (
-    <Screen style={$container} preset="fixed">
+    <Screen style={$container} loading={loading} preset="fixed">
       <Text style={$heading}>Dashboard</Text>
+      <ScrollView>
+        <RecentFormCard results={['W', 'W', 'D']} />
+
+        <View style={[$statCardRow, $mt]}>
+          <StatCard label='Games Tracked' value={stats?.gamesCount || 0} />
+          <StatCard label='Win %' value={toPercent(stats?.winRate)} />
+        </View>
+        <View style={$statCardRow}>
+          <StatCard label='Average Possession' value={toPercent(stats?.averagePossession)} />
+          <StatCard label='Rage Quits' value={3} />
+        </View>
+        <View style={$statCardRow}>
+          <StatCard label='Average xG For' value={stats?.averageUserXG || 0} />
+          <StatCard label='Average xG Against' value={stats?.averageOpponentXG || 0} />
+        </View>
+        <View style={$statCardRow}>
+          <StatCard label='Average Shots For' value={stats?.averageUserShots || 0} />
+          <StatCard label='Average Shots Against' value={stats?.averageOpponentShots || 0} />
+        </View>
+        <View style={$statCardRow}>
+          <StatCard label='Average Goals For' value={stats?.averageUserGoals || 0} />
+          <StatCard label='Average Goals Against' value={stats?.averageOpponentShots || 0} />
+        </View>
+      </ScrollView>
+
     </Screen>
     )
 })
@@ -28,10 +79,23 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen() {
 const $heading: TextStyle = {
   color: colors.primary,
   fontFamily: typography.primary.bold,
-  fontSize: 22
+  fontSize: 22,
+  marginBottom: 10
 }
 
 const $container: ViewStyle = {
   flex: 1,
-  marginHorizontal: 20
+  paddingHorizontal: 20
+}
+
+const $statCardRow: ViewStyle = {
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  gap: 10,
+  justifyContent: 'space-between',
+  marginBottom: 10
+}
+
+const $mt: ViewStyle ={ 
+  marginTop: 10
 }

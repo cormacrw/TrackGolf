@@ -11,7 +11,12 @@ const queries: QueryResolvers = {
     const matches = await MatchModel.findByUserId(userId)
 
     return matches
-  }
+  },
+  getUserStats: async (_, { userId }, ) => {
+    const userStats = await UserModel.getMatchStats(userId)
+
+    return userStats
+  },
 }
 
 export default queries
