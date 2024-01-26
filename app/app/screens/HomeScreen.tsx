@@ -40,7 +40,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
       return '0%'
     }
 
-    return (number * 100) + '%'
+    return Math.round(number * 100) + '%'
   }
 
   
@@ -70,6 +70,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
           <StatCard label='Average Goals For' value={stats?.averageUserGoals || 0} />
           <StatCard label='Average Goals Against' value={stats?.averageOpponentShots || 0} />
         </View>
+        <View style={$spacer} />
       </ScrollView>
 
     </Screen>
@@ -86,6 +87,10 @@ const $heading: TextStyle = {
 const $container: ViewStyle = {
   flex: 1,
   paddingHorizontal: 20
+}
+
+const $spacer: ViewStyle = {
+  height: 50
 }
 
 const $statCardRow: ViewStyle = {

@@ -42,5 +42,5 @@ const $heading: TextStyle = {
 
 const $root: ViewStyle = {
   flex: 1,
-  marginHorizontal: 20
+  paddingHorizontal: 20
 }

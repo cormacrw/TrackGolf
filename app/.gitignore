@@ -88,3 +88,5 @@ web-build/
 /coverage
 
 .DS_Store
+
+_ios/

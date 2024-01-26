@@ -18,6 +18,7 @@ export const FollowScreen: FC<FollowScreenProps> = observer(function FollowScree
   return (
     <Screen style={$root} preset="scroll">
       <Text style={$heading}>Social Feed</Text>
+      <Text>Coming Soon!</Text>
 
     </Screen>
   )

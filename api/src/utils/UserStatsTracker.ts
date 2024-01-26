@@ -72,7 +72,7 @@ export default class UserStatsTracker {
     })
 
     this.winRate = this.roundNumber(this.wins / this.gamesCount)
-    this.averagePossession = this.roundNumber(this.totalPossession / this.gamesCount)
+    this.averagePossession = this.roundNumber(this.totalPossession / this.gamesCount / 100)
 
 
     this.averageOpponentGoals = this.roundNumber(this.totalOpponentGoals / this.gamesCount)

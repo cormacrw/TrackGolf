@@ -4,14 +4,14 @@
   "expo": {
     "name": "TrackUT",
     "slug": "TrackUT",
-    "scheme": "app",
+    "scheme": "trackut",
     "version": "0.0.1",
     "orientation": "portrait",
-    "icon": "./assets/images/app-icon-all.png",
+    "icon": "./assets/images/icon-all.png",
     "splash": {
-      "image": "./assets/images/splash-logo-all.png",
+      "image": "./assets/images/icon-large.png",
       "resizeMode": "contain",
-      "backgroundColor": "#191015"
+      "backgroundColor": "#1E1F23"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -21,27 +21,26 @@
       "**/*"
     ],
     "android": {
-      "icon": "./assets/images/app-icon-android-legacy.png",
+      "icon": "./assets/images/icon-all.png",
       "package": "com.trackut",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/app-icon-android-adaptive-foreground.png",
+        "foregroundImage": "./assets/images/icon-foreground.png",
         "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
       },
       "splash": {
-        "image": "./assets/images/splash-logo-android-universal.png",
+        "image": "./assets/images/icon-large.png",
         "resizeMode": "contain",
-        "backgroundColor": "#191015"
+        "backgroundColor": "#1E1F23"
       }
     },
     "ios": {
-      "icon": "./assets/images/app-icon-ios.png",
-      "supportsTablet": true,
+      "icon": "./assets/images/icon-all.png",
+      "supportsTablet": false,
       "bundleIdentifier": "com.trackut",
       "splash": {
-        "image": "./assets/images/splash-logo-ios-mobile.png",
-        "tabletImage": "./assets/images/splash-logo-ios-tablet.png",
+        "image": "./assets/images/icon-large.png",
         "resizeMode": "contain",
-        "backgroundColor": "#191015"
+        "backgroundColor": "#1E1F23"
       }
     },
     "web": {
@@ -49,7 +48,7 @@
       "splash": {
         "image": "./assets/images/splash-logo-web.png",
         "resizeMode": "contain",
-        "backgroundColor": "#191015"
+        "backgroundColor": "#1E1F23"
       },
       "bundler": "metro"
     },
