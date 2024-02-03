@@ -4,3 +4,5 @@ node_modules/
 .webpack/
 
 .env
+
+src/generated/
