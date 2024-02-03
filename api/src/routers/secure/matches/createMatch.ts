@@ -1,6 +1,6 @@
-import { prisma } from 'db/client'
+import { prisma } from '../../../db/client'
 import { Router } from 'express'
-import { TypedRequestBody } from 'types/TypedRequestBody'
+import { TypedRequestBody } from '../../../types/TypedRequestBody'
 
 interface CreateMatchRequestBody {
   match: {

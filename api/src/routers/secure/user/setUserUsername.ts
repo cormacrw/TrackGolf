@@ -1,4 +1,4 @@
-import { prisma } from 'db/client'
+import { prisma } from '../../../db/client'
 import { Router } from 'express'
 import BadWordFilter from 'bad-words'
 

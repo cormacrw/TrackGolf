@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { verifier } from 'utils/jwtVerifier'
-import logger from 'utils/logger'
+import { verifier } from '../utils/jwtVerifier'
+import logger from '../utils/logger'
 
 const register = (router: Router) => {
   router.use(async (req, res, next) => {

@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import publicRouter from './public';
-import secureRouter from './secure';
+import secureRouter from './secure/router';
 
 const router = Router()
 

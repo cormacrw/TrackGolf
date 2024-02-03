@@ -1,16 +1,19 @@
 import { Router } from 'express'
-import { createMatch, deleteMatch, findAllMatches } from './matches'
-import { findUserMatches, getUserStats, setUserUsername } from './user'
-import { testSecure } from './test'
-import { authMiddleware } from 'middleware'
+import { authMiddleware } from '../../middleware'
 import { authLogin } from './auth'
+import findUserMatches from './user/findUserMatches'
+import setUserUsername from './user/setUserUsername'
+import getUserStats from './user/getUserStats'
+import findAllMatches from './matches/findAllMatches'
+import createMatch from './matches/createMatch'
+import deleteMatch from './matches/deleteMatch'
 
 const secureRouter = Router()
 
 // DO NOT REMOVE
 authMiddleware.register(secureRouter)
 
-testSecure.register(secureRouter)
+// testSecure.register(secureRouter)
 
 findUserMatches.register(secureRouter)
 setUserUsername.register(secureRouter)
