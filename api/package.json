@@ -6,7 +6,8 @@
     "dev": "nodemon --watch \"src/**\" --ext \"ts,json\" --ignore \"src/**/*.spec.ts\" --exec \"tsx src/index.ts\"",
     "build": "tsc --build --verbose",
     "db:push": "prisma db push",
-    "db:generate": "prisma generate"
+    "db:generate": "prisma generate",
+    "prod": "node --es-module-specifier-resolution=node build/index.js"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
