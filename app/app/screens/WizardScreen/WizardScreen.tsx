@@ -7,9 +7,7 @@ import steps from './steps'
 import { colors } from 'app/theme'
 import { useStores } from 'app/models'
 import { Progress } from 'app/components/wizard/Progress'
-import { CREATE_MATCH, CreateMatchResponse } from 'app/services/api/gql/mutations/createMatch'
 import { ApolloError, useMutation } from '@apollo/client'
-import { MatchInput } from 'app/services/api/gql/secureSchema'
 
 interface WizardScreenProps extends AppStackScreenProps<"Wizard"> {}
 
@@ -19,7 +17,7 @@ export const WizardScreen: FC<WizardScreenProps> = observer(function WizardScree
   } = props
   const { wizardStore, userStore, appStore } = useStores()
   const [step, setStep] = useState(0)
-  const [createMatch] = useMutation<CreateMatchResponse, MatchInput>(CREATE_MATCH)
+  // const [createMatch] = useMutation<CreateMatchResponse, MatchInput>(CREATE_MATCH)
 
   const Question = steps[step].component
   useEffect(() => {
@@ -58,25 +56,25 @@ export const WizardScreen: FC<WizardScreenProps> = observer(function WizardScree
         userYellows: wizardStore.userYellows,
         userReds: wizardStore.userReds,
       })
-      const res = await createMatch({variables: {
-        userId: userStore.userId || '',
-        type: wizardStore.type,
-        userScore: wizardStore.userScore,
-        userPossession: wizardStore.userPossession,
-        userXG: wizardStore.userXG,
-        userShots: wizardStore.userShots,
-        minutes: wizardStore.minutes,
-        userPenalties: wizardStore.userPenalties,
-        opponentScore: wizardStore.opponentScore,
-        opponentXG: wizardStore.opponentXG,
-        opponentShots: wizardStore.opponentShots,
-        opponentPenalties: wizardStore.opponentPenalties,
-        userYellows: wizardStore.userYellows,
-        userReds: wizardStore.userReds,
-      }})
+      // const res = await createMatch({variables: {
+      //   userId: userStore.userId || '',
+      //   type: wizardStore.type,
+      //   userScore: wizardStore.userScore,
+      //   userPossession: wizardStore.userPossession,
+      //   userXG: wizardStore.userXG,
+      //   userShots: wizardStore.userShots,
+      //   minutes: wizardStore.minutes,
+      //   userPenalties: wizardStore.userPenalties,
+      //   opponentScore: wizardStore.opponentScore,
+      //   opponentXG: wizardStore.opponentXG,
+      //   opponentShots: wizardStore.opponentShots,
+      //   opponentPenalties: wizardStore.opponentPenalties,
+      //   userYellows: wizardStore.userYellows,
+      //   userReds: wizardStore.userReds,
+      // }})
 
 
-      console.log(res)
+      // console.log(res)
       
       // reset the wizard
       wizardStore.default()

@@ -5,7 +5,6 @@ import { AppStackScreenProps } from "app/navigators"
 import { MatchListItem, Screen } from "app/components"
 import { colors, typography } from 'app/theme'
 import { useQuery } from '@apollo/client'
-import { GET_MATCHES_BY_USER, GetMatchesByUserResponse } from 'app/services/api/gql/queries/getMatchesByUser'
 import { useStores } from 'app/models'
 import { FlashList } from '@shopify/flash-list'
 // import { useNavigation } from "@react-navigation/native"
@@ -19,19 +18,17 @@ export const MatchesScreen: FC<MatchesScreenProps> = observer(function MatchesSc
   } = props
   // Pull in one of our MST stores
   const { userStore } = useStores()
-  const { loading, data, refetch } = useQuery<GetMatchesByUserResponse>(GET_MATCHES_BY_USER, { variables: { userId: userStore.userId } })
-  const matches = data?.getMatchesByUser
+  const matches = [] as any[]
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      refetch()
     });
 
     return unsubscribe;
   }, [navigation])
 
   return (
-    <Screen style={$root} preset="fixed" loading={loading}>
+    <Screen style={$root} preset="fixed">
       <Text style={$heading}>Matches</Text>
       <ScrollView style={$scroll}>
         <FlashList
@@ -48,8 +45,9 @@ export const MatchesScreen: FC<MatchesScreenProps> = observer(function MatchesSc
 const $heading: TextStyle = {
   color: colors.primary,
   fontFamily: typography.primary.bold,
-  fontSize: 22,
-  marginBottom: 20
+  fontSize: 28,
+  marginBottom: 10,
+  marginTop: 15
 }
 
 const $root: ViewStyle = {

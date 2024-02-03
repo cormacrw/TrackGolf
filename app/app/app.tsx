@@ -32,8 +32,6 @@ import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { ViewStyle } from "react-native"
 import { Amplify } from 'aws-amplify';
 import amplifyconfig from './config/amplifyconfiguration.json';
-import { ApolloProvider } from '@apollo/client';
-import { api as privateAPI } from './services/api/apiSecure'
 
 Amplify.configure(amplifyconfig);
 
@@ -99,19 +97,17 @@ function App(props: AppProps) {
     prefixes: [prefix],
     config,
   }
-  
+
   // otherwise, we're ready to render the app
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ErrorBoundary catchErrors={Config.catchErrors}>
-        <ApolloProvider client={privateAPI.clientInst} >
-          <GestureHandlerRootView style={$container}>
-            <AppNavigator
-              linking={linking}
-              onStateChange={onNavigationStateChange}
-            />
-          </GestureHandlerRootView>
-        </ApolloProvider>
+        <GestureHandlerRootView style={$container}>
+          <AppNavigator
+            linking={linking}
+            onStateChange={onNavigationStateChange}
+          />
+        </GestureHandlerRootView>
       </ErrorBoundary>
     </SafeAreaProvider>
   )

@@ -90,3 +90,7 @@ web-build/
 .DS_Store
 
 _ios/
+
+.builds/
+
+googleserviceaccount.json

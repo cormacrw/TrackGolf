@@ -42,6 +42,8 @@ export type AppStackParamList = {
 	Matches: undefined
 	Follow: undefined
   TabsNav: undefined
+	Match: undefined
+	Username: undefined
 	// IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
 
@@ -81,24 +83,26 @@ const Stack = createNativeStackNavigator<AppStackParamList>()
 
 const AppStack = observer(function AppStack() {
   const { authStore } = useStores()
-  
+  authStore.signout()
+  console.log(authStore.isLoggedIn)
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false, animation: 'slide_from_bottom' }}
-      initialRouteName='Home'
+      initialRouteName='Username'
     >
       { authStore.isLoggedIn
       ? (
         <>
           <Stack.Screen name="TabsNav" component={AppTabs} />
           <Stack.Screen name="Wizard" component={Screens.WizardScreen} />
+          <Stack.Screen name="Match" component={Screens.MatchScreen} />
+          <Stack.Screen name="Username" component={Screens.UsernameScreen} />
         </>
         ) : (
           <Stack.Screen name="SignIn" component={Screens.SignInScreen} />
           )
         }
-      {/** 🔥 Your screens go here */}
-			{/* IGNITE_GENERATOR_ANCHOR_APP_Tabs_SCREENS */}
+			{/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )
 })

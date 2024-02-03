@@ -61,8 +61,8 @@ export const NavTabs = observer(function NavTabs(props: BottomTabBarProps) {
 const $container: ViewStyle = {
   justifyContent: "space-evenly",
   flexDirection: 'row',
-  height: 90,
-  backgroundColor: colors.lightBackground
+  height: 80,
+  backgroundColor: colors.nav
 }
 
 const $menuItem: ViewStyle = {

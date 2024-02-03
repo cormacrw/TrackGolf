@@ -5,45 +5,55 @@ provider:
   region: us-east-1
   stage: dev
   runtime: nodejs18.x
+  vpc:
+    securityGroupIds:
+      - sg-0f774410b8254fec1
+    subnetIds:
+      - subnet-06af6aef1760ddddf
   iam:
     role:
       statements:
         - Effect: Allow
           Action:
-            - 'dynamodb:BatchGetItem'
-            - 'dynamodb:BatchWriteItem'
-            - 'dynamodb:DeleteItem'
-            - 'dynamodb:GetItem'
-            - 'dynamodb:PutItem'
-            - 'dynamodb:Query'
-            - 'dynamodb:Scan'
-          Resource: ${ssm:/database/trackut/arn}
-custom:
-  webpack:
-    includeModules: true
+            - '*'
+          Resource: 'arn:aws:rds:us-east-1:767397792113:db:trackut-pg-dev'
 
 plugins:
   - serverless-offline
-  - serverless-webpack
+  - serverless-esbuild
+
+package:
+  patterns:
+    - 'src/generated/client/libquery_engine-rhel-openssl-*'
+    - '!node_modules/@prisma/engines'
+
+custom:
+  esbuild:
+    external:
+      - uuid
+      - zod
+      - superjson
+      - jsonwebtoken
+      - express
+      - aws-jwt-verify
+      - bad-word
+      - winston
+      - '@codegenie/serverless-express'
+      - '@prisma/client'
+      - '.prisma'
 
 functions:
-  graphql_secure:
-    handler: src/lambda/graphql/secure/handler.handle
+  trackut_api:
+    handler: src/lambda/lambda.handle
     timeout: 30
+    environment:
+      DATABASE_URL: "postgresql://cormac:camrocnosmailliw@trackut-pg-dev.cj4oemogm6t9.us-east-1.rds.amazonaws.com:5432/trackut?schema=public"
+      COGNITO_USER_POOL_ID: "us-east-1_F7tcsur3g"
+      COGNITO_CLIENT_ID: "2s3qg2vr014l4avuhknlbbqhn5"
     events:
       - http:
-          path: /s/graphql/
+          path: /api
           method: ANY
       - http:
-          path: /s/graphql/{any+}
-          method: ANY
-  graphql_public:
-    handler: src/lambda/graphql/public/handler.handle
-    timeout: 30
-    events:
-      - http:
-          path: graphql/
-          method: ANY
-      - http:
-          path: graphql/{any+}
+          path: /api/{any+}
           method: ANY

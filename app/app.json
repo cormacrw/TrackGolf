@@ -5,7 +5,7 @@
     "name": "TrackUT",
     "slug": "TrackUT",
     "scheme": "trackut",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon-all.png",
     "splash": {
@@ -21,10 +21,10 @@
       "**/*"
     ],
     "android": {
-      "icon": "./assets/images/icon-all.png",
+      "icon": "./assets/images/icon-512-small.png",
       "package": "com.trackut",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icon-foreground.png",
+        "foregroundImage": "./assets/images/icon-512-small.png",
         "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
       },
       "splash": {
@@ -43,15 +43,6 @@
         "backgroundColor": "#1E1F23"
       }
     },
-    "web": {
-      "favicon": "./assets/images/app-icon-web-favicon.png",
-      "splash": {
-        "image": "./assets/images/splash-logo-web.png",
-        "resizeMode": "contain",
-        "backgroundColor": "#1E1F23"
-      },
-      "bundler": "metro"
-    },
     "plugins": [
       "expo-localization",
       [
@@ -68,6 +59,11 @@
     ],
     "experiments": {
       "tsconfigPaths": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "95b1ee72-16ca-4470-af20-fd9a82dff379"
+      }
     }
   },
   "ignite": {

@@ -20,3 +20,7 @@ Player:
   PK: player:{id}
   SK: metadata:player
 ```
+
+## Test user
+cormac@cormac.is
+Test123!@

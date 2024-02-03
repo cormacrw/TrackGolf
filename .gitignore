@@ -1,2 +1,6 @@
 .vscode/
 .DS_Store
+_src/
+node_modules/
+
+ssh/

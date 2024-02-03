@@ -9,8 +9,6 @@ import {
 import { AppStackScreenProps } from "../navigators"
 import { useStores } from 'app/models'
 import { colors, typography } from 'app/theme'
-import { GET_USER_STATS, GetUserStatsResponse } from 'app/services/api/gql/queries/getUserStats'
-import { useQuery } from '@apollo/client'
 
 interface HomeScreenProps extends AppStackScreenProps<"Home"> {}
 
@@ -22,14 +20,14 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
   
   useEffect(() => {
     appStore.setLoading(false)
-    console.log('USERID', userStore.userId)
   }, [])
-  const { loading, data, refetch } = useQuery<GetUserStatsResponse>(GET_USER_STATS, { variables: { userId: userStore.userId } })
-  const stats = data?.getUserStats
+  // const { loading, data, refetch } = useQuery<GetUserStatsResponse>(GET_USER_STATS, { variables: { userId: userStore.userId } })
+  // const stats = data?.getUserStats
+  const stats = {} as any
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      refetch()
+      // refetch()
     });
 
     return unsubscribe;
@@ -45,7 +43,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
 
   
   return (
-    <Screen style={$container} loading={loading} preset="fixed">
+    <Screen style={$container} preset="fixed">
       <Text style={$heading}>Dashboard</Text>
       <ScrollView>
         <RecentFormCard results={['W', 'W', 'D']} />
@@ -80,8 +78,9 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
 const $heading: TextStyle = {
   color: colors.primary,
   fontFamily: typography.primary.bold,
-  fontSize: 22,
-  marginBottom: 10
+  fontSize: 28,
+  marginBottom: 10,
+  marginTop: 15
 }
 
 const $container: ViewStyle = {

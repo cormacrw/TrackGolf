@@ -1,3 +1,3 @@
-variable "DB_TABLE_NAME" {
-  default = "TrackUTTAble"
-}
+# variable "DB_TABLE_NAME" {
+#   default = "TrackUTTAble"
+# }

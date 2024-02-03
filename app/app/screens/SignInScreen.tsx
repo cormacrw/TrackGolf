@@ -4,11 +4,8 @@ import { View, ViewStyle } from 'react-native'
 import { AppStackScreenProps } from 'app/navigators'
 import { Button, Screen, Text } from 'app/components'
 import { colors } from 'app/theme'
-import { getCurrentUser, signInWithRedirect, fetchUserAttributes } from "aws-amplify/auth"
+import { getCurrentUser, signInWithRedirect, fetchUserAttributes, fetchAuthSession } from "aws-amplify/auth"
 import { Hub } from "@aws-amplify/core";
-import { useMutation } from '@apollo/client'
-import { SIGN_IN_GOOGLE_USER, SignInGoogleUserResponse } from '../services/api/gql/mutations/signInGoogleUser'
-import { api } from 'app/services/api'
 import { useStores } from 'app/models'
 
 interface SignInScreenProps extends AppStackScreenProps<'SignIn'> {}
@@ -16,8 +13,7 @@ interface SignInScreenProps extends AppStackScreenProps<'SignIn'> {}
 export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScreen(props) {
   // Pull in one of our MST stores
   const { authStore, userStore, appStore } = useStores()
-  const [signInGoogleUser] = useMutation<SignInGoogleUserResponse>(SIGN_IN_GOOGLE_USER, { client: api.clientInst })
-
+  
   // Pull in navigation via hook
   // const navigation = useNavigation()
   useEffect(() => {
@@ -36,8 +32,9 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
           break;
       }
     });
+    appStore.setLoading(false)
 
-    // signIn();
+    signIn();
 
     return unsubscribe;
   }, []);
@@ -45,21 +42,12 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
   const signIn = async (): Promise<void> => {
     try {
       appStore.setLoading(true)
-      const cognitoUser = await getCurrentUser()
-      const attr = await fetchUserAttributes()
-      const { data, errors } = await signInGoogleUser({variables: {email: attr.email, googleId: cognitoUser.username}})
+      const session = await fetchAuthSession()
 
-      if (errors && errors.length) {
-        console.error(errors)
-      }
-
-      if (data) {
-        authStore.setTokens(data.signInGoogleUser.auth.accessToken, data.signInGoogleUser.auth.refreshToken)
-        userStore.setUser(data.signInGoogleUser.user)
-        appStore.setLoading(false)
+      if (session.tokens?.idToken) {
         authStore.login()
       }
-      // setUser(currentUser);
+
     } catch (error) {
       console.log(error);
       console.log("Not signed in");
@@ -74,7 +62,7 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
         <Button
           text="Sign in with Google"
           textStyle={{color: colors.textDim}}
-          onPress={() => signInWithRedirect({ provider: 'Google' })}
+          onPress={() => signInWithRedirect()}
           style={{marginTop: 10}}
         />
       </View>

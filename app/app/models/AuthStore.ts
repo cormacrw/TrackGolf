@@ -1,5 +1,6 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/withSetPropAction"
+import { api } from 'app/services/api/api'
 /**
  * Model description here for TypeScript hints.
  */
@@ -13,12 +14,9 @@ export const AuthStoreModel = types
   .actions(withSetPropAction)
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({
-    setTokens (accessToken: string, refreshToken: string) {
-      self.accessToken = accessToken
-      self.refreshToken = refreshToken
-    },
-    login () {
-      self.isLoggedIn = true
+    async login () {
+      const user = await api.auth().login()
+      self.isLoggedIn = false
     },
     signout () {
       self.isLoggedIn = false

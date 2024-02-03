@@ -1,17 +1,27 @@
 {
   "compilerOptions": {
-    "preserveConstEnums": true,
+    "outDir": "./build",
+    "rootDir": "src",
+    "baseUrl": "src",
+    "paths": {
+      "@": ["./src"],
+      "~/*": ["./src/*"]
+    },
+    "allowJs": true,
+    "strict": true,
     "strictNullChecks": true,
-    "inlineSources": true,
-    "inlineSourceMap": true,
-    "sourceRoot": "/",
-    "target": "es2017",
-    "outDir": ".build",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "pretty": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "skipLibCheck": true,
     "esModuleInterop": true,
-    "lib": ["es2017"],
-    "rootDir": "./src",
-    "resolveJsonModule": true
-  }
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "target": "ES6",
+    "moduleDetection": "force"
+  }, 
+  "include": ["./src"],
+  "exclude": ["build", "node_modules"],
 }

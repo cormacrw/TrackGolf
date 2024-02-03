@@ -37,7 +37,9 @@ export const SettingsScreen: FC<SettingsScreenProps> = observer(function Setting
 const $heading: TextStyle = {
   color: colors.primary,
   fontFamily: typography.primary.bold,
-  fontSize: 22
+  fontSize: 28,
+  marginBottom: 10,
+  marginTop: 15
 }
 
 const $root: ViewStyle = {
