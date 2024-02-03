@@ -25,11 +25,16 @@ const register = (router: Router) => {
   router.post('/matches', async (req: TypedRequestBody<CreateMatchRequestBody>, res) => {
     const { match } = req.body
 
-    const matches = await prisma.match.create({
+    if (!match) {
+      res.sendStatus(400)
+      return
+    }
+
+    const newMatch = await prisma.match.create({
       data: match
     })
     res.send({
-      matches
+      match: newMatch
     })
   })
 }

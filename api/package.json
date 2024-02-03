@@ -1,11 +1,11 @@
 {
   "name": "trackut-api",
   "version": "0.0.1",
+  "type": "module",
   "scripts": {
-    "deploy": "sls deploy",
-    "dev": "sls offline --verbose",
+    "dev": "nodemon --watch \"src/**\" --ext \"ts,json\" --ignore \"src/**/*.spec.ts\" --exec \"tsx src/index.ts\"",
     "build": "tsc --build --verbose",
-    "push:db": "prisma db push"
+    "db:push": "prisma db push"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
@@ -17,13 +17,10 @@
     "@types/jsonwebtoken": "9.0.5",
     "aws-lambda": "^1.0.7",
     "aws-sdk": "^2.1539.0",
-    "esbuild": "^0.19.12",
     "eslint": "^8.36.0",
+    "nodemon": "^3.0.3",
     "prisma": "^5.9.0",
-    "serverless": "^3.38.0",
-    "serverless-esbuild": "^1.50.2",
-    "serverless-offline": "^13.3.2",
-    "serverless-webpack": "^5.13.0",
+    "tsx": "^4.7.0",
     "typescript": "^5.3.3"
   },
   "dependencies": {
@@ -31,8 +28,10 @@
     "@prisma/client": "^5.9.0",
     "aws-jwt-verify": "^4.0.0",
     "bad-words": "^3.0.4",
+    "date-fns": "^3.3.1",
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
     "jsonwebtoken": "9.0.2",
     "superjson": "^2.2.1",
     "uuid": "^9.0.1",

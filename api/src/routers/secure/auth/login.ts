@@ -9,7 +9,6 @@ import { TypedRequestBody } from 'types/TypedRequestBody'
 const register = (router: Router) => {
   router.post('/login', async (req, res) => {
     const user = await prisma.user.findFirst({ where: { email: res.locals.email }})
-
     if (user) {
       res.send({ user })
     } else {

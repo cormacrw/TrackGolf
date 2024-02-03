@@ -19,8 +19,7 @@
     "esModuleInterop": true,
     "module": "ESNext",
     "moduleResolution": "Node",
-    "target": "ES6",
-    "moduleDetection": "force"
+    "target": "ESNext"
   }, 
   "include": ["./src"],
   "exclude": ["build", "node_modules"],

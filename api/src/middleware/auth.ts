@@ -5,6 +5,14 @@ import logger from 'utils/logger'
 const register = (router: Router) => {
   router.use(async (req, res, next) => {
     logger.info('IN AUTH')
+    if (req.headers['x-api-token'] && req.headers['x-api-token'] === process.env.API_TOKEN) {
+      logger.info('AUTH SUCCESS WITH API TOKEN')
+      res.locals.email = process.env.API_USER_EMAIL
+      next()
+      return
+    }
+
+
     if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer')) {
       res.sendStatus(401)
       return
