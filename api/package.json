@@ -7,7 +7,9 @@
     "build": "tsc --build --verbose",
     "db:push": "prisma db push",
     "db:generate": "prisma generate",
-    "prod": "node --es-module-specifier-resolution=node build/index.js"
+    "start": "prisma generate && node --es-module-specifier-resolution=node build/index.js",
+    "postinstall": "prisma generate",
+    "deploy": "npm run build && eb deploy"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",

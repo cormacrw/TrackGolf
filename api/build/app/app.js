@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import 'express-async-errors';
 import express, { json } from 'express';
 import { errorMiddleware, loggerMiddleware } from '../middleware';
