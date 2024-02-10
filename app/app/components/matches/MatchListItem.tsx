@@ -2,7 +2,8 @@ import * as React from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { colors, typography } from "app/theme"
 import { Text } from "app/components/Text"
-import { Match } from 'app/services/api/gql/secureSchema'
+import { format } from 'date-fns'
+import { Match } from 'app/services/api/controllers/match/matchApi.types'
 
 export interface MatchListItemProps {
   item: Match
@@ -25,6 +26,8 @@ export const MatchListItem = function MatchListItem(props: MatchListItemProps) {
     color = colors.draw
   }
 
+  const date = format(new Date(item.createdAt), 'do MMM yyyy')
+
   const $result: ViewStyle = {
     flexDirection: 'row',
     backgroundColor: color,
@@ -40,7 +43,7 @@ export const MatchListItem = function MatchListItem(props: MatchListItemProps) {
     <View style={$styles}>
       <View>
         <Text style={$text}>{item.type}</Text>
-        <Text style={$subText}>24th Jan 2023</Text>
+        <Text style={$subText}>{date}</Text>
       </View>
       <View style={$resultContainer}>
         <Text style={$scoreText}>{item.userScore} - {item.opponentScore}</Text>
