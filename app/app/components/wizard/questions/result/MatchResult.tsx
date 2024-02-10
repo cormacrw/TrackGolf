@@ -9,18 +9,18 @@ export const MatchResult = observer(function MatchResult () {
   const { wizardStore } = useStores()
 
   const setUserScore = (score: number) => {
-    wizardStore.setProp('userScore', score)
+    wizardStore.wizard.setProp('userScore', score)
   }
 
   const setOpponentScore = (score: number) => {
-    wizardStore.setProp('opponentScore', score)
+    wizardStore.wizard.setProp('opponentScore', score)
   }
   return (
     <View>
       <Text style={$question}>What was the result?</Text>
       <View style={$pickerContainer}>
-        <NumberPicker label="You" value={wizardStore.userScore || 0} onChange={setUserScore} />
-        <NumberPicker label="Opponent" value={wizardStore.opponentScore || 0} onChange={setOpponentScore} />
+        <NumberPicker label="You" value={wizardStore.wizard.userScore || 0} onChange={setUserScore} />
+        <NumberPicker label="Opponent" value={wizardStore.wizard.opponentScore || 0} onChange={setOpponentScore} />
       </View>
     </View>
   )

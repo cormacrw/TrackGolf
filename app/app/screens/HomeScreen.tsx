@@ -9,6 +9,7 @@ import {
 import { AppStackScreenProps } from "../navigators"
 import { useStores } from 'app/models'
 import { colors, typography } from 'app/theme'
+import { getResult } from 'app/utils/match'
 
 interface HomeScreenProps extends AppStackScreenProps<"Home"> {}
 
@@ -16,18 +17,19 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
   const {
     navigation
   } = props
-  const { userStore, appStore } = useStores()
+  const { userStore, appStore, dashboardStore } = useStores()
   
   useEffect(() => {
     appStore.setLoading(false)
   }, [])
-  // const { loading, data, refetch } = useQuery<GetUserStatsResponse>(GET_USER_STATS, { variables: { userId: userStore.userId } })
-  // const stats = data?.getUserStats
-  const stats = {} as any
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      // refetch()
+      dashboardStore.fetchStats(userStore.id)
+      dashboardStore.fetchRecentMatches(userStore.id)
+      if (!userStore.username) {
+        navigation.navigate('Username')
+      }
     });
 
     return unsubscribe;
@@ -38,7 +40,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
       return '0%'
     }
 
-    return Math.round(number * 100) + '%'
+    return Math.round(number) + '%'
   }
 
   
@@ -46,27 +48,27 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
     <Screen style={$container} preset="fixed">
       <Text style={$heading}>Dashboard</Text>
       <ScrollView>
-        <RecentFormCard results={['W', 'W', 'D']} />
+        <RecentFormCard results={dashboardStore.recentMatches.map(m => getResult(m))} />
 
         <View style={[$statCardRow, $mt]}>
-          <StatCard label='Games Tracked' value={stats?.gamesCount || 0} />
-          <StatCard label='Win %' value={toPercent(stats?.winRate)} />
+          <StatCard label='Games Tracked' value={dashboardStore.matchesCount} />
+          <StatCard label='Win %' value={toPercent(0)} />
         </View>
         <View style={$statCardRow}>
-          <StatCard label='Average Possession' value={toPercent(stats?.averagePossession)} />
-          <StatCard label='Rage Quits' value={3} />
+          <StatCard label='Average Possession' value={toPercent(dashboardStore.averageUserPossession)} />
+          <StatCard label='Rage Quits' value={0} />
         </View>
         <View style={$statCardRow}>
-          <StatCard label='Average xG For' value={stats?.averageUserXG || 0} />
-          <StatCard label='Average xG Against' value={stats?.averageOpponentXG || 0} />
+          <StatCard label='Average xG For' value={dashboardStore.averageUserXG} />
+          <StatCard label='Average xG Against' value={dashboardStore.averageOpponentXG} />
         </View>
         <View style={$statCardRow}>
-          <StatCard label='Average Shots For' value={stats?.averageUserShots || 0} />
-          <StatCard label='Average Shots Against' value={stats?.averageOpponentShots || 0} />
+          <StatCard label='Average Shots For' value={dashboardStore.averageUserShots} />
+          <StatCard label='Average Shots Against' value={dashboardStore.averageOpponentShots} />
         </View>
         <View style={$statCardRow}>
-          <StatCard label='Average Goals For' value={stats?.averageUserGoals || 0} />
-          <StatCard label='Average Goals Against' value={stats?.averageOpponentShots || 0} />
+          <StatCard label='Average Goals For' value={dashboardStore.averageUserScore} />
+          <StatCard label='Average Goals Against' value={dashboardStore.averageOpponentScore} />
         </View>
         <View style={$spacer} />
       </ScrollView>

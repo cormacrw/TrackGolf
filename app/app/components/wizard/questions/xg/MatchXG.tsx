@@ -9,18 +9,18 @@ export const MatchXG = observer(function MatchXG () {
   const { wizardStore } = useStores()
 
   const setUserXG = (xg: number) => {
-    wizardStore.setProp('userXG', Math.round(xg * 10) / 10)
+    wizardStore.wizard.setProp('userXG', Math.round(xg * 10) / 10)
   }
 
   const setOpponentXG = (xg: number) => {
-    wizardStore.setProp('opponentXG', Math.round(xg * 10) / 10)
+    wizardStore.wizard.setProp('opponentXG', Math.round(xg * 10) / 10)
   }
   return (
     <View>
       <Text style={$question}>What was the xG?</Text>
       <View style={$pickerContainer}>
-        <NumberPicker label="You" value={wizardStore.userXG || 0} showSmallIncrements onChange={setUserXG} />
-        <NumberPicker label="Opponent" value={wizardStore.opponentXG || 0} showSmallIncrements onChange={setOpponentXG} />
+        <NumberPicker label="You" value={wizardStore.wizard.userXG || 0} showSmallIncrements onChange={setUserXG} />
+        <NumberPicker label="Opponent" value={wizardStore.wizard.opponentXG || 0} showSmallIncrements onChange={setOpponentXG} />
       </View>
     </View>
   )

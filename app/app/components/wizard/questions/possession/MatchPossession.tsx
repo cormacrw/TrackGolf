@@ -9,14 +9,14 @@ export const MatchPossession = observer(function MatchPossession () {
   const { wizardStore } = useStores()
 
   const setPossession = (possession: number) => {
-    wizardStore.setProp('userPossession', possession)
+    wizardStore.wizard.setProp('userPossession', possession)
   }
 
   return (
     <View>
       <Text style={$question}>How much possession did you have?</Text>
       <NumberSlider
-        value={wizardStore.userPossession || 50}
+        value={wizardStore.wizard.userPossession || 50}
         minimumValue={1}
         maximumValue={100}
         step={1}

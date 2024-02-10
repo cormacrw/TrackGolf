@@ -3,11 +3,8 @@ import { observer } from "mobx-react-lite"
 import { ViewStyle, Text, TextStyle } from "react-native"
 import { AppStackScreenProps } from "app/navigators"
 import { Button, Screen } from "app/components"
-import { signOut } from 'aws-amplify/auth'
 import { useStores } from 'app/models'
 import { colors, typography } from 'app/theme'
-// import { useNavigation } from "@react-navigation/native"
-// import { useStores } from "app/models"
 
 interface SettingsScreenProps extends AppStackScreenProps<"Settings"> {}
 
@@ -18,8 +15,7 @@ export const SettingsScreen: FC<SettingsScreenProps> = observer(function Setting
   // Pull in navigation via hook
   // const navigation = useNavigation()
   const _signOut = async () => {
-    await signOut()
-    authStore.signout()
+    await authStore.logout()
   }
 
   return (

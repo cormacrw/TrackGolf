@@ -7,7 +7,6 @@ import steps from './steps'
 import { colors } from 'app/theme'
 import { useStores } from 'app/models'
 import { Progress } from 'app/components/wizard/Progress'
-import { ApolloError, useMutation } from '@apollo/client'
 
 interface WizardScreenProps extends AppStackScreenProps<"Wizard"> {}
 
@@ -40,56 +39,21 @@ export const WizardScreen: FC<WizardScreenProps> = observer(function WizardScree
   const finishWizard = async () => {
     try {
       appStore.setLoading(true)
-      console.log({
-        userId: userStore.userId || '',
-        type: wizardStore.type,
-        userScore: wizardStore.userScore,
-        userPossession: wizardStore.userPossession,
-        userXG: wizardStore.userXG,
-        userShots: wizardStore.userShots,
-        minutes: wizardStore.minutes,
-        userPenalties: wizardStore.userPenalties,
-        opponentScore: wizardStore.opponentScore,
-        opponentXG: wizardStore.opponentXG,
-        opponentShots: wizardStore.opponentShots,
-        opponentPenalties: wizardStore.opponentPenalties,
-        userYellows: wizardStore.userYellows,
-        userReds: wizardStore.userReds,
-      })
-      // const res = await createMatch({variables: {
-      //   userId: userStore.userId || '',
-      //   type: wizardStore.type,
-      //   userScore: wizardStore.userScore,
-      //   userPossession: wizardStore.userPossession,
-      //   userXG: wizardStore.userXG,
-      //   userShots: wizardStore.userShots,
-      //   minutes: wizardStore.minutes,
-      //   userPenalties: wizardStore.userPenalties,
-      //   opponentScore: wizardStore.opponentScore,
-      //   opponentXG: wizardStore.opponentXG,
-      //   opponentShots: wizardStore.opponentShots,
-      //   opponentPenalties: wizardStore.opponentPenalties,
-      //   userYellows: wizardStore.userYellows,
-      //   userReds: wizardStore.userReds,
-      // }})
 
+      await wizardStore.create(userStore.id)
 
-      // console.log(res)
-      
       // reset the wizard
       wizardStore.default()
   
       appStore.setLoading(false)
+      setStep(0)
       navigation.navigate('Home')
     } catch (error) {
       appStore.setLoading(false)
-      if (error instanceof ApolloError) {
-        console.log(error.message)
-      }
     }
   }
 
-  const showNext = steps[step].showNext(wizardStore)
+  const showNext = steps[step].showNext(wizardStore.wizard)
 
   return (
     <Screen contentContainerStyle={$root} preset="fixed" statusBarStyle='light'>

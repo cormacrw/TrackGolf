@@ -17,11 +17,11 @@ export const MatchesScreen: FC<MatchesScreenProps> = observer(function MatchesSc
     navigation
   } = props
   // Pull in one of our MST stores
-  const { userStore } = useStores()
-  const matches = [] as any[]
+  const { userStore, matchStore } = useStores()
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
+      matchStore.fetchMatches(userStore.id)
     });
 
     return unsubscribe;
@@ -32,7 +32,8 @@ export const MatchesScreen: FC<MatchesScreenProps> = observer(function MatchesSc
       <Text style={$heading}>Matches</Text>
       <ScrollView style={$scroll}>
         <FlashList
-          data={matches}
+          data={matchStore.matches}
+          key={matchStore.matches.length}
           renderItem={MatchListItem}
           estimatedItemSize={200}
           ListEmptyComponent={<Text style={$helpText}>Looks like you don't have any matches, add some using the '+' button below!</Text>}

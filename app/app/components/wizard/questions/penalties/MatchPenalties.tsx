@@ -9,18 +9,18 @@ export const MatchPenalties = observer(function MatchPenalties () {
   const { wizardStore } = useStores()
 
   const setUserPenalties = (penalties: number) => {
-    wizardStore.setProp('userPenalties', penalties)
+    wizardStore.wizard.setProp('userPenalties', penalties)
   }
 
   const setOpponentPenalties = (penalties: number) => {
-    wizardStore.setProp('opponentPenalties', penalties)
+    wizardStore.wizard.setProp('opponentPenalties', penalties)
   }
   return (
     <View>
       <Text style={$question}>Were there any penalties?</Text>
       <View style={$pickerContainer}>
-        <NumberPicker label="You" value={wizardStore.userPenalties || 0} onChange={setUserPenalties} />
-        <NumberPicker label="Opponent" value={wizardStore.opponentPenalties || 0} onChange={setOpponentPenalties} />
+        <NumberPicker label="You" value={wizardStore.wizard.userPenalties || 0} onChange={setUserPenalties} />
+        <NumberPicker label="Opponent" value={wizardStore.wizard.opponentPenalties || 0} onChange={setOpponentPenalties} />
       </View>
     </View>
   )

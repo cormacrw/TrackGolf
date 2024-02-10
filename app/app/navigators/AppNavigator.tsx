@@ -11,7 +11,7 @@ import {
 } from "@react-navigation/native"
 import { NativeStackScreenProps, createNativeStackNavigator } from "@react-navigation/native-stack"
 import { observer } from "mobx-react-lite"
-import React from "react"
+import React, { useEffect } from "react"
 import { useColorScheme } from "react-native"
 import * as Screens from "app/screens"
 import Config from "../config"
@@ -41,7 +41,9 @@ export type AppStackParamList = {
 	Wizard: undefined
 	Matches: undefined
 	Follow: undefined
-  TabsNav: undefined
+  TabsNav: {
+    screen: 'Home' | 'Settings' | 'Matches' | 'Follow'
+  }
 	Match: undefined
 	Username: undefined
 	// IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
@@ -82,13 +84,23 @@ const AppTabs = observer(function AppTabs() {
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
 const AppStack = observer(function AppStack() {
-  const { authStore } = useStores()
-  authStore.signout()
-  console.log(authStore.isLoggedIn)
+  const { authStore, userStore } = useStores()
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      const isLoggedIn = await authStore.checkLogin()
+      if (!userStore.id || !isLoggedIn) {
+        authStore.logout()
+      }
+    }
+
+    checkLogin()
+  }, [])
+
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false, animation: 'slide_from_bottom' }}
-      initialRouteName='Username'
+      initialRouteName='Home'
     >
       { authStore.isLoggedIn
       ? (

@@ -9,14 +9,14 @@ export const MatchMinutes = observer(function MatchMinutes () {
   const { wizardStore } = useStores()
 
   const setMinutes = (minutes: number) => {
-    wizardStore.setProp('minutes', minutes)
+    wizardStore.wizard.setProp('minutes', minutes)
   }
 
   return (
     <View>
       <Text style={$question}>How many minutes did you play?</Text>
       <NumberSlider
-        value={wizardStore.minutes || 90}
+        value={wizardStore.wizard.minutes || 90}
         minimumValue={1}
         maximumValue={120}
         step={1}

@@ -5,7 +5,7 @@
     "name": "TrackUT",
     "slug": "TrackUT",
     "scheme": "trackut",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "orientation": "portrait",
     "icon": "./assets/images/icon-all.png",
     "splash": {

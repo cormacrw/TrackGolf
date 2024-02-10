@@ -17,6 +17,7 @@ import MatchAPI from './controllers/match/matchApi'
 import UserAPI from './controllers/user/userApi'
 import AuthAPI from './controllers/auth/authApi'
 import { fetchAuthSession } from 'aws-amplify/auth'
+import { AuthStore, useStores } from 'app/models'
 
 /**
  * Configuring the apisauce instance.
@@ -33,6 +34,7 @@ export const DEFAULT_API_CONFIG: ApiConfig = {
 export class Api {
   apisauce: ApisauceInstance
   config: ApiConfig
+  authStore?: AuthStore
   matchApi: MatchAPI
   userApi: UserAPI
   authApi: AuthAPI
@@ -47,13 +49,16 @@ export class Api {
       timeout: this.config.timeout,
       headers: {
         Accept: "application/json",
-      },
-
+      }
     })
 
     this.userApi = new UserAPI(this)
     this.matchApi = new MatchAPI(this)
     this.authApi = new AuthAPI(this)
+  }
+
+  setAuthStore (authStore: AuthStore) {
+    this.authStore = authStore
   }
 
   async setToken () {
@@ -65,7 +70,9 @@ export class Api {
         throw new Error()
       }
     } catch (error) {
-      
+      if (this.authStore) {
+        this.authStore.logout()
+      }
     }
   }
 
@@ -83,4 +90,4 @@ export class Api {
 }
 
 // Singleton instance of the API for convenience
-export const api = new Api()
+export const api = new Api(DEFAULT_API_CONFIG)

@@ -38,6 +38,9 @@ export const RecentFormCard = observer(function RecentFormCard(props: RecentForm
     <View style={$container}>
       <Text style={$text}>Recent Form</Text>
       <View style={$resultContainer}>
+        {results?.length === 0 &&
+          <Text style={$hint}>You don't have any matches logged yet! Press the '+' button below to get started!</Text>
+        }
         {results?.map((r, i) => (
           <View style={$result(r)} key={i}>
             <Text style={$resultText}>{r}</Text>
@@ -66,6 +69,15 @@ const $text: TextStyle = {
   lineHeight: 18,
   color: colors.text,
   marginBottom: 5
+}
+
+const $hint: TextStyle = {
+  fontFamily: typography.primary.normal,
+  fontSize: 12,
+  lineHeight: 18,
+  color: colors.text,
+  marginBottom: 5,
+  textAlign: 'center'
 }
 
 const $resultText: TextStyle = {

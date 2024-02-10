@@ -5,7 +5,7 @@ import { AppStackScreenProps } from "app/navigators"
 import { Button, Screen, Text, TextField } from "app/components"
 import { useStores } from 'app/models'
 import { colors, typography } from 'app/theme'
-import { fetchAuthSession } from 'aws-amplify/auth'
+import { USERNAME_MESSAGE_MAP } from 'app/services/api/controllers/user/userApi.types'
 
 interface UsernameScreenProps extends AppStackScreenProps<"Username"> {}
 
@@ -14,29 +14,35 @@ export const UsernameScreen: FC<UsernameScreenProps> = observer(function Usernam
     navigation
   } = props
 
-  const { userStore } = useStores()
-  const [username, setUsername] = useState('test')
+  const { userStore, appStore } = useStores()
+  const [username, setUsername] = useState('cormacrw')
+  const [errorMsg, setErrorMsg] = useState('')
 
   useEffect(() => {
+    appStore.setLoading(false)
     if ( userStore.username ) {
-      navigation.navigate('Home')
+      navigation.navigate('TabsNav', { screen: 'Home' })
     }
   }, [])
 
-  const ee = async () => {
-    const r = await fetchAuthSession()
-    console.log(r.tokens?.idToken?.toString())
-  }
+  const submit = async () => {
+    const response = await userStore.setUsername(username)
 
-  ee()
+    if (!response?.success) {
+      if (response?.message) {
+        setErrorMsg(USERNAME_MESSAGE_MAP[response.message])
+      }
+      return
+    }
 
-  const submit = () => {
-
+    setErrorMsg('')
+    navigation.navigate('TabsNav', { screen: 'Home' })
   }
 
   return (
     <Screen style={$root} preset="fixed">
       <Text style={$question}>Pick a username</Text>
+      <Text style={$error}>{errorMsg}</Text>
       <TextField
         containerStyle={$inputContainer}
         inputWrapperStyle={$inputWrapperStyle}
@@ -65,6 +71,16 @@ const $question: TextStyle = {
   fontFamily: typography.primary.bold,
   marginBottom: 10
 }
+
+const $error: TextStyle = {
+  color: colors.error,
+  textAlign: 'center',
+  fontSize: 12,
+  fontWeight: 'bold',
+  fontFamily: typography.primary.bold,
+  marginBottom: 10
+}
+
 
 const $root: ViewStyle = {
   flex: 1,

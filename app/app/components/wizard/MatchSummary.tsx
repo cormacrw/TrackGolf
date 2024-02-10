@@ -8,23 +8,25 @@ import { SummaryItem } from './SummaryItem'
 export const MatchSummary = observer(function MatchSummary () {
   const { wizardStore } = useStores()
 
+  const { wizard } = wizardStore
+
   return (
     <View style={$container}>
       <Text style={$question}>Summary</Text>
       <ScrollView>
-        <SummaryItem label="Match Type" value={wizardStore.type} />
-        <SummaryItem label="Goals Scored" value={wizardStore.userScore} />
-        <SummaryItem label="Goals Conceded" value={wizardStore.opponentScore} />
-        <SummaryItem label="Minutes Played" value={wizardStore.minutes} />
-        <SummaryItem label="Possession" value={wizardStore.userPossession} />
-        <SummaryItem label="Shots For" value={wizardStore.userShots} />
-        <SummaryItem label="Shots Against" value={wizardStore.opponentShots} />
-        <SummaryItem label="xG For" value={wizardStore.userXG} />
-        <SummaryItem label="xG Against" value={wizardStore.opponentXG} />
-        <SummaryItem label="Penalties For" value={wizardStore.userPenalties} />
-        <SummaryItem label="Penalties Against" value={wizardStore.opponentPenalties} />
-        <SummaryItem label="Yellow Cards" value={wizardStore.userYellows} />
-        <SummaryItem label="Red Cards" value={wizardStore.userReds} />
+        <SummaryItem label="Match Type" value={wizard.type} />
+        <SummaryItem label="Goals Scored" value={wizard.userScore} />
+        <SummaryItem label="Goals Conceded" value={wizard.opponentScore} />
+        <SummaryItem label="Minutes Played" value={wizard.minutes} />
+        <SummaryItem label="Possession" value={wizard.userPossession} />
+        <SummaryItem label="Shots For" value={wizard.userShots} />
+        <SummaryItem label="Shots Against" value={wizard.opponentShots} />
+        <SummaryItem label="xG For" value={wizard.userXG} />
+        <SummaryItem label="xG Against" value={wizard.opponentXG} />
+        <SummaryItem label="Penalties For" value={wizard.userPenalties} />
+        <SummaryItem label="Penalties Against" value={wizard.opponentPenalties} />
+        <SummaryItem label="Yellow Cards" value={wizard.userYellows} />
+        <SummaryItem label="Red Cards" value={wizard.userReds} />
       </ScrollView>
     </View>
   )

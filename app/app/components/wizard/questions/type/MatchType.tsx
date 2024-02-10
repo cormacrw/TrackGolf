@@ -16,7 +16,7 @@ export const MatchType = observer(function MatchType () {
   const { wizardStore } = useStores()
 
   const setType = (type: string) => {
-    wizardStore.setProp('type', type)
+    wizardStore.wizard.setProp('type', type)
   }
 
   return (
@@ -28,7 +28,7 @@ export const MatchType = observer(function MatchType () {
             label={t}
             key={t}
             onPress={() => setType(t)}
-            active={t === wizardStore.type}
+            active={t === wizardStore.wizard.type}
           />
         ))}
       </View>
