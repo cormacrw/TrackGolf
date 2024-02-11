@@ -86,7 +86,7 @@ const $root: ViewStyle = {
 }
 
 const $button: ViewStyle = {
-  width: 150,
+  width: '40%',
   height: 50
 }
 

@@ -4,11 +4,8 @@ import { TextStyle, ViewStyle, Text, ScrollView } from "react-native"
 import { AppStackScreenProps } from "app/navigators"
 import { MatchListItem, Screen } from "app/components"
 import { colors, typography } from 'app/theme'
-import { useQuery } from '@apollo/client'
-import { useStores } from 'app/models'
+import { MatchItem, useStores } from 'app/models'
 import { FlashList } from '@shopify/flash-list'
-// import { useNavigation } from "@react-navigation/native"
-// import { useStores } from "app/models"
 
 interface MatchesScreenProps extends AppStackScreenProps<"Matches"> {}
 
@@ -16,7 +13,7 @@ export const MatchesScreen: FC<MatchesScreenProps> = observer(function MatchesSc
   const {
     navigation
   } = props
-  // Pull in one of our MST stores
+
   const { userStore, matchStore } = useStores()
 
   useEffect(() => {
@@ -27,6 +24,11 @@ export const MatchesScreen: FC<MatchesScreenProps> = observer(function MatchesSc
     return unsubscribe;
   }, [navigation])
 
+  const onItemPress = (item: MatchItem) => {
+    matchStore.setCurrentMatch(item)
+    navigation.navigate('Match')
+  }
+
   return (
     <Screen style={$root} preset="fixed">
       <Text style={$heading}>Matches</Text>
@@ -34,7 +36,7 @@ export const MatchesScreen: FC<MatchesScreenProps> = observer(function MatchesSc
         <FlashList
           data={matchStore.matches}
           key={matchStore.matches.length}
-          renderItem={MatchListItem}
+          renderItem={(props) => <MatchListItem item={props.item as MatchItem} onPress={onItemPress} />}
           estimatedItemSize={200}
           ListEmptyComponent={<Text style={$helpText}>Looks like you don't have any matches, add some using the '+' button below!</Text>}
         />

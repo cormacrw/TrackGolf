@@ -1,10 +1,10 @@
-import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
+import { Instance, SnapshotIn, SnapshotOut, applySnapshot, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/withSetPropAction"
 import { api } from 'app/services/api/api'
 
 
 export const MatchModel = types.model({
-  id: types.string,
+  id: types.identifier,
   userId: types.string,
   createdAt: types.string,
   updatedAt: types.string,
@@ -13,6 +13,7 @@ export const MatchModel = types.model({
   userXG: types.maybe(types.number),
   userShots: types.maybe(types.number),
   userPenalties: types.maybe(types.number),
+  userPossession: types.maybe(types.number),
   opponentScore: types.maybe(types.number),
   opponentXG: types.maybe(types.number),
   opponentShots: types.maybe(types.number),
@@ -31,7 +32,17 @@ export interface MatchItem extends Instance<typeof MatchModel> {}
 export const MatchStoreModel = types
   .model("MatchStore")
   .props({
-    matches: types.array(MatchModel)
+    matches: types.array(MatchModel),
+    currentMatch: types.maybe(types.reference(MatchModel, {
+      // given an identifier, find the user
+      get(identifier, parent) {
+        return parent?.matches.find((m: MatchItem) => m.id === identifier) || null
+      },
+      // given a user, produce the identifier that should be stored
+      set(value) {
+          return value.id
+      }
+  }))
   })
   .actions(withSetPropAction)
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -40,6 +51,9 @@ export const MatchStoreModel = types
       const response = await api.user().fetchMatches(userId, 0, 10000)
 
       self.setProp('matches', response?.matches as any)
+    },
+    setCurrentMatch (match: MatchItem) {
+      self.currentMatch = match
     }
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 

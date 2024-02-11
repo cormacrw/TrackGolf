@@ -1,12 +1,13 @@
 import * as React from "react"
-import { TextStyle, View, ViewStyle } from "react-native"
+import { Pressable, TextStyle, View, ViewStyle } from "react-native"
 import { colors, typography } from "app/theme"
 import { Text } from "app/components/Text"
 import { format } from 'date-fns'
-import { Match } from 'app/services/api/controllers/match/matchApi.types'
+import { MatchItem, useStores } from 'app/models'
 
 export interface MatchListItemProps {
-  item: Match
+  item: MatchItem
+  onPress: (item: MatchItem) => void
 }
 
 /**
@@ -15,6 +16,7 @@ export interface MatchListItemProps {
 export const MatchListItem = function MatchListItem(props: MatchListItemProps) {
   const { item } = props
   const $styles = [$container]
+  // const { matchStore } = useStores()
 
   let result = 'W'
   let color: string = colors.win
@@ -40,18 +42,20 @@ export const MatchListItem = function MatchListItem(props: MatchListItemProps) {
   }
 
   return (
-    <View style={$styles}>
-      <View>
-        <Text style={$text}>{item.type}</Text>
-        <Text style={$subText}>{date}</Text>
-      </View>
-      <View style={$resultContainer}>
-        <Text style={$scoreText}>{item.userScore} - {item.opponentScore}</Text>
-        <View style={$result}>
-          <Text style={$resultText}>{result}</Text>
+    <Pressable onPress={() => props.onPress(item)}>
+      <View style={$styles}>
+        <View>
+          <Text style={$text}>{item.type}</Text>
+          <Text style={$subText}>{date}</Text>
+        </View>
+        <View style={$resultContainer}>
+          <Text style={$scoreText}>{item.userScore} - {item.opponentScore}</Text>
+          <View style={$result}>
+            <Text style={$resultText}>{result}</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </Pressable>
   )
 }
 
@@ -73,7 +77,7 @@ const $resultContainer: ViewStyle = {
 const $resultText: TextStyle = {
   fontFamily: typography.primary.bold,
   fontSize: 14,
-  color: colors.text,
+  color: colors.darkBackground,
 }
 
 const $scoreText: TextStyle = {

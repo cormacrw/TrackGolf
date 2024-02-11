@@ -43,12 +43,47 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
     return Math.round(number) + '%'
   }
 
-  
+  const roundNumber = (number?: number | null) => {
+    if (!number) {
+      return '0'
+    }
+
+    return Math.round(number * 100) / 100
+  }
+
+  const results = [
+    {
+      name: "Wins",
+      population: 10,
+      color: colors.primary,
+      legendFontColor: colors.text,
+      legendFontSize: 18
+    },
+    {
+      name: "Draws",
+      population: 4,
+      color: '#fcba03',
+      legendFontColor: colors.text,
+      legendFontSize: 18
+    },
+    {
+      name: "Losses",
+      population: 6,
+      color: colors.error,
+      legendFontColor: colors.text,
+      legendFontSize: 18
+    }
+  ]
+  const labels = ['Wins', 'Draws', 'Losses']
+
   return (
     <Screen style={$container} preset="fixed">
       <Text style={$heading}>Dashboard</Text>
       <ScrollView>
         <RecentFormCard results={dashboardStore.recentMatches.map(m => getResult(m))} />
+
+        <View>
+        </View>
 
         <View style={[$statCardRow, $mt]}>
           <StatCard label='Games Tracked' value={dashboardStore.matchesCount} />
@@ -59,16 +94,16 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
           <StatCard label='Rage Quits' value={0} />
         </View>
         <View style={$statCardRow}>
-          <StatCard label='Average xG For' value={dashboardStore.averageUserXG} />
-          <StatCard label='Average xG Against' value={dashboardStore.averageOpponentXG} />
+          <StatCard label='Average xG For' value={roundNumber(dashboardStore.averageUserXG)} />
+          <StatCard label='Average xG Against' value={roundNumber(dashboardStore.averageOpponentXG)} />
         </View>
         <View style={$statCardRow}>
-          <StatCard label='Average Shots For' value={dashboardStore.averageUserShots} />
-          <StatCard label='Average Shots Against' value={dashboardStore.averageOpponentShots} />
+          <StatCard label='Average Shots For' value={roundNumber(dashboardStore.averageUserShots)} />
+          <StatCard label='Average Shots Against' value={roundNumber(dashboardStore.averageOpponentShots)} />
         </View>
         <View style={$statCardRow}>
-          <StatCard label='Average Goals For' value={dashboardStore.averageUserScore} />
-          <StatCard label='Average Goals Against' value={dashboardStore.averageOpponentScore} />
+          <StatCard label='Average Goals For' value={roundNumber(dashboardStore.averageUserScore)} />
+          <StatCard label='Average Goals Against' value={roundNumber(dashboardStore.averageOpponentScore)} />
         </View>
         <View style={$spacer} />
       </ScrollView>
