@@ -15,7 +15,7 @@ export const UsernameScreen: FC<UsernameScreenProps> = observer(function Usernam
   } = props
 
   const { userStore, appStore } = useStores()
-  const [username, setUsername] = useState('cormacrw')
+  const [username, setUsername] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
 
   useEffect(() => {

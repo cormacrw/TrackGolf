@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React, { FC, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { Pressable, PressableStateCallbackType, TextStyle, View, ViewStyle } from "react-native"
 import { AppStackScreenProps } from "app/navigators"
@@ -8,6 +8,7 @@ import { colors, typography } from 'app/theme'
 import { MatchStatBar } from 'app/components/matches/MatchStatBar'
 import { format } from 'date-fns'
 import Icon from 'react-native-vector-icons/Feather'
+import { DeleteModal } from 'app/components/DeleteModal'
 
 interface MatchScreenProps extends AppStackScreenProps<"Match"> {}
 
@@ -15,12 +16,12 @@ interface MatchScreenProps extends AppStackScreenProps<"Match"> {}
  * Screen to display matches and allow for deletion
  */
 export const MatchScreen: FC<MatchScreenProps> = observer(function MatchScreen(props: MatchScreenProps) {
-  // const {
-  //   navigation
-  // } = props
+  const {
+    navigation
+  } = props
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   
-  // Pull in one of our MST stores
-  const { matchStore } = useStores()
+  const { matchStore, appStore } = useStores()
 
   const notes = ''
 
@@ -30,15 +31,19 @@ export const MatchScreen: FC<MatchScreenProps> = observer(function MatchScreen(p
     ]
   }
 
-  const deleteMatch = () => {
-
+  const deleteItem = async () => {
+    setShowDeleteConfirm(false)
+    if (matchStore.currentMatch?.id) {
+      await matchStore.deleteMatch(matchStore.currentMatch.id)
+      navigation.navigate('Matches')
+    }
   }
 
   return (
     <Screen style={$root} preset="scroll">
       <View style={$back}>
         <BackArrow />
-        <Pressable style={$menu} onPress={deleteMatch}>
+        <Pressable style={$menu} onPress={() => setShowDeleteConfirm(true)}>
           <Icon name="trash" color={colors.error} size={32} />
         </Pressable>
       </View>
@@ -111,6 +116,13 @@ export const MatchScreen: FC<MatchScreenProps> = observer(function MatchScreen(p
           </>
         }
       </View>
+      <DeleteModal
+        show={showDeleteConfirm}
+        title='Delete Match'
+        msg='Are you sure you want to delete this match?'
+        onCancel={() => setShowDeleteConfirm(false)}
+        onConfirm={deleteItem}
+      />
     </Screen>
   )
 })

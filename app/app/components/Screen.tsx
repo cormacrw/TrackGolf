@@ -198,12 +198,16 @@ export const Screen = observer(function Screen(props: ScreenProps) {
     backgroundColor = colors.background,
     KeyboardAvoidingViewProps,
     keyboardOffset = 0,
-    StatusBarProps,
+    StatusBarProps = {},
     statusBarStyle = "light",
     loading
   } = props
 
   const { appStore } = useStores()
+
+  if (appStore.overlay) {
+    StatusBarProps.backgroundColor = '#00000060'
+  }
 
   return (
     <SafeAreaView style={[$containerStyle, { backgroundColor }]}>

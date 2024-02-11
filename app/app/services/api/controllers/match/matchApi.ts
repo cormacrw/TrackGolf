@@ -28,4 +28,16 @@ export default class MatchAPI {
       return undefined
     }
   }
+
+  async delete (matchId: string) {
+    try {
+      await this.api.setToken()
+      const response: ApiResponse<MatchCreateResponse> = await this.api.apisauce.delete('/matches/' + matchId)
+
+      return response.data
+    } catch (error) {
+      console.log(error)
+      return undefined
+    }
+  }
 }

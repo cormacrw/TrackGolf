@@ -7,7 +7,8 @@ import { withSetPropAction } from "./helpers/withSetPropAction"
 export const AppStoreModel = types
   .model("AppStore")
   .props({
-    loading: false
+    loading: false,
+    overlay: true
   })
   .actions(withSetPropAction)
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars

@@ -25,7 +25,6 @@ export const MatchModel = types.model({
 
 export interface MatchItem extends Instance<typeof MatchModel> {}
 
-
 /**
  * Model description here for TypeScript hints.
  */
@@ -54,6 +53,11 @@ export const MatchStoreModel = types
     },
     setCurrentMatch (match: MatchItem) {
       self.currentMatch = match
+    },
+    async deleteMatch (matchId: string) {
+      const response = await api.match().delete(matchId)
+
+      return response
     }
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 
