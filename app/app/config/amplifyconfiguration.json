@@ -5,7 +5,7 @@
   "aws_user_pools_id": "us-east-1_F7tcsur3g",
   "aws_user_pools_web_client_id": "2s3qg2vr014l4avuhknlbbqhn5",
   "oauth": {
-    "domain": "trackut-dev.auth.us-east-1.amazoncognito.com",
+    "domain": "auth.trackut.net",
     "scope": [
       "email",
       "openid"

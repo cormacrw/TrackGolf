@@ -27,8 +27,8 @@ export const AuthStoreModel = types
       return user
     },
     async logout () {
-      self.setProp('isLoggedIn', false)
       await signOut()
+      self.setProp('isLoggedIn', false)
     },
     async checkLogin () {
       try {
