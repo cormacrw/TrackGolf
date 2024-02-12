@@ -69,6 +69,7 @@ export const colors = {
    * The default text color in many components.
    */
   text: palette.white,
+  placeholder: '#DDDDDD',
   /**
    * Secondary text information.
    */

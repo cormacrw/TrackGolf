@@ -46,6 +46,7 @@ export type AppStackParamList = {
   }
 	Match: undefined
 	Username: undefined
+	SearchUser: undefined
 	// IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
 
@@ -109,6 +110,7 @@ const AppStack = observer(function AppStack() {
           <Stack.Screen name="Wizard" component={Screens.WizardScreen} />
           <Stack.Screen name="Match" component={Screens.MatchScreen} />
           <Stack.Screen name="Username" component={Screens.UsernameScreen} />
+          <Stack.Screen name="SearchUser" component={Screens.SearchUserScreen} />
         </>
         ) : (
           <Stack.Screen name="SignIn" component={Screens.SignInScreen} />

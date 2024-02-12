@@ -43,7 +43,7 @@ export const MatchFilter = observer(function MatchFilter(props: MatchFilterProps
         ))}
         <View style={{ width: 30 }}></View>
       </ScrollView>
-      <Text style={$title}>Timeframe</Text>
+      <Text style={[$title, { marginTop: 10 }]}>Timeframe</Text>
       <ScrollView style={$container} horizontal showsHorizontalScrollIndicator={false}>
         {DATE_FILTERS.map(t => (
           <OptionPill
@@ -70,15 +70,4 @@ const $title: TextStyle = {
   color: colors.text,
   marginLeft: 20,
   marginBottom: 3
-}
-
-
-const $value: TextStyle = {
-  fontFamily: typography.primary.bold,
-  fontSize: 60,
-  lineHeight: 60,
-  color: colors.text,
-  textAlign: 'center',
-  marginTop: 10,
-  letterSpacing: -5
 }

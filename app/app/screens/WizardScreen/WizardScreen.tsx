@@ -1,10 +1,11 @@
 import React, { FC, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { TextStyle, View, ViewStyle } from "react-native"
+import { Pressable, PressableStateCallbackType, Text, TextStyle, View, ViewStyle } from "react-native"
+import Icon from 'react-native-vector-icons/Feather'
 import { AppStackScreenProps } from "app/navigators"
-import { BackArrow, Button, Screen } from "app/components"
+import { Button, Screen } from "app/components"
 import steps from './steps'
-import { colors } from 'app/theme'
+import { colors, typography } from 'app/theme'
 import { useStores } from 'app/models'
 import { Progress } from 'app/components/wizard/Progress'
 
@@ -55,10 +56,19 @@ export const WizardScreen: FC<WizardScreenProps> = observer(function WizardScree
 
   const showNext = steps[step].showNext(wizardStore.wizard)
 
+  function $menu({ pressed }: PressableStateCallbackType) {
+    return [
+      !!pressed && [{opacity: 0.6}]
+    ]
+  }
+
   return (
     <Screen contentContainerStyle={$root} preset="fixed" statusBarStyle='light'>
-      <View style={$back}>
-        <BackArrow />
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 20 }}>
+        <Pressable style={$menu} onPress={() => navigation.goBack()}>
+          <Icon name="arrow-left" size={32} color={colors.text} />
+        </Pressable>
+        <Text style={$heading}>New Match</Text>
       </View>
       <Progress stepCount={steps.length} step={step} />
       <View style={$questionContainer}>
@@ -90,12 +100,6 @@ const $button: ViewStyle = {
   height: 50
 }
 
-const $back: ViewStyle = {
-  marginTop: 10,
-  marginLeft: 30
-}
-
-
 const $buttonNext: ViewStyle = {
   backgroundColor: colors.primary,
   borderColor: colors.primary
@@ -117,4 +121,14 @@ const $navContainer: ViewStyle = {
   justifyContent: 'space-between',
   marginHorizontal: 50,
   height: 100
+}
+
+const $heading: TextStyle = {
+  color: colors.primary,
+  fontFamily: typography.primary.bold,
+  fontSize: 28,
+  lineHeight: 28,
+  marginBottom: 10,
+  marginTop: 15,
+  marginLeft: 10
 }
