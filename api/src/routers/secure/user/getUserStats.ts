@@ -41,11 +41,61 @@ const register = (router: Router) => {
         createdAt: {
           lte: new Date(to as string),
           gte: new Date(from as string)
-        }
+        },
+        ...(type ? { type: type as string } : {})
       }
     })
 
-    res.send({ stats })
+    const rageQuits = await prisma.match.count({
+      where: {
+        userId: req.params.userId,
+        minutes: {
+          lt: 90
+        },
+        createdAt: {
+          lte: new Date(to as string),
+          gte: new Date(from as string)
+        },
+        ...(type ? { type: type as string } : {})
+      }
+    })
+
+    const wins = await prisma.match.count({
+      where: {
+        userId: req.params.userId,
+        userScore: {
+          gt: prisma.match.fields.opponentScore
+        },
+        createdAt: {
+          lte: new Date(to as string),
+          gte: new Date(from as string)
+        },
+        ...(type ? { type: type as string } : {})
+      }
+    })
+
+    const draws = await prisma.match.count({
+      where: {
+        userId: req.params.userId,
+        userScore: {
+          equals: prisma.match.fields.opponentScore
+        },
+        createdAt: {
+          lte: new Date(to as string),
+          gte: new Date(from as string)
+        },
+        ...(type ? { type: type as string } : {})
+      }
+    })
+
+    res.send({
+      stats: {
+        ...stats,
+        rageQuits,
+        wins,
+        draws
+      }
+    })
   })
 }
 
