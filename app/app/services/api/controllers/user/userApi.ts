@@ -21,10 +21,17 @@ export default class UserAPI {
     }
   }
 
-  async fetchStats (userId: string, from: string, to: string): Promise<UserMatchStatsResponse | undefined> {
+  async fetchStats (userId: string, from: string, to: string, type: string): Promise<UserMatchStatsResponse | undefined> {
     try {
       await this.api.setToken()
-      const response: ApiResponse<UserMatchStatsResponse> = await this.api.apisauce.get(`/user/${userId}/stats?from=${from}&to=${to}`, {}, {
+
+      let url = `/user/${userId}/stats?from=${from}&to=${to}`
+
+      if (type !== 'All') {
+        url += `&type=${encodeURI(type)}`
+      }
+
+      const response: ApiResponse<UserMatchStatsResponse> = await this.api.apisauce.get(url, {}, {
         
       })
 

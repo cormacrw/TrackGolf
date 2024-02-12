@@ -2,6 +2,7 @@ import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/withSetPropAction"
 import { api } from 'app/services/api/api'
 import { MatchModel } from './MatchStore'
+import { FilterStoreModel, createFilterStoreDefaultModel } from './FilterStore'
 
 /**
  * Model description here for TypeScript hints.
@@ -10,8 +11,7 @@ export const DashboardStoreModel = types
   .model("DashboardStore")
   .props({
     // FILTERS
-    from: types.string,
-    to: types.string,
+    filters: FilterStoreModel,
     // STATS
     averageMinutes: types.number,
     averageOpponentScore: types.number,
@@ -34,7 +34,7 @@ export const DashboardStoreModel = types
   .actions((self) => ({
     async fetchStats (userId: string) {
       try {
-        const response = await api.user().fetchStats(userId, self.from, self.to)
+        const response = await api.user().fetchStats(userId, self.filters.from, self.filters.to, self.filters.type)
         self.setProp('averageMinutes', response?.stats._avg.minutes || 0)
         self.setProp('averageOpponentScore', response?.stats._avg.opponentScore || 0)
         self.setProp('averageOpponentShots', response?.stats._avg.opponentShots || 0)
@@ -62,8 +62,7 @@ export interface DashboardStore extends Instance<typeof DashboardStoreModel> {}
 export interface DashboardStoreSnapshotOut extends SnapshotOut<typeof DashboardStoreModel> {}
 export interface DashboardStoreSnapshotIn extends SnapshotIn<typeof DashboardStoreModel> {}
 export const createDashboardStoreDefaultModel = () => ({
-  from: '2024-01-01',
-  to: '2024-12-30',
+  filters: createFilterStoreDefaultModel(),
 
   averageMinutes: 0,
   averageOpponentScore: 0,

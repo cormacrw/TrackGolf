@@ -40,15 +40,40 @@ const register = (router) => {
                 userShots: true,
                 opponentShots: true
             },
-            where: {
-                userId: req.params.userId,
-                createdAt: {
+            where: Object.assign({ userId: req.params.userId, createdAt: {
                     lte: new Date(to),
                     gte: new Date(from)
-                }
-            }
+                } }, (type ? { type: type } : {}))
         });
-        res.send({ stats });
+        const rageQuits = yield prisma.match.count({
+            where: Object.assign({ userId: req.params.userId, minutes: {
+                    lt: 90
+                }, createdAt: {
+                    lte: new Date(to),
+                    gte: new Date(from)
+                } }, (type ? { type: type } : {}))
+        });
+        const wins = yield prisma.match.count({
+            where: Object.assign({ userId: req.params.userId, userScore: {
+                    gt: prisma.match.fields.opponentScore
+                }, createdAt: {
+                    lte: new Date(to),
+                    gte: new Date(from)
+                } }, (type ? { type: type } : {}))
+        });
+        const draws = yield prisma.match.count({
+            where: Object.assign({ userId: req.params.userId, userScore: {
+                    equals: prisma.match.fields.opponentScore
+                }, createdAt: {
+                    lte: new Date(to),
+                    gte: new Date(from)
+                } }, (type ? { type: type } : {}))
+        });
+        res.send({
+            stats: Object.assign(Object.assign({}, stats), { rageQuits,
+                wins,
+                draws })
+        });
     }));
 };
 export default { register };

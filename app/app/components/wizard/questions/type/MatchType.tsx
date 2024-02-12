@@ -2,15 +2,8 @@ import { colors, typography } from 'app/theme'
 import React from "react"
 import { Text, TextStyle, View, ViewStyle } from 'react-native'
 import { OptionPill } from './OptionPill'
-import { useStores } from 'app/models'
+import { MATCH_TYPES, useStores } from 'app/models'
 import { observer } from 'mobx-react-lite'
-
-const MATCH_TYPES = [
-  'Champions Qualification',
-  'Champions',
-  'Rivals',
-  'Friendly'
-]
 
 export const MatchType = observer(function MatchType () {
   const { wizardStore } = useStores()

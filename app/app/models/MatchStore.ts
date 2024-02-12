@@ -1,7 +1,6 @@
-import { Instance, SnapshotIn, SnapshotOut, applySnapshot, types } from "mobx-state-tree"
+import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/withSetPropAction"
 import { api } from 'app/services/api/api'
-
 
 export const MatchModel = types.model({
   id: types.identifier,
@@ -65,3 +64,10 @@ export interface MatchStore extends Instance<typeof MatchStoreModel> {}
 export interface MatchStoreSnapshotOut extends SnapshotOut<typeof MatchStoreModel> {}
 export interface MatchStoreSnapshotIn extends SnapshotIn<typeof MatchStoreModel> {}
 export const createMatchStoreDefaultModel = () => types.optional(MatchStoreModel, {})
+
+export const MATCH_TYPES = [
+  'Champions Qualification',
+  'Champions',
+  'Rivals',
+  'Friendly'
+]

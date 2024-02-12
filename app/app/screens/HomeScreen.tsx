@@ -1,15 +1,17 @@
 import { observer } from "mobx-react-lite"
-import React, { FC, useEffect } from "react"
-import { TextStyle, ViewStyle, Text, View, ScrollView } from "react-native"
+import React, { FC, useEffect, useState } from "react"
+import { TextStyle, ViewStyle, Text, View, ScrollView, PressableStateCallbackType, Pressable } from "react-native"
 import {
   RecentFormCard,
   Screen,
   StatCard
 } from "app/components"
+import Icon from 'react-native-vector-icons/Feather'
 import { AppStackScreenProps } from "../navigators"
 import { useStores } from 'app/models'
 import { colors, typography } from 'app/theme'
 import { getResult } from 'app/utils/match'
+import { MatchFilter } from 'app/components/MatchFilter'
 
 interface HomeScreenProps extends AppStackScreenProps<"Home"> {}
 
@@ -18,6 +20,13 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
     navigation
   } = props
   const { userStore, appStore, dashboardStore } = useStores()
+
+  const [showFilter, setShowFilter] = useState(false)
+
+  const fetchData = () => {
+    dashboardStore.fetchStats(userStore.id)
+    dashboardStore.fetchRecentMatches(userStore.id)
+  }
   
   useEffect(() => {
     appStore.setLoading(false)
@@ -25,8 +34,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      dashboardStore.fetchStats(userStore.id)
-      dashboardStore.fetchRecentMatches(userStore.id)
+      fetchData()
       if (!userStore.username) {
         navigation.navigate('Username')
       }
@@ -51,39 +59,30 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
     return Math.round(number * 100) / 100
   }
 
-  const results = [
-    {
-      name: "Wins",
-      population: 10,
-      color: colors.primary,
-      legendFontColor: colors.text,
-      legendFontSize: 18
-    },
-    {
-      name: "Draws",
-      population: 4,
-      color: '#fcba03',
-      legendFontColor: colors.text,
-      legendFontSize: 18
-    },
-    {
-      name: "Losses",
-      population: 6,
-      color: colors.error,
-      legendFontColor: colors.text,
-      legendFontSize: 18
-    }
-  ]
-  const labels = ['Wins', 'Draws', 'Losses']
+  function $menu({ pressed }: PressableStateCallbackType) {
+    return [
+      !!pressed && [{opacity: 0.6}]
+    ]
+  }
+
+  const onFilterChange = () => {
+      fetchData()
+  }
 
   return (
     <Screen style={$container} preset="fixed">
-      <Text style={$heading}>Dashboard</Text>
-      <ScrollView>
-        <RecentFormCard results={dashboardStore.recentMatches.map(m => getResult(m))} />
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 20 }}>
+        <Text style={$heading}>Dashboard</Text>
+        <Pressable style={$menu} onPress={() => setShowFilter(!showFilter)}>
+          <Icon name="filter" size={32} color={colors.primary} />
+        </Pressable>
+      </View>
+      { showFilter &&
+        <MatchFilter filters={dashboardStore.filters} onChange={onFilterChange} />
+      }
+      <ScrollView style={$scrollContainer}>
 
-        <View>
-        </View>
+        <RecentFormCard results={dashboardStore.recentMatches.map(m => getResult(m))} />
 
         <View style={[$statCardRow, $mt]}>
           <StatCard label='Games Tracked' value={dashboardStore.matchesCount} />
@@ -122,6 +121,9 @@ const $heading: TextStyle = {
 
 const $container: ViewStyle = {
   flex: 1,
+}
+
+const $scrollContainer: ViewStyle = {
   paddingHorizontal: 20
 }
 
