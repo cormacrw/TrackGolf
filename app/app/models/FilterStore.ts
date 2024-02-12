@@ -55,6 +55,6 @@ export interface FilterStoreSnapshotIn extends SnapshotIn<typeof FilterStoreMode
 export const createFilterStoreDefaultModel = () => ({
   from: '2000-01-01',
   to: format(new Date(), 'yyyy-MM-dd'),
-  type: 'all',
+  type: 'All',
   timeframe: 'All time'
 })

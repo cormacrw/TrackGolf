@@ -59,6 +59,10 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
     return Math.round(number * 100) / 100
   }
 
+  const calcWinRate = () => {
+    return toPercent((dashboardStore.wins / dashboardStore.matchesCount) * 100)
+  }
+
   function $menu({ pressed }: PressableStateCallbackType) {
     return [
       !!pressed && [{opacity: 0.6}]
@@ -86,11 +90,11 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
 
         <View style={[$statCardRow, $mt]}>
           <StatCard label='Games Tracked' value={dashboardStore.matchesCount} />
-          <StatCard label='Win %' value={toPercent(0)} />
+          <StatCard label='Win %' value={calcWinRate()} />
         </View>
         <View style={$statCardRow}>
           <StatCard label='Average Possession' value={toPercent(dashboardStore.averageUserPossession)} />
-          <StatCard label='Rage Quits' value={0} />
+          <StatCard label='Rage Quits' value={dashboardStore.rageQuits} />
         </View>
         <View style={$statCardRow}>
           <StatCard label='Average xG For' value={roundNumber(dashboardStore.averageUserXG)} />

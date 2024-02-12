@@ -26,6 +26,9 @@ export const DashboardStoreModel = types
     totalOpponentScore: types.number,
     totalUserShots: types.number,
     totalOpponentShots: types.number,
+    wins: types.number,
+    rageQuits: types.number,
+    draws: types.number,
 
     recentMatches: types.array(MatchModel)
   })
@@ -48,6 +51,10 @@ export const DashboardStoreModel = types
         self.setProp('totalOpponentScore', response?.stats._sum.opponentScore || 0)
         self.setProp('totalUserShots', response?.stats._sum.userShots || 0)
         self.setProp('totalOpponentShots', response?.stats._sum.opponentShots || 0)
+        self.setProp('wins', response?.stats.wins || 0)
+        self.setProp('draws', response?.stats.draws || 0)
+        self.setProp('rageQuits', response?.stats.rageQuits || 0)
+
       } catch (error) {
         console.log(error)
       }
@@ -76,5 +83,8 @@ export const createDashboardStoreDefaultModel = () => ({
   totalUserScore: 0,
   totalOpponentScore: 0,
   totalUserShots: 0,
-  totalOpponentShots: 0
+  totalOpponentShots: 0,
+  wins: 0,
+  draws: 0,
+  rageQuits: 0
 })

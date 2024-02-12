@@ -34,6 +34,9 @@ export interface UserMatchStatsResponse {
       userShots: null
       opponentShots: null
     }
+    wins: number
+    rageQuits: number
+    draws: number
   }
 }
 
