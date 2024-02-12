@@ -51,12 +51,12 @@ export const DeleteModal = observer(function DeleteModal(props: DeleteModalProps
         <View style={$modal}>
           <Text style={$header}>{title}</Text>
           <Text style={$body}>{msg}</Text>
-          <View style={{flexDirection: 'row', marginTop: 10}}>
-            <Pressable style={$button} onPress={onConfirm}>
-              <Text style={$confirmBtnText}>Confirm</Text>
-            </Pressable>
+          <View style={{flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10}}>
             <Pressable style={$cancel} onPress={onCancel}>
               <Text style={$btnText}>Cancel</Text>
+            </Pressable>
+            <Pressable style={$button} onPress={onConfirm}>
+              <Text style={$confirmBtnText}>Confirm</Text>
             </Pressable>
           </View>
         </View>
@@ -78,7 +78,7 @@ const $confirmBtn: ViewStyle = {
   backgroundColor: colors.primary,
   padding: 10,
   borderRadius: 5,
-  marginRight: 5
+  marginLeft: 10
 }
 
 
