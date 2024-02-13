@@ -18,7 +18,7 @@ export const MatchesScreen: FC<MatchesScreenProps> = observer(function MatchesSc
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      matchStore.fetchMatches(userStore.id)
+      matchStore.fetchMatches(userStore.user.id)
     });
 
     return unsubscribe;

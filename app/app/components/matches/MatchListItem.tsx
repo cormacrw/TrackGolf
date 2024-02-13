@@ -1,9 +1,9 @@
 import * as React from "react"
-import { Pressable, TextStyle, View, ViewStyle } from "react-native"
+import { Pressable, PressableStateCallbackType, TextStyle, View, ViewStyle } from "react-native"
 import { colors, typography } from "app/theme"
 import { Text } from "app/components/Text"
 import { format } from 'date-fns'
-import { MatchItem, useStores } from 'app/models'
+import { MatchItem } from 'app/models'
 
 export interface MatchListItemProps {
   item: MatchItem
@@ -41,8 +41,14 @@ export const MatchListItem = function MatchListItem(props: MatchListItemProps) {
     marginLeft: 5
   }
 
+  function $menu({ pressed }: PressableStateCallbackType) {
+    return [
+      !!pressed && [{opacity: 0.6}]
+    ]
+  }
+
   return (
-    <Pressable onPress={() => props.onPress(item)}>
+    <Pressable style={$menu} onPress={() => props.onPress(item)}>
       <View style={$styles}>
         <View>
           <Text style={$text}>{item.type}</Text>
@@ -77,7 +83,7 @@ const $resultContainer: ViewStyle = {
 const $resultText: TextStyle = {
   fontFamily: typography.primary.bold,
   fontSize: 14,
-  color: colors.darkBackground,
+  color: colors.text,
 }
 
 const $scoreText: TextStyle = {

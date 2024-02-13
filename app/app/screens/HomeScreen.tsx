@@ -24,8 +24,8 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
   const [showFilter, setShowFilter] = useState(false)
 
   const fetchData = () => {
-    dashboardStore.fetchStats(userStore.id)
-    dashboardStore.fetchRecentMatches(userStore.id)
+    dashboardStore.fetchStats(userStore.user.id)
+    dashboardStore.fetchRecentMatches(userStore.user.id)
   }
   
   useEffect(() => {
@@ -35,7 +35,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       fetchData()
-      if (!userStore.username) {
+      if (!userStore.user.username) {
         navigation.navigate('Username')
       }
     });

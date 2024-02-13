@@ -21,7 +21,7 @@ export const MatchScreen: FC<MatchScreenProps> = observer(function MatchScreen(p
   } = props
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   
-  const { matchStore, appStore } = useStores()
+  const { matchStore } = useStores()
 
   const notes = ''
 

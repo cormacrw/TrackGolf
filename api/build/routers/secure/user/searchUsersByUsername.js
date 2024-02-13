@@ -20,7 +20,7 @@ const register = (router) => {
             res.status(400).send({ message: 'QUERY_TOO_SHORT' });
             return;
         }
-        const matches = yield prisma.user.findMany({
+        const users = yield prisma.user.findMany({
             where: {
                 username: {
                     contains: qry,
@@ -31,7 +31,7 @@ const register = (router) => {
                 createdAt: 'desc'
             }
         });
-        res.send({ matches });
+        res.send({ users });
     }));
 };
 export default { register };

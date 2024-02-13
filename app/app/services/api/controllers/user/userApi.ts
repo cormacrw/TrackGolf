@@ -1,6 +1,6 @@
 import { ApiResponse } from 'apisauce'
 import { Api } from '../../api'
-import { SetUsernameResponse, UserMatchStatsResponse, UserMatchesResponse } from './userApi.types'
+import { SearchUsersResponse, SetUsernameResponse, UserMatchStatsResponse, UserMatchesResponse } from './userApi.types'
 
 export default class UserAPI {
   api: Api
@@ -50,6 +50,22 @@ export default class UserAPI {
     try {
       await this.api.setToken()
       const response: ApiResponse<UserMatchesResponse> = await this.api.apisauce.get(`/user/${userId}/matches?offset=${offset}&limit=${limit}`)
+
+      if (!response.ok) {
+        console.log(response.originalError)
+      }
+
+      return response.data || undefined
+    } catch (error) {
+      console.log(error)
+      return undefined
+    }
+  }
+
+  async findByUsername (username: string): Promise<SearchUsersResponse | undefined> {
+    try {
+      await this.api.setToken()
+      const response: ApiResponse<SearchUsersResponse> = await this.api.apisauce.get(`/users/search?query=${encodeURI(username)}`)
 
       if (!response.ok) {
         console.log(response.originalError)

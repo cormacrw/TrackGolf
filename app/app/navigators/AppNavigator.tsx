@@ -47,6 +47,7 @@ export type AppStackParamList = {
 	Match: undefined
 	Username: undefined
 	SearchUser: undefined
+	UserProfile: undefined
 	// IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
 
@@ -90,7 +91,7 @@ const AppStack = observer(function AppStack() {
   useEffect(() => {
     const checkLogin = async () => {
       const isLoggedIn = await authStore.checkLogin()
-      if (!userStore.id || !isLoggedIn) {
+      if (!userStore.user.id || !isLoggedIn) {
         authStore.logout()
       }
     }
@@ -111,6 +112,7 @@ const AppStack = observer(function AppStack() {
           <Stack.Screen name="Match" component={Screens.MatchScreen} />
           <Stack.Screen name="Username" component={Screens.UsernameScreen} />
           <Stack.Screen name="SearchUser" component={Screens.SearchUserScreen} />
+          <Stack.Screen name="UserProfile" component={Screens.UserProfileScreen} />
         </>
         ) : (
           <Stack.Screen name="SignIn" component={Screens.SignInScreen} />

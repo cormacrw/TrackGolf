@@ -20,7 +20,7 @@ export const UsernameScreen: FC<UsernameScreenProps> = observer(function Usernam
 
   useEffect(() => {
     appStore.setLoading(false)
-    if ( userStore.username ) {
+    if ( userStore.user.username ) {
       navigation.navigate('TabsNav', { screen: 'Home' })
     }
   }, [])

@@ -24,3 +24,5 @@ Player:
 ## Test user
 cormac@cormac.is
 Test123!@
+
+bigal

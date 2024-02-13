@@ -1,10 +1,13 @@
 import React, { FC, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { Pressable, PressableStateCallbackType, Text, TextStyle, View, ViewStyle } from "react-native"
+import { Pressable, PressableStateCallbackType, ScrollView, Text, TextStyle, View, ViewStyle } from "react-native"
 import Icon from 'react-native-vector-icons/Feather'
 import { AppStackScreenProps } from "app/navigators"
 import { Screen, TextField } from "app/components"
 import { colors, typography } from 'app/theme'
+import { UserItem, useStores } from 'app/models'
+import { FlashList } from '@shopify/flash-list'
+import { SearchUserItem } from 'app/components/SearchUserItem'
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "app/models"
 
@@ -17,7 +20,9 @@ export const SearchUserScreen: FC<SearchUserScreenProps> = observer(function Sea
     navigation
   } = props
 
-  const [searchTerm, setSearchTerm] = useState('')
+  const { searchUserStore } = useStores()
+
+  const [searchTerm, setSearchTerm] = useState('bigal')
 
   function $menu({ pressed }: PressableStateCallbackType) {
     return [
@@ -26,16 +31,21 @@ export const SearchUserScreen: FC<SearchUserScreenProps> = observer(function Sea
   }
 
   const searchForUsers = async () => {
+    searchUserStore.search(searchTerm)
   }
 
   useEffect(() => {
-    console.log('search term!!!')
     clearTimeout(timeout)
     timeout = setTimeout(searchForUsers, 500)
   }, [searchTerm])
 
+  const onItemPress = (item: UserItem) => {
+    // matchStore.setCurrentMatch(item)
+    navigation.navigate('UserProfile')
+  }
+
   return (
-    <Screen style={$root} preset="scroll">
+    <Screen style={$root} preset="fixed">
       <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 20 }}>
         <Pressable style={$menu} onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" size={32} color={colors.text} />
@@ -57,9 +67,18 @@ export const SearchUserScreen: FC<SearchUserScreenProps> = observer(function Sea
           maxLength={20}
           id='username'
           autoFocus
-          
         />
       </View>
+      <View style={{height: 1, backgroundColor: colors.darkBackground, marginHorizontal: 20, marginVertical: 10 }}></View>
+      <ScrollView style={{ marginHorizontal: 20, minHeight: 600 }}>
+        <FlashList
+          data={searchUserStore.users}
+          key={searchUserStore.users.length}
+          renderItem={(props) => <SearchUserItem item={props.item as UserItem} onPress={onItemPress} />}
+          estimatedItemSize={200}
+          ListEmptyComponent={<Text style={$helpText}>No users found!</Text>}
+        />
+      </ScrollView>
     </Screen>
   )
 })
@@ -94,7 +113,6 @@ const $inputContainer: ViewStyle = {
 
 const $input: TextStyle = {
   paddingLeft: 5,
-  // height: 40,
   backgroundColor: colors.lightBackground,
   borderColor: colors.lightBackground,
   color: colors.text
@@ -108,4 +126,11 @@ const $inputWrapperStyle: ViewStyle = {
   borderBottomLeftRadius: 0,
   borderTopRightRadius: 8,
   borderBottomRightRadius: 8
+}
+
+const $helpText: TextStyle = {
+  fontFamily: typography.primary.medium,
+  color: colors.text,
+  textAlign: 'center',
+  marginTop: 20
 }

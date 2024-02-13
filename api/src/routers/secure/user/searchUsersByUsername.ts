@@ -17,7 +17,7 @@ const register = (router: Router) => {
       return
     }
 
-    const matches = await prisma.user.findMany({
+    const users = await prisma.user.findMany({
       where: {
         username: {
           contains: qry,
@@ -29,7 +29,7 @@ const register = (router: Router) => {
       }
     })
 
-    res.send({ matches })
+    res.send({ users })
   })
 }
 

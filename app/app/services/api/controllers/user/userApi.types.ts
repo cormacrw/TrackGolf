@@ -1,3 +1,4 @@
+import User from '../../models/user'
 import { Match } from '../match/matchApi.types'
 
 export interface SetUsernameResponse {
@@ -42,4 +43,8 @@ export interface UserMatchStatsResponse {
 
 export interface UserMatchesResponse {
   matches: Match[]
+}
+
+export interface SearchUsersResponse {
+  users: User[]
 }

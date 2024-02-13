@@ -1,4 +1,5 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
+import { SearchUserStoreModel } from "./SearchUserStore"
 import { DashboardStoreModel, createDashboardStoreDefaultModel } from "./DashboardStore"
 import { WizardStoreModel, createWizardStoreDefaultModel } from "./WizardStore"
 import { MatchStoreModel } from "./MatchStore"
@@ -10,6 +11,7 @@ import { AuthStoreModel } from "./AuthStore"
  * A RootStore model.
  */
 export const RootStoreModel = types.model("RootStore").props({
+  searchUserStore: types.optional(SearchUserStoreModel, {} as any),
   dashboardStore: types.optional(DashboardStoreModel, createDashboardStoreDefaultModel()),
   wizardStore: types.optional(WizardStoreModel, createWizardStoreDefaultModel()),
   matchStore: types.optional(MatchStoreModel, {} as any),
