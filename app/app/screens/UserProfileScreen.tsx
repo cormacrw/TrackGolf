@@ -71,16 +71,23 @@ export const UserProfileScreen: FC<UserProfileScreenProps> = observer(function U
           </Pressable> */}
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 15 }}>
-          <Pressable style={$menu}>
-            <View style={$followBtn}>
-              <Text style={$followBtnTxt}>Follow</Text>
-            </View>
-          </Pressable>
-          <Pressable style={$menu}>
-            <View style={$unfollowBtn}>
-              <Text style={$unfollowBtnTxt}>Following</Text>
-            </View>
-          </Pressable>
+          {
+            socialStore.isFollowingUser(socialStore.currentUser?.id || '')
+            ? (
+              <Pressable style={$menu}>
+                <View style={$unfollowBtn}>
+                  <Text style={$unfollowBtnTxt}>Following</Text>
+                </View>
+              </Pressable>
+            ) : (
+              <Pressable style={$menu}>
+                <View style={$followBtn}>
+                  <Text style={$followBtnTxt}>Follow</Text>
+                </View>
+              </Pressable>
+            )
+          }
+          
         </View>
         <ScrollView style={$scrollContainer}>
 

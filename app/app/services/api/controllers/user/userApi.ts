@@ -1,6 +1,6 @@
 import { ApiResponse } from 'apisauce'
 import { Api } from '../../api'
-import { SearchUsersResponse, SetUsernameResponse, UserMatchStatsResponse, UserMatchesResponse } from './userApi.types'
+import { FindUserFollowingResponse, SearchUsersResponse, SetUsernameResponse, UserMatchStatsResponse, UserMatchesResponse } from './userApi.types'
 
 export default class UserAPI {
   api: Api
@@ -67,6 +67,40 @@ export default class UserAPI {
     try {
       await this.api.setToken()
       const response: ApiResponse<SearchUsersResponse> = await this.api.apisauce.get(`/users/search?query=${encodeURI(username)}`)
+
+      if (!response.ok) {
+        console.log(response.originalError)
+      }
+
+      return response.data || undefined
+    } catch (error) {
+      console.log(error)
+      return undefined
+    }
+  }
+
+  async findUserFollowing (userId: string): Promise<FindUserFollowingResponse | undefined> {
+    try {
+      await this.api.setToken()
+      const response: ApiResponse<FindUserFollowingResponse> = await this.api.apisauce.get(`/user/${userId}/following`)
+
+      if (!response.ok) {
+        console.log(response.originalError)
+      }
+
+      return response.data || undefined
+    } catch (error) {
+      console.log(error)
+      return undefined
+    }
+  }
+
+  async followUser (userId: string, userToFollowId: string) {
+    try {
+      await this.api.setToken()
+      const response: ApiResponse<FindUserFollowingResponse> = await this.api.apisauce.post(`/user/${userToFollowId}/follow`, {
+        userId
+      })
 
       if (!response.ok) {
         console.log(response.originalError)

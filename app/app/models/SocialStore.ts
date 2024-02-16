@@ -12,10 +12,11 @@ export const SocialStoreModel = types
   .model("SocialStore")
   .props({
     users: types.array(UserModel),
+    followingUsers: types.array(UserModel),
     currentUser: types.maybe(types.reference(UserModel, {
       // given an identifier, find the user
       get(identifier, parent) {
-        return parent?.users.find((u: UserItem) => u.id === identifier) || null
+        return [...parent?.users, ...parent?.followingUsers].find((u: UserItem) => u.id === identifier) || null
       },
       // given a user, produce the identifier that should be stored
       set(value) {
@@ -27,7 +28,11 @@ export const SocialStoreModel = types
     filters: FilterStoreModel
   })
   .actions(withSetPropAction)
-  .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
+  .views((self) => ({
+    isFollowingUser (userId: string) {
+      return self.followingUsers.findIndex(u => u.id === userId) > -1
+    }
+  })) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({
     clearUsers () {
       self.setProp('users', [])
@@ -53,7 +58,15 @@ export const SocialStoreModel = types
       self.setProp('currentUserRecentMatches', matches?.matches as any)
     },
     async fetchFollowingUsers (userId: string) {
+      const response = await api.user().findUserFollowing(userId)
+      const users = response?.following.map(f => f.followedUser) || []
+      self.setProp('followingUsers', users)
+    },
+    async followUser (userId: string) {
 
+    },
+    async unfollowUser (userId: string) {
+      
     }
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 

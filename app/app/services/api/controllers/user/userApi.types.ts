@@ -30,10 +30,10 @@ export interface UserMatchStatsResponse {
       id: number
     },
     _sum: {
-      userScore: null
-      opponentScore: null
-      userShots: null
-      opponentShots: null
+      userScore: number
+      opponentScore: number
+      userShots: number
+      opponentShots: number
     }
     wins: number
     rageQuits: number
@@ -47,4 +47,25 @@ export interface UserMatchesResponse {
 
 export interface SearchUsersResponse {
   users: User[]
+}
+
+export interface Follow {
+  id: string
+  createdAt: string
+  updatedAt: string
+  userId: string
+  followedUserId: string
+  followedUser: User
+}
+
+export interface FindUserFollowingResponse {
+  following: Follow[]
+}
+
+export interface FollowUserResponse {
+  message: string
+}
+
+export interface UnfollowUserResponse {
+  message: string
 }

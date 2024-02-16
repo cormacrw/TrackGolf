@@ -11,7 +11,7 @@ const register = (router: Router) => {
         createdAt: 'desc'
       },
       include: {
-        user: true
+        followedUser: true
       }
     })
 

@@ -18,7 +18,7 @@ const register = (router) => {
                 createdAt: 'desc'
             },
             include: {
-                user: true
+                followedUser: true
             }
         });
         res.send({ following });
