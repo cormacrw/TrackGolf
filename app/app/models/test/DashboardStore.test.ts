@@ -1,4 +1,4 @@
-import { DashboardStoreModel } from "./DashboardStore"
+import { DashboardStoreModel } from "../DashboardStore"
 
 test("can be created", () => {
   const instance = DashboardStoreModel.create({})

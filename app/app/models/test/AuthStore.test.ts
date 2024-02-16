@@ -1,4 +1,4 @@
-import { AuthStoreModel } from "./AuthStore"
+import { AuthStoreModel } from "../AuthStore"
 
 test("can be created", () => {
   const instance = AuthStoreModel.create({})

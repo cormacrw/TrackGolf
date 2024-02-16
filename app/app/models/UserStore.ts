@@ -20,7 +20,7 @@ export interface UserItem extends Instance<typeof UserModel> {}
 export const UserStoreModel = types
   .model("UserStore")
   .props({
-    user: UserModel
+    user: UserModel,
   })
   .actions(withSetPropAction)
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars

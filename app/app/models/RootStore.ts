@@ -1,4 +1,5 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
+import { SocialStoreModel, createSocialStoreDefaultModel } from "./SocialStore"
 import { SearchUserStoreModel } from "./SearchUserStore"
 import { DashboardStoreModel, createDashboardStoreDefaultModel } from "./DashboardStore"
 import { WizardStoreModel, createWizardStoreDefaultModel } from "./WizardStore"
@@ -11,6 +12,7 @@ import { AuthStoreModel } from "./AuthStore"
  * A RootStore model.
  */
 export const RootStoreModel = types.model("RootStore").props({
+  socialStore: types.optional(SocialStoreModel, createSocialStoreDefaultModel()),
   searchUserStore: types.optional(SearchUserStoreModel, {} as any),
   dashboardStore: types.optional(DashboardStoreModel, createDashboardStoreDefaultModel()),
   wizardStore: types.optional(WizardStoreModel, createWizardStoreDefaultModel()),

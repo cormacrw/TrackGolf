@@ -45,7 +45,7 @@ export interface WizardStoreSnapshotIn extends SnapshotIn<typeof WizardStoreMode
 export const createWizardStoreDefaultModel = () => ({
   wizard: {
     type: '',
-    minutes: 0,
+    minutes: 90,
     userScore: 0,
     userPossession: 50,
     userXG: 0,

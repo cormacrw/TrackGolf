@@ -1,4 +1,4 @@
-import { AppStoreModel } from "./AppStore"
+import { AppStoreModel } from "../AppStore"
 
 test("can be created", () => {
   const instance = AppStoreModel.create({})

@@ -1,4 +1,4 @@
-import { FilterStoreModel } from "./FilterStore"
+import { FilterStoreModel } from "../FilterStore"
 
 test("can be created", () => {
   const instance = FilterStoreModel.create({})

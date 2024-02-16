@@ -1,6 +1,6 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/withSetPropAction"
-import { format, sub } from 'date-fns'
+import { addDays, format, sub,  } from 'date-fns'
 
 export const DATE_FILTERS = [
   'All time',
@@ -45,7 +45,10 @@ export const FilterStoreModel = types
         case 'Past year':
           self.setProp('from', format(sub(new Date(), { years: 1 }), 'yyyy-MM-dd'))
           break
-      } 
+      }
+    },
+    resetTo () {
+      self.setProp('to', format(addDays(new Date(), 2), 'yyyy-MM-dd'))
     }
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 

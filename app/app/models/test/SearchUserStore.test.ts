@@ -1,4 +1,4 @@
-import { SearchUserStoreModel } from "./SearchUserStore"
+import { SearchUserStoreModel } from "../SearchUserStore"
 
 test("can be created", () => {
   const instance = SearchUserStoreModel.create({})

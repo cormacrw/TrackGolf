@@ -1,4 +1,4 @@
-import { WizardStoreModel } from "./WizardStore"
+import { WizardStoreModel } from "../WizardStore"
 
 test("can be created", () => {
   const instance = WizardStoreModel.create({})

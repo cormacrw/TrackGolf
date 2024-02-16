@@ -1,4 +1,4 @@
-import { UserStoreModel } from "./UserStore"
+import { UserStoreModel } from "../UserStore"
 
 test("can be created", () => {
   const instance = UserStoreModel.create({})
