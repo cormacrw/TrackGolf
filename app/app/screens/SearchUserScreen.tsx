@@ -20,7 +20,7 @@ export const SearchUserScreen: FC<SearchUserScreenProps> = observer(function Sea
     navigation
   } = props
 
-  const { searchUserStore } = useStores()
+  const { socialStore } = useStores()
 
   const [searchTerm, setSearchTerm] = useState('bigal')
 
@@ -31,7 +31,7 @@ export const SearchUserScreen: FC<SearchUserScreenProps> = observer(function Sea
   }
 
   const searchForUsers = async () => {
-    searchUserStore.search(searchTerm)
+    socialStore.search(searchTerm)
   }
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export const SearchUserScreen: FC<SearchUserScreenProps> = observer(function Sea
   }, [searchTerm])
 
   const onItemPress = (item: UserItem) => {
-    // matchStore.setCurrentMatch(item)
+    socialStore.setCurrentUser(item)
     navigation.navigate('UserProfile')
   }
 
@@ -72,8 +72,8 @@ export const SearchUserScreen: FC<SearchUserScreenProps> = observer(function Sea
       <View style={{height: 1, backgroundColor: colors.darkBackground, marginHorizontal: 20, marginVertical: 10 }}></View>
       <ScrollView style={{ marginHorizontal: 20, minHeight: 600 }}>
         <FlashList
-          data={searchUserStore.users}
-          key={searchUserStore.users.length}
+          data={socialStore.users}
+          key={socialStore.users.length}
           renderItem={(props) => <SearchUserItem item={props.item as UserItem} onPress={onItemPress} />}
           estimatedItemSize={200}
           ListEmptyComponent={<Text style={$helpText}>No users found!</Text>}

@@ -27,7 +27,7 @@ export const FollowScreen: FC<FollowScreenProps> = observer(function FollowScree
   }
 
   return (
-    <Screen style={$root} preset="scroll">
+    <Screen style={$root} preset="fixed">
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 20 }}>
         <Text style={$heading}>Social Feed</Text>
         <Pressable style={$menu} onPress={() => navigation.navigate('SearchUser')}>

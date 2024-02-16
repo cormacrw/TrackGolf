@@ -12,6 +12,7 @@ import { useStores } from 'app/models'
 import { colors, typography } from 'app/theme'
 import { getResult } from 'app/utils/match'
 import { MatchFilter } from 'app/components/MatchFilter'
+import { roundNumber, toPercent } from 'app/utils/format'
 
 interface HomeScreenProps extends AppStackScreenProps<"Home"> {}
 
@@ -24,6 +25,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
   const [showFilter, setShowFilter] = useState(false)
 
   const fetchData = () => {
+    dashboardStore.filters.resetTo()
     dashboardStore.fetchStats(userStore.user.id)
     dashboardStore.fetchRecentMatches(userStore.user.id)
   }
@@ -43,24 +45,9 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
     return unsubscribe;
   }, [navigation])
 
-  const toPercent = (number?: number | null) => {
-    if (!number) {
-      return '0%'
-    }
-
-    return Math.round(number) + '%'
-  }
-
-  const roundNumber = (number?: number | null) => {
-    if (!number) {
-      return '0'
-    }
-
-    return Math.round(number * 100) / 100
-  }
 
   const calcWinRate = () => {
-    return toPercent((dashboardStore.wins / dashboardStore.matchesCount) * 100)
+    return toPercent((dashboardStore.stats.wins / dashboardStore.stats.matchesCount) * 100)
   }
 
   function $menu({ pressed }: PressableStateCallbackType) {
@@ -89,24 +76,24 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
         <RecentFormCard results={dashboardStore.recentMatches.map(m => getResult(m))} />
 
         <View style={[$statCardRow, $mt]}>
-          <StatCard label='Games Tracked' value={dashboardStore.matchesCount} />
+          <StatCard label='Games Tracked' value={dashboardStore.stats.matchesCount} />
           <StatCard label='Win %' value={calcWinRate()} />
         </View>
         <View style={$statCardRow}>
-          <StatCard label='Average Possession' value={toPercent(dashboardStore.averageUserPossession)} />
-          <StatCard label='Rage Quits' value={dashboardStore.rageQuits} />
+          <StatCard label='Average Possession' value={toPercent(dashboardStore.stats.averageUserPossession)} />
+          <StatCard label='Rage Quits' value={dashboardStore.stats.rageQuits} />
         </View>
         <View style={$statCardRow}>
-          <StatCard label='Average xG For' value={roundNumber(dashboardStore.averageUserXG)} />
-          <StatCard label='Average xG Against' value={roundNumber(dashboardStore.averageOpponentXG)} />
+          <StatCard label='Average xG For' value={roundNumber(dashboardStore.stats.averageUserXG)} />
+          <StatCard label='Average xG Against' value={roundNumber(dashboardStore.stats.averageOpponentXG)} />
         </View>
         <View style={$statCardRow}>
-          <StatCard label='Average Shots For' value={roundNumber(dashboardStore.averageUserShots)} />
-          <StatCard label='Average Shots Against' value={roundNumber(dashboardStore.averageOpponentShots)} />
+          <StatCard label='Average Shots For' value={roundNumber(dashboardStore.stats.averageUserShots)} />
+          <StatCard label='Average Shots Against' value={roundNumber(dashboardStore.stats.averageOpponentShots)} />
         </View>
         <View style={$statCardRow}>
-          <StatCard label='Average Goals For' value={roundNumber(dashboardStore.averageUserScore)} />
-          <StatCard label='Average Goals Against' value={roundNumber(dashboardStore.averageOpponentScore)} />
+          <StatCard label='Average Goals For' value={roundNumber(dashboardStore.stats.averageUserScore)} />
+          <StatCard label='Average Goals Against' value={roundNumber(dashboardStore.stats.averageOpponentScore)} />
         </View>
         <View style={$spacer} />
       </ScrollView>

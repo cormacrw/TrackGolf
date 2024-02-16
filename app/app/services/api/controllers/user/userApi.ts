@@ -31,6 +31,7 @@ export default class UserAPI {
         url += `&type=${encodeURI(type)}`
       }
 
+      console.log(url)
       const response: ApiResponse<UserMatchStatsResponse> = await this.api.apisauce.get(url, {}, {
         
       })

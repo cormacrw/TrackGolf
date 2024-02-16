@@ -41,7 +41,7 @@ export const WizardScreen: FC<WizardScreenProps> = observer(function WizardScree
     try {
       appStore.setLoading(true)
 
-      await wizardStore.create(userStore.id)
+      await wizardStore.create(userStore.user.id)
 
       // reset the wizard
       wizardStore.default()
