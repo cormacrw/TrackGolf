@@ -57,7 +57,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
   }
 
   const onFilterChange = () => {
-      fetchData()
+    fetchData()
   }
 
   return (

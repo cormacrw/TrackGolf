@@ -28,7 +28,7 @@ export const DashboardStoreModel = types
       }
     },
     async fetchRecentMatches (userId: string) {
-      const matches = await api.user().fetchMatches(userId, 0, 5)
+      const matches = await api.user().fetchMatches(userId, 0, 5, self.filters.from, self.filters.to, self.filters.type)
       self.setProp('recentMatches', matches?.matches as any)
     }
   })) // eslint-disable-line @typescript-eslint/no-unused-vars

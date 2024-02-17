@@ -8,13 +8,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { prisma } from '../../../db/client';
+import { isValid } from 'date-fns';
 const register = (router) => {
     router.get('/user/:userId/matches', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        const { limit, offset, sort } = req.query;
+        const { limit, offset, sort, from, to, type } = req.query;
+        if (from && !isValid(new Date(from))) {
+            res.status(400).send({ message: 'INVALID_FROM_DATE' });
+            return;
+        }
+        if (to && !isValid(new Date(to))) {
+            res.status(400).send({ message: 'INVALID_TO_DATE' });
+            return;
+        }
         const matches = yield prisma.match.findMany({
-            where: {
-                userId: req.params.userId
-            },
+            where: Object.assign({ userId: req.params.userId, createdAt: Object.assign(Object.assign({}, (to ? { lte: new Date(to) } : {})), (from ? { gte: new Date(from) } : {})) }, (type ? { type: type } : {})),
             orderBy: {
                 createdAt: 'desc'
             },

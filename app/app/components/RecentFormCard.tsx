@@ -36,7 +36,7 @@ export const RecentFormCard = observer(function RecentFormCard(props: RecentForm
 
   return (
     <View style={$container}>
-      <Text style={$text}>Recent Form</Text>
+      <Text style={$text}>Last 5 Games</Text>
       <View style={$resultContainer}>
         {results?.length === 0 &&
           <Text style={$hint}>You don't have any matches logged yet! Press the '+' button below to get started!</Text>

@@ -1,6 +1,7 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/withSetPropAction"
 import { api } from 'app/services/api/api'
+import { FilterStoreModel, createFilterStoreDefaultModel } from './FilterStore'
 
 export const MatchModel = types.model({
   id: types.identifier,
@@ -31,6 +32,7 @@ export const MatchStoreModel = types
   .model("MatchStore")
   .props({
     matches: types.array(MatchModel),
+    filters: FilterStoreModel,
     currentMatch: types.maybe(types.reference(MatchModel, {
       // given an identifier, find the user
       get(identifier, parent) {
@@ -46,8 +48,8 @@ export const MatchStoreModel = types
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({
     async fetchMatches (userId: string) {
-      const response = await api.user().fetchMatches(userId, 0, 10000)
-
+      const response = await api.user().fetchMatches(userId, 0, 10000, self.filters.from, self.filters.to, self.filters.type)
+      console.log(response)
       self.setProp('matches', response?.matches as any)
     },
     setCurrentMatch (match: MatchItem) {
@@ -63,7 +65,9 @@ export const MatchStoreModel = types
 export interface MatchStore extends Instance<typeof MatchStoreModel> {}
 export interface MatchStoreSnapshotOut extends SnapshotOut<typeof MatchStoreModel> {}
 export interface MatchStoreSnapshotIn extends SnapshotIn<typeof MatchStoreModel> {}
-export const createMatchStoreDefaultModel = () => types.optional(MatchStoreModel, {})
+export const createMatchStoreDefaultModel = () => ({
+  filters: createFilterStoreDefaultModel()
+})
 
 export const MATCH_TYPES = [
   'Champions Qualification',

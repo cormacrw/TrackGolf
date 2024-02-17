@@ -57,11 +57,11 @@ export const FollowScreen: FC<FollowScreenProps> = observer(function FollowScree
       </View>
       <ScrollView style={{ marginHorizontal: 20, minHeight: 600 }}>
         <FlashList
-          data={socialStore.users}
-          key={socialStore.users.length}
+          data={socialStore.followingUsers}
+          key={socialStore.followingUsers.length}
           renderItem={(props) => <SearchUserItem item={props.item as UserItem} onPress={onItemPress} />}
           estimatedItemSize={200}
-          ListEmptyComponent={<Text style={$helpText}>No users found!</Text>}
+          ListEmptyComponent={<Text style={$helpText}>No users found! Press the '+' in the top right to find a user to follow!</Text>}
         />
       </ScrollView>
     </Screen>

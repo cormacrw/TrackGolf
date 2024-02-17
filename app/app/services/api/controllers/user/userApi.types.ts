@@ -64,6 +64,7 @@ export interface FindUserFollowingResponse {
 
 export interface FollowUserResponse {
   message: string
+  follow: Follow
 }
 
 export interface UnfollowUserResponse {

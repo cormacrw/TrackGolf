@@ -18,7 +18,7 @@ export const UserProfileScreen: FC<UserProfileScreenProps> = observer(function U
     navigation
   } = props
 
-  const { socialStore } = useStores()
+  const { socialStore, userStore } = useStores()
 
   const fetchData = () => {
     socialStore.filters.resetTo()
@@ -45,11 +45,17 @@ export const UserProfileScreen: FC<UserProfileScreenProps> = observer(function U
   }, [navigation])
 
   const followUser = async () => {
-
+    const res = await socialStore.followUser(userStore.user.id, socialStore.currentUser?.id || '')
+    if (res) {
+      socialStore.fetchFollowingUsers(userStore.user.id)
+    }
   }
 
   const unfollowUser = async () => {
-
+    const res = await socialStore.unfollowUser(userStore.user.id, socialStore.currentUser?.id || '')
+    if (res) {
+      socialStore.fetchFollowingUsers(userStore.user.id)
+    }
   }
 
   return (
@@ -74,13 +80,13 @@ export const UserProfileScreen: FC<UserProfileScreenProps> = observer(function U
           {
             socialStore.isFollowingUser(socialStore.currentUser?.id || '')
             ? (
-              <Pressable style={$menu}>
+              <Pressable style={$menu} onPress={unfollowUser}>
                 <View style={$unfollowBtn}>
                   <Text style={$unfollowBtnTxt}>Following</Text>
                 </View>
               </Pressable>
             ) : (
-              <Pressable style={$menu}>
+              <Pressable style={$menu} onPress={followUser}>
                 <View style={$followBtn}>
                   <Text style={$followBtnTxt}>Follow</Text>
                 </View>

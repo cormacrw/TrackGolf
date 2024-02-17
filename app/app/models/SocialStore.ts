@@ -54,19 +54,31 @@ export const SocialStoreModel = types
       }
     },
     async fetchRecentMatches (userId: string) {
-      const matches = await api.user().fetchMatches(userId, 0, 5)
+      const matches = await api.user().fetchMatches(userId, 0, 5, self.filters.from, self.filters.to, self.filters.type)
       self.setProp('currentUserRecentMatches', matches?.matches as any)
     },
     async fetchFollowingUsers (userId: string) {
       const response = await api.user().findUserFollowing(userId)
+      console.log(response)
       const users = response?.following.map(f => f.followedUser) || []
+      console.log(users)
       self.setProp('followingUsers', users)
     },
-    async followUser (userId: string) {
+    async followUser (userId: string, userToFollowId: string): Promise<boolean> {
+      const response = await api.user().followUser(userId, userToFollowId)
 
+      if (response?.follow) {
+        return true
+      }
+      return false
     },
-    async unfollowUser (userId: string) {
-      
+    async unfollowUser (userId: string, userToUnfollowId: string) {
+      const response = await api.user().unfollowUser(userId, userToUnfollowId)
+
+      if (response?.message === 'SUCCESS') {
+        return true
+      }
+      return false
     }
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 

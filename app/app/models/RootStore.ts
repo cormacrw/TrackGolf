@@ -3,7 +3,7 @@ import { SocialStoreModel, createSocialStoreDefaultModel } from "./SocialStore"
 import { SearchUserStoreModel } from "./SearchUserStore"
 import { DashboardStoreModel, createDashboardStoreDefaultModel } from "./DashboardStore"
 import { WizardStoreModel, createWizardStoreDefaultModel } from "./WizardStore"
-import { MatchStoreModel } from "./MatchStore"
+import { MatchStoreModel, createMatchStoreDefaultModel } from "./MatchStore"
 import { AppStoreModel } from "./AppStore"
 import { UserStoreModel, createUserStoreDefaultModel } from "./UserStore"
 import { AuthStoreModel } from "./AuthStore"
@@ -16,7 +16,7 @@ export const RootStoreModel = types.model("RootStore").props({
   searchUserStore: types.optional(SearchUserStoreModel, {} as any),
   dashboardStore: types.optional(DashboardStoreModel, createDashboardStoreDefaultModel()),
   wizardStore: types.optional(WizardStoreModel, createWizardStoreDefaultModel()),
-  matchStore: types.optional(MatchStoreModel, {} as any),
+  matchStore: types.optional(MatchStoreModel, createMatchStoreDefaultModel()),
   appStore: types.optional(AppStoreModel, {} as any),
   userStore: types.optional(UserStoreModel, createUserStoreDefaultModel()),
   authStore: types.optional(AuthStoreModel, {} as any),
