@@ -77,12 +77,12 @@ export const WizardScreen: FC<WizardScreenProps> = observer(function WizardScree
       <View style={$navContainer}>
         {
           step > 0
-          ? <Button text="Back" style={$button} textStyle={$buttonText} onPress={backStep} />
+          ? <Button text="Back" style={$button} pressedStyle={{opacity: 0.6}} textStyle={$buttonText} onPress={backStep} />
           : <View style={$button}></View>
         }
         {
           showNext
-          ? <Button text={steps[step].name === 'SUMMARY' ? 'Finish' : 'Next'} style={[$button, $buttonNext]} textStyle={$buttonText} onPress={nextStep} />
+          ? <Button text={steps[step].name === 'SUMMARY' ? 'Finish' : 'Next'} style={[$button, $buttonNext]} pressedStyle={{opacity: 0.6, backgroundColor: colors.primary}} textStyle={$buttonText} onPress={nextStep} />
           : <View style={$button}></View>
         }
       </View>

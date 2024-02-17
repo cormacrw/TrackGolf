@@ -119,7 +119,7 @@ const $scrollContainer: ViewStyle = {
 }
 
 const $spacer: ViewStyle = {
-  height: 50
+  height: 150
 }
 
 const $statCardRow: ViewStyle = {

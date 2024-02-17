@@ -9,11 +9,8 @@ import { colors, typography } from 'app/theme'
 interface SettingsScreenProps extends AppStackScreenProps<"Settings"> {}
 
 export const SettingsScreen: FC<SettingsScreenProps> = observer(function SettingsScreen() {
-  // Pull in one of our MST stores
   const { authStore } = useStores()
 
-  // Pull in navigation via hook
-  // const navigation = useNavigation()
   const _signOut = async () => {
     await authStore.logout()
   }

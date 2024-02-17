@@ -51,7 +51,7 @@ export const MatchesScreen: FC<MatchesScreenProps> = observer(function MatchesSc
   return (
     <Screen style={$root} preset="fixed">
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 20 }}>
-        <Text style={$heading}>Dashboard</Text>
+        <Text style={$heading}>Matches <Text style={{opacity: 0.5}}>{matchStore.matches.length}</Text></Text>
         <Pressable style={$menu} onPress={() => setShowFilter(!showFilter)}>
           <Icon name="filter" size={32} color={colors.primary} />
         </Pressable>
