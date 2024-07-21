@@ -43,7 +43,7 @@ export const NavTabs = observer(function NavTabs(props: BottomTabBarProps) {
         <Icon name="home" size={32} color={isFocused('Home') ? colors.primary : colors.text} />
       </Pressable>
       <Pressable style={$menu} onPress={() => onPress('Matches')}>
-        <Icon name="layers" size={32} color={isFocused('Matches') ? colors.primary : colors.text} />
+        <Icon name="pie-chart" size={32} color={isFocused('Matches') ? colors.primary : colors.text} />
       </Pressable>
       <Pressable style={$new} onPress={() => onPress('Wizard')}>
         <Icon name="plus" size={60} color={colors.darkBackground} />

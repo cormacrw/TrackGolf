@@ -13,6 +13,8 @@ import { colors, typography } from 'app/theme'
 import { getResult } from 'app/utils/match'
 import { MatchFilter } from 'app/components/MatchFilter'
 import { roundNumber, toPercent } from 'app/utils/format'
+import { ChampionsCard } from 'app/components/home/ChampionsCard'
+import { ChampionsQualificationCard } from 'app/components/home/ChampionsQualificationCard'
 
 interface HomeScreenProps extends AppStackScreenProps<"Home"> {}
 
@@ -63,39 +65,14 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen(prop
   return (
     <Screen style={$container} preset="fixed">
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 20 }}>
-        <Text style={$heading}>Dashboard</Text>
-        <Pressable style={$menu} onPress={() => setShowFilter(!showFilter)}>
-          <Icon name="filter" size={32} color={colors.primary} />
-        </Pressable>
+        <Text style={$heading}>Home</Text>
       </View>
       { showFilter &&
         <MatchFilter filters={dashboardStore.filters} onChange={onFilterChange} />
       }
       <ScrollView style={$scrollContainer}>
-
-        <RecentFormCard results={dashboardStore.recentMatches.map(m => getResult(m))} />
-
-        <View style={[$statCardRow, $mt]}>
-          <StatCard label='Games Tracked' value={dashboardStore.stats.matchesCount} />
-          <StatCard label='Win %' value={calcWinRate()} />
-        </View>
-        <View style={$statCardRow}>
-          <StatCard label='Average Possession' value={toPercent(dashboardStore.stats.averageUserPossession)} />
-          <StatCard label='Rage Quits' value={dashboardStore.stats.rageQuits} />
-        </View>
-        <View style={$statCardRow}>
-          <StatCard label='Average xG For' value={roundNumber(dashboardStore.stats.averageUserXG)} />
-          <StatCard label='Average xG Against' value={roundNumber(dashboardStore.stats.averageOpponentXG)} />
-        </View>
-        <View style={$statCardRow}>
-          <StatCard label='Average Shots For' value={roundNumber(dashboardStore.stats.averageUserShots)} />
-          <StatCard label='Average Shots Against' value={roundNumber(dashboardStore.stats.averageOpponentShots)} />
-        </View>
-        <View style={$statCardRow}>
-          <StatCard label='Average Goals For' value={roundNumber(dashboardStore.stats.averageUserScore)} />
-          <StatCard label='Average Goals Against' value={roundNumber(dashboardStore.stats.averageOpponentScore)} />
-        </View>
-        <View style={$spacer} />
+        <ChampionsCard wins={15} losses={10} onPress={navigation.navigate('')} />
+        <ChampionsQualificationCard wins={15} losses={10} />
       </ScrollView>
 
     </Screen>
@@ -115,7 +92,7 @@ const $container: ViewStyle = {
 }
 
 const $scrollContainer: ViewStyle = {
-  paddingHorizontal: 20
+  paddingHorizontal: 20,
 }
 
 const $spacer: ViewStyle = {

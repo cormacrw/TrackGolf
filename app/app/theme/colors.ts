@@ -47,7 +47,7 @@ const palette = {
   tealGreenTransparent: '#00F3AD55',
 
   orange: '#fcba03',
-  winGreen: '#03fc30',
+  winGreen: '#00F30A',
   red: '#fc032d'
 } as const
 
