@@ -1,0 +1,158 @@
+{
+  "uuid": "3c38253b-d271-41c2-9e8b-807ca961d8e9",
+  "lastMigration": 32,
+  "name": "TrackUT",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3001,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "a038cf2c-b4b8-4c76-8957-cf719e734eb5",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "",
+      "responses": [
+        {
+          "uuid": "af082e0d-8935-4bc5-9d6a-3ceac736eb00",
+          "body": "{\n  message: \"success\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "9dad6414-281f-48c4-b114-6c224f81411d",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "matches",
+      "responses": [
+        {
+          "uuid": "17722733-57de-4609-8fb7-3f516f962047",
+          "body": "{\n  \"message\": \"success\",\n  \"matches\": [\n    {{#repeat 5}}\n      {\n        \"matchId\": \"{{faker 'string.uuid'}}\",\n        \"userScore\": {{faker 'number.int' 5}},\n        \"opponentScore\": {{faker 'number.int' 5}},\n        \"type\": \"Champions\",\n        \"createdAt\": \"{{faker 'date.recent' 10}}\"\n      }\n    {{/repeat}}\n    ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "6ab4c6de-49ab-4e2a-b751-16ff68ec6dcd",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "user/stats/recent",
+      "responses": [
+        {
+          "uuid": "ad8d029c-13d3-4502-ac8e-461dac00278a",
+          "body": "{\n  \"wins\": {{faker 'number.int' 10}},\n  \"losses\": {{faker 'number.int' 10}},\n  \"expectedWins\": {{faker 'number.int' 10}},\n  \"extraTimes\": {{faker 'number.int' 10}}\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "a038cf2c-b4b8-4c76-8957-cf719e734eb5"
+    },
+    {
+      "type": "route",
+      "uuid": "9dad6414-281f-48c4-b114-6c224f81411d"
+    },
+    {
+      "type": "route",
+      "uuid": "6ab4c6de-49ab-4e2a-b751-16ff68ec6dcd"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [],
+  "callbacks": []
+}
