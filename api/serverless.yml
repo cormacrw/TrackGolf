@@ -1,0 +1,35 @@
+service: trackut-api
+frameworkVersion: '>= 3.38.0'
+provider:
+  name: aws
+  runtime: provided.al2023
+  region: us-east-1
+  stage: ${opt:stage}
+  iam:
+    role:
+      name: trackut-api-role
+      statements:
+        - Effect: 'Allow'
+          Action:
+            - 'dynamodb:BatchGetItem'
+            - 'dynamodb:DeleteItem'
+            - 'dynamodb:GetItem'
+            - 'dynamodb:BatchWriteItem'
+            - 'dynamodb:UpdateItem'
+            - 'dynamodb:PutItem'
+            - 'dynamodb:Query'
+            - 'dynamodb:Scan'
+          Resource: 'arn:aws:dynamodb:us-east-1:767397792113:table/trackut-ddb-dev'
+
+functions:
+  api:
+    memorySize: 3008
+    timeout: 10
+    handler: bootstrap
+    events:
+      - http:
+          path: /api/v1/{proxy+}
+          method: ANY
+
+package:
+  artifact: deployment.zip
