@@ -1,4 +1,4 @@
-module cormactech/trackut-api
+module cormactech/trackgolf-api
 
 go 1.20
 

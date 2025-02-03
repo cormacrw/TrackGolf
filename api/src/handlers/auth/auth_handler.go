@@ -3,9 +3,9 @@ package auth
 import (
 	"net/http"
 
-	Data "cormactech/trackut-api/src/data"
-	AuthTypes "cormactech/trackut-api/src/types/auth"
-	ModelTypes "cormactech/trackut-api/src/types/models"
+	Data "cormactech/trackgolf-api/src/data"
+	AuthTypes "cormactech/trackgolf-api/src/types/auth"
+	ModelTypes "cormactech/trackgolf-api/src/types/models"
 
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 	"github.com/gin-gonic/gin"
@@ -40,13 +40,13 @@ func SignInHandler(c *gin.Context) {
 		user.UserId = body.UserId
 
 		err = Data.PutItem(client, user)
-		
+
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
 	} else {
-		item, err := Data.GetItem(client, "user:" + body.UserId, "metadata:user")
+		item, err := Data.GetItem(client, "user:"+body.UserId, "metadata:user")
 
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

@@ -1,8 +1,16 @@
-# TrackUT
-App to track match statistics on EAFC 24
+# TrackGolf
+App to track match statistics on PGA 2k25. TGC is great for competitive golf, but the analytics and statistics tracking leaves a lot to be desired. Having the ability to track your progress and see where you could improve would be very helpful.
+
+## MVP Features
+[] Track Rounds
+[] See basic stats
+[] See basic stats over time
+[] Follow friends
+[] Compare stats
+[] Link to TGC
 
 ## App
-The app uses React Native and is deployed on Android and iOS devices.
+The client side is written using Svelte, while the backend uses Go.
 
 ## Database
 
@@ -12,17 +20,8 @@ User:
   PK: user:{id}
   SK: metadata:user
 
-Match:
+Round:
   PK: user:{id}
   SK: match:{id}
 
-Player:
-  PK: player:{id}
-  SK: metadata:player
 ```
-
-## Test user
-cormac@cormac.is
-Test123!@
-
-bigal

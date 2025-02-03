@@ -1,4 +1,4 @@
-service: trackut-api
+service: trackgolf-api
 frameworkVersion: '>= 3.38.0'
 provider:
   name: aws
@@ -7,7 +7,7 @@ provider:
   stage: ${opt:stage}
   iam:
     role:
-      name: trackut-api-role
+      name: trackgolf-api-role
       statements:
         - Effect: 'Allow'
           Action:
@@ -19,7 +19,7 @@ provider:
             - 'dynamodb:PutItem'
             - 'dynamodb:Query'
             - 'dynamodb:Scan'
-          Resource: 'arn:aws:dynamodb:us-east-1:767397792113:table/trackut-ddb-dev'
+          Resource: 'arn:aws:dynamodb:us-east-1:767397792113:table/trackgolf-ddb-dev'
 
 functions:
   api:

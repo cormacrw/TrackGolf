@@ -10,7 +10,7 @@ import (
 )
 
 const AWS_REGION = "us-east-1"
-const TABLE_NAME = "trackut-ddb-dev"
+const TABLE_NAME = "trackgolf-ddb-dev"
 
 func GetDynamoDBClient() (*dynamodb.DynamoDB, error) {
 
@@ -27,7 +27,7 @@ func GetDynamoDBClient() (*dynamodb.DynamoDB, error) {
 	return svc, nil
 }
 
-func GetItem (client *dynamodb.DynamoDB, pk string, sk string) (map[string]*dynamodb.AttributeValue, error) {
+func GetItem(client *dynamodb.DynamoDB, pk string, sk string) (map[string]*dynamodb.AttributeValue, error) {
 
 	result, err := client.GetItem(&dynamodb.GetItemInput{
 		TableName: aws.String(TABLE_NAME),
@@ -45,7 +45,7 @@ func GetItem (client *dynamodb.DynamoDB, pk string, sk string) (map[string]*dyna
 
 }
 
-func PutItem (client *dynamodb.DynamoDB, item interface{}) (error) {
+func PutItem(client *dynamodb.DynamoDB, item interface{}) error {
 	inputItem, err := dynamodbattribute.MarshalMap(item)
 
 	if err != nil {
@@ -54,7 +54,7 @@ func PutItem (client *dynamodb.DynamoDB, item interface{}) (error) {
 
 	_, err = client.PutItem(&dynamodb.PutItemInput{
 		TableName: aws.String(TABLE_NAME),
-		Item: inputItem,
+		Item:      inputItem,
 	})
 
 	if err != nil {

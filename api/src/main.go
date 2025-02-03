@@ -4,13 +4,13 @@ import (
 	"context"
 	"log"
 
+	AuthHandler "cormactech/trackgolf-api/src/handlers/auth"
+	MatchHandler "cormactech/trackgolf-api/src/handlers/match"
+	TestHandler "cormactech/trackgolf-api/src/handlers/test"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	ginadapter "github.com/awslabs/aws-lambda-go-api-proxy/gin"
 	"github.com/gin-gonic/gin"
-	TestHandler "cormactech/trackut-api/src/handlers/test"
-	AuthHandler "cormactech/trackut-api/src/handlers/auth"
-	MatchHandler "cormactech/trackut-api/src/handlers/match"
 )
 
 // AWS gin lambda adapter
@@ -35,26 +35,26 @@ func init() {
 	api.GET("/test", TestHandler.TestHandler)
 
 	matchGroup := secureGroup.Group("/matches")
-	
+
 	matchGroup.GET("/test", MatchHandler.MatchTestHandler)
 
 	authGroup := api.Group("/auth")
 	authGroup.POST("/sign-in", AuthHandler.SignInHandler)
 	authGroup.GET("/test", AuthHandler.AuthTestHandler)
-		// Mapping Player routes to their handlers
+	// Mapping Player routes to their handlers
 
-		// Setup route group for characters
-		//	characters := api.Group("/characters")
-		//characters.GET("/", CharacterRequestsHandler.)
-		// characters.POST("/", CreateCharacterHandler)
-		// characters.PUT("/:id", UpdateCharacterHandler)
-		// characters.DELETE("/:id", DeleteCharacterHandler)
+	// Setup route group for characters
+	//	characters := api.Group("/characters")
+	//characters.GET("/", CharacterRequestsHandler.)
+	// characters.POST("/", CreateCharacterHandler)
+	// characters.PUT("/:id", UpdateCharacterHandler)
+	// characters.DELETE("/:id", DeleteCharacterHandler)
 
-		// Setup routes for episodes
-		// episodes.GET("/:id", EpisodeHandler)
-		// episodes.POST("/", CreateEpisodeHandler)
-		// episodes.PUT("/:id", UpdateEpisodeHandler)
-		// episodes.DELETE("/:id", DeleteEpisodeHandler)
+	// Setup routes for episodes
+	// episodes.GET("/:id", EpisodeHandler)
+	// episodes.POST("/", CreateEpisodeHandler)
+	// episodes.PUT("/:id", UpdateEpisodeHandler)
+	// episodes.DELETE("/:id", DeleteEpisodeHandler)
 	// Start and run the server
 	ginLambda = ginadapter.New(router)
 	//router.Run(":8000")
