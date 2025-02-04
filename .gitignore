@@ -5,3 +5,5 @@ _src/
 node_modules/
 
 ssh/
+
+.env

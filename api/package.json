@@ -21,12 +21,15 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.741.0",
     "cors": "^2.8.5",
+    "dynamoose": "^4.0.3",
     "express": "^4.19.1",
     "express-async-errors": "^3.1.1",
     "helmet": "^7.1.0",
     "serverless-http": "^3.2.0",
-    "supertokens-node": "^21.1.0"
+    "supertokens-node": "^21.1.0",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.2.1",
