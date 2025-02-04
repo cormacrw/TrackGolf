@@ -1,35 +1,49 @@
-service: trackgolf-api
-frameworkVersion: '>= 3.38.0'
+service: track-golf-api
+
+custom:
+  # Our stage is based on what is passed in when running serverless
+  # commands. Or falls back to what we have set in the provider section.
+  stage: ${opt:stage, 'offline'}
+  region: ${opt:region, 'us-east-1'}
+
+  esbuild:
+    platform: "node"
+    target: node18
+    sourcemap: linked
+  serverless-offline:
+    httpPort: 4000
+    noPrependStageInUrl: true
+    reloadHandler: true
+
 provider:
   name: aws
-  runtime: provided.al2023
-  region: us-east-1
-  stage: ${opt:stage}
-  iam:
-    role:
-      name: trackgolf-api-role
-      statements:
-        - Effect: 'Allow'
-          Action:
-            - 'dynamodb:BatchGetItem'
-            - 'dynamodb:DeleteItem'
-            - 'dynamodb:GetItem'
-            - 'dynamodb:BatchWriteItem'
-            - 'dynamodb:UpdateItem'
-            - 'dynamodb:PutItem'
-            - 'dynamodb:Query'
-            - 'dynamodb:Scan'
-          Resource: 'arn:aws:dynamodb:us-east-1:767397792113:table/trackgolf-ddb-dev'
+  stage: ${self:custom.stage}
+  region: ${self:custom.region}
+  runtime: nodejs18.x
+  memorySize: 512
+  timeout: 10
+  logRetentionInDays: 90
+  logs:
+    httpApi: true
+  httpApi:
+    # metrics: true # Enable if you need
+    cors: false
 
 functions:
   api:
-    memorySize: 3008
-    timeout: 10
-    handler: bootstrap
+    handler: src/handler.handler
+    # reservedConcurrency: 100
     events:
-      - http:
-          path: /api/v1/{proxy+}
-          method: ANY
+      - httpApi:
+          path: "/{proxy+}"
+          method: "*"
 
 package:
-  artifact: deployment.zip
+  patterns:
+    - "!**/*.test.ts"
+  individually: true
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-esbuild
+  - serverless-offline
