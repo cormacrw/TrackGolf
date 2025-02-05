@@ -1,8 +1,6 @@
 service: track-golf-api
 
 custom:
-  # Our stage is based on what is passed in when running serverless
-  # commands. Or falls back to what we have set in the provider section.
   stage: ${opt:stage, 'offline'}
   region: ${opt:region, 'us-east-1'}
 
@@ -33,6 +31,11 @@ provider:
   environment:
     AWS_ACCESS_KEY_ID: ${env:AWS_ACCESS_KEY_ID}
     AWS_SECRET_ACCESS_KEY: ${env:AWS_SECRET_ACCESS_KEY}
+    CLIENT_CORS_ORIGIN: ${env:CLIENT_CORS_ORIGIN}
+    SUPERTOKENS_CONNECTION_URI: ${env:SUPERTOKENS_CONNECTION_URI}
+    SUPERTOKENS_API_KEY: ${env:SUPERTOKENS_API_KEY}
+    PUBLIC_API_URL: ${env:PUBLIC_API_URL}
+    PUBLIC_WEBSITE_URL: ${env:PUBLIC_WEBSITE_URL}
 
 functions:
   api:

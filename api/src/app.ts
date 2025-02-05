@@ -14,7 +14,7 @@ const app = express()
 
 app.use(
 	cors({
-		origin: ['http://localhost:5173', 'http://localhost:4173'],
+		origin: [process.env.CLIENT_CORS_ORIGIN],
 		allowedHeaders: ['content-type', ...supertokens.getAllCORSHeaders()],
 		credentials: true,
 	}),
@@ -28,12 +28,6 @@ app.use(json())
 app.use(helmet())
 
 app.use('/api', router())
-
-app.get('/', (_: Request, res: Response) => {
-  res.json({
-    msg: 'Hello World',
-  })
-})
 
 app.use((_: Request, res: Response) => {
   res.status(404).json({ error: 'NOT FOUND' })
