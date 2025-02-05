@@ -1,8 +1,17 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { makeRequest } from '$lib/api';
   import { Navbar, NavBrand, Button, Dropdown, DropdownHeader, DropdownItem, DropdownDivider, Avatar } from 'flowbite-svelte';
+	import { onMount } from 'svelte';
   
   let email = ''
+  
+  onMount(async () => {
+    const res = await makeRequest('/user', { method: 'GET' })
+    console.log(res)
+
+    email = res.user.email
+  })
 
 </script>
 <Navbar>

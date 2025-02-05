@@ -1,12 +1,18 @@
+import { verifySession } from 'supertokens-node/recipe/session/framework/express'
 import { Router } from 'express'
-import { create } from './round/create'
-import { list } from './round/list'
+import { create as createRound } from './round/create'
+import { list as listRounds } from './round/list'
+import { get as getUser } from './user/get'
 
 export default () => {
   const router = Router()
+  
+  router.use(verifySession())
 
-  router.post('/round/create', create)
-  router.get('/round/list', list)
+  router.post('/round/create', createRound)
+  router.get('/round/list', listRounds)
+  
+  router.get('/user', getUser)
 
   return router
 }

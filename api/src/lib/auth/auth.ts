@@ -32,14 +32,7 @@ export const init = () => {
             return {
               ...original,
               signUpPOST: async (input) => {
-                if (!original.signUpPOST) {
-                  return {
-                    status: "SIGN_UP_NOT_ALLOWED",
-                    reason: "Sign up is not allowed"
-                  }
-                }
-
-                const response = await original.signUpPOST(input)
+                const response = await original.signUpPOST!(input)
 
                 if (response.status === "OK" && response.user.loginMethods.length === 1 && input.session === undefined) {
                   console.log(response.user)

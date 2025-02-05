@@ -1,8 +1,8 @@
 import dynamoose from 'dynamoose'
 
 const schema = new dynamoose.Schema({
-  tgPk: { type: String, required: true },
-  tgSk: { type: String, required: true },
+  tgPk: { type: String, required: true, hashKey: true },
+  tgSk: { type: String, required: true, rangeKey: true },
   
   // COURSE
   courseName: { type: String },
