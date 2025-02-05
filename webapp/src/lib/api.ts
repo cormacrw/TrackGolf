@@ -10,11 +10,17 @@ export const makeRequest = async (path: string, options: RequestInit) => {
   }
   
   const jwt = await Session.getAccessToken()
+  
+  const headers = {
+    Authorization: `Bearer ${jwt}`
+  }
 
+  if (options.method === 'POST') {
+    headers['Content-Type'] = 'application/json'
+  }
+  
   const response = await fetch(`${BASE_URL}${path}`, {
-    headers: {
-      Authorization: `Bearer ${jwt}`
-    },
+    headers,
     ...options
   })
 

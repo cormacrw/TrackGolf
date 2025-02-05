@@ -13,9 +13,8 @@ export const init = () => {
       // We use try.supertokens for demo purposes.
       // At the end of the tutorial we will show you how to create
       // your own SuperTokens core instance and then update your config.
-      connectionURI: "https://st-dev-3b67cde0-e2a3-11ef-869a-3b51ebca2395.aws.supertokens.io",
-      apiKey: 'dpRnlAMJ7Uxu-y8Ha6nvV6Nvxi'
-      // apiKey: <YOUR_API_KEY>
+      connectionURI: process.env.SUPERTOKENS_CONNECTION_URI || '',
+      apiKey: process.env.SUPERTOKENS_API_KEY
     },
     appInfo: {
       // learn more about this on https://supertokens.com/docs/session/appinfo

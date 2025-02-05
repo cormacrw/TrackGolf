@@ -1,5 +1,34 @@
 <script lang="ts">
+	import { makeRequest } from '$lib/api';
   import { Card, Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell } from 'flowbite-svelte'
+	import { onMount } from 'svelte';
+  
+  let rounds = []
+  
+  const getRounds = async () => {
+    const response = await makeRequest('/rounds', {
+      method: 'GET'
+    })
+
+    rounds = response.rows
+  }
+  
+  const getRoundScore = (round: any) => {
+    let sign = ''
+    if (round.roundScore - round.coursePar > 0) {
+      sign = '+'
+    } else if (round.roundScore - round.coursePar < 0) {
+      sign = '-'
+    }
+
+    return `${round.roundScore} (${sign}${Math.abs(round.roundScore - round.coursePar)})`
+  }
+  
+  onMount(() => {
+    getRounds()
+  })
+  
+  
 </script>
 <h1 class="text-2xl font-bold">Dashboard</h1>
 <div class="flex flex-row gap-4">
@@ -23,28 +52,20 @@
     <TableHead>
       <TableHeadCell>Date</TableHeadCell>
       <TableHeadCell>Course</TableHeadCell>
+      <TableHeadCell>Length</TableHeadCell>
       <TableHeadCell>Score</TableHeadCell>
-      <TableHeadCell>Rounds</TableHeadCell>
+      <TableHeadCell>Putts</TableHeadCell>
   </TableHead>
   <TableBody tableBodyClass="divide-y">
-    <TableBodyRow>
-      <TableBodyCell>Apple MacBook Pro 17"</TableBodyCell>
-      <TableBodyCell>Sliver</TableBodyCell>
-      <TableBodyCell>Laptop</TableBodyCell>
-      <TableBodyCell>$2999</TableBodyCell>
-    </TableBodyRow>
-    <TableBodyRow>
-      <TableBodyCell>Microsoft Surface Pro</TableBodyCell>
-      <TableBodyCell>White</TableBodyCell>
-      <TableBodyCell>Laptop PC</TableBodyCell>
-      <TableBodyCell>$1999</TableBodyCell>
-    </TableBodyRow>
-    <TableBodyRow>
-      <TableBodyCell>Magic Mouse 2</TableBodyCell>
-      <TableBodyCell>Black</TableBodyCell>
-      <TableBodyCell>Accessories</TableBodyCell>
-        <TableBodyCell>$99</TableBodyCell>
+    {#each rounds as round}
+      <TableBodyRow>
+        <TableBodyCell>{round.roundDate}</TableBodyCell>
+        <TableBodyCell>{round.courseName}</TableBodyCell>
+        <TableBodyCell>{round.courseLength}</TableBodyCell>
+        <TableBodyCell>{getRoundScore(round)}</TableBodyCell>
+        <TableBodyCell>{round.roundPutts}</TableBodyCell>
       </TableBodyRow>
+    {/each}
     </TableBody>
   </Table>
 </div>

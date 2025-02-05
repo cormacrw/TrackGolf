@@ -361,7 +361,7 @@ var require_request = __commonJS({
 var require_create_request = __commonJS({
   "node_modules/serverless-http/lib/provider/aws/create-request.js"(exports, module2) {
     "use strict";
-    var URL3 = require("url");
+    var URL4 = require("url");
     var Request3 = require_request();
     function requestMethod(event) {
       if (event.version === "2.0") {
@@ -401,7 +401,7 @@ var require_create_request = __commonJS({
     }
     function requestUrl(event) {
       if (event.version === "2.0") {
-        return URL3.format({
+        return URL4.format({
           pathname: event.rawPath,
           search: event.rawQueryString
         });
@@ -418,7 +418,7 @@ var require_create_request = __commonJS({
           }
         });
       }
-      return URL3.format({
+      return URL4.format({
         pathname: event.path,
         query
       });
@@ -895,7 +895,7 @@ var require_ms = __commonJS({
       options = options || {};
       var type = typeof val2;
       if (type === "string" && val2.length > 0) {
-        return parse2(val2);
+        return parse3(val2);
       } else if (type === "number" && isNaN(val2) === false) {
         return options.long ? fmtLong(val2) : fmtShort(val2);
       }
@@ -903,7 +903,7 @@ var require_ms = __commonJS({
         "val is not a non-empty string or a valid number. val=" + JSON.stringify(val2)
       );
     };
-    function parse2(str) {
+    function parse3(str) {
       str = String(str);
       if (str.length > 100) {
         return;
@@ -1929,7 +1929,7 @@ var require_parseurl = __commonJS({
   "node_modules/parseurl/index.js"(exports, module2) {
     "use strict";
     var url = require("url");
-    var parse2 = url.parse;
+    var parse3 = url.parse;
     var Url = url.Url;
     module2.exports = parseurl;
     module2.exports.original = originalurl;
@@ -1961,7 +1961,7 @@ var require_parseurl = __commonJS({
     }
     function fastparse(str) {
       if (typeof str !== "string" || str.charCodeAt(0) !== 47) {
-        return parse2(str);
+        return parse3(str);
       }
       var pathname = str;
       var query = null;
@@ -1983,7 +1983,7 @@ var require_parseurl = __commonJS({
           case 35:
           case 160:
           case 65279:
-            return parse2(str);
+            return parse3(str);
         }
       }
       var url2 = Url !== void 0 ? new Url() : {};
@@ -11648,8 +11648,8 @@ var init_emitWarningIfUnsupportedVersion = __esm({
     state = {
       warningEmitted: false
     };
-    emitWarningIfUnsupportedVersion = (version2) => {
-      if (version2 && !state.warningEmitted && parseInt(version2.substring(1, version2.indexOf("."))) < 18) {
+    emitWarningIfUnsupportedVersion = (version3) => {
+      if (version3 && !state.warningEmitted && parseInt(version3.substring(1, version3.indexOf("."))) < 18) {
         state.warningEmitted = true;
         process.emitWarning(`NodeDeprecationWarning: The AWS SDK for JavaScript (v3) will
 no longer support Node.js 16.x on January 6, 2025.
@@ -13963,8 +13963,8 @@ var require_dist_cjs30 = __commonJS({
       }
     }, "loadConfigsForDefaultMode");
     var warningEmitted = false;
-    var emitWarningIfUnsupportedVersion5 = /* @__PURE__ */ __name((version2) => {
-      if (version2 && !warningEmitted && parseInt(version2.substring(1, version2.indexOf("."))) < 16) {
+    var emitWarningIfUnsupportedVersion5 = /* @__PURE__ */ __name((version3) => {
+      if (version3 && !warningEmitted && parseInt(version3.substring(1, version3.indexOf("."))) < 16) {
         warningEmitted = true;
       }
     }, "emitWarningIfUnsupportedVersion");
@@ -16363,14 +16363,14 @@ var require_dist_cjs31 = __commonJS({
     }, "userAgentMiddleware");
     var escapeUserAgent = /* @__PURE__ */ __name((userAgentPair) => {
       const name = userAgentPair[0].split(UA_NAME_SEPARATOR).map((part) => part.replace(UA_NAME_ESCAPE_REGEX, UA_ESCAPE_CHAR)).join(UA_NAME_SEPARATOR);
-      const version2 = userAgentPair[1]?.replace(UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR);
+      const version3 = userAgentPair[1]?.replace(UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR);
       const prefixSeparatorIndex = name.indexOf(UA_NAME_SEPARATOR);
       const prefix = name.substring(0, prefixSeparatorIndex);
       let uaName = name.substring(prefixSeparatorIndex + 1);
       if (prefix === "api") {
         uaName = uaName.toLowerCase();
       }
-      return [prefix, uaName, version2].filter((item) => item && item.length > 0).reduce((acc, item, index) => {
+      return [prefix, uaName, version3].filter((item) => item && item.length > 0).reduce((acc, item, index) => {
         switch (index) {
           case 0:
             return item;
@@ -16699,7 +16699,7 @@ var require_dist_cjs34 = __commonJS({
   }
 });
 
-// node_modules/uuid/dist/esm-node/rng.js
+// node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/rng.js
 function rng() {
   if (poolPtr > rnds8Pool.length - 16) {
     import_crypto.default.randomFillSync(rnds8Pool);
@@ -16709,34 +16709,34 @@ function rng() {
 }
 var import_crypto, rnds8Pool, poolPtr;
 var init_rng = __esm({
-  "node_modules/uuid/dist/esm-node/rng.js"() {
+  "node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/rng.js"() {
     import_crypto = __toESM(require("crypto"));
     rnds8Pool = new Uint8Array(256);
     poolPtr = rnds8Pool.length;
   }
 });
 
-// node_modules/uuid/dist/esm-node/regex.js
+// node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/regex.js
 var regex_default;
 var init_regex = __esm({
-  "node_modules/uuid/dist/esm-node/regex.js"() {
+  "node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/regex.js"() {
     regex_default = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
   }
 });
 
-// node_modules/uuid/dist/esm-node/validate.js
+// node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/validate.js
 function validate(uuid) {
   return typeof uuid === "string" && regex_default.test(uuid);
 }
 var validate_default;
 var init_validate = __esm({
-  "node_modules/uuid/dist/esm-node/validate.js"() {
+  "node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/validate.js"() {
     init_regex();
     validate_default = validate;
   }
 });
 
-// node_modules/uuid/dist/esm-node/stringify.js
+// node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/stringify.js
 function unsafeStringify(arr, offset = 0) {
   return byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + "-" + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + "-" + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + "-" + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + "-" + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]];
 }
@@ -16749,7 +16749,7 @@ function stringify(arr, offset = 0) {
 }
 var byteToHex, stringify_default;
 var init_stringify = __esm({
-  "node_modules/uuid/dist/esm-node/stringify.js"() {
+  "node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/stringify.js"() {
     init_validate();
     byteToHex = [];
     for (let i3 = 0; i3 < 256; ++i3) {
@@ -16759,7 +16759,7 @@ var init_stringify = __esm({
   }
 });
 
-// node_modules/uuid/dist/esm-node/v1.js
+// node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/v1.js
 function v1(options, buf, offset) {
   let i3 = buf && offset || 0;
   const b3 = buf || new Array(16);
@@ -16810,7 +16810,7 @@ function v1(options, buf, offset) {
 }
 var _nodeId, _clockseq, _lastMSecs, _lastNSecs, v1_default;
 var init_v1 = __esm({
-  "node_modules/uuid/dist/esm-node/v1.js"() {
+  "node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/v1.js"() {
     init_rng();
     init_stringify();
     _lastMSecs = 0;
@@ -16819,7 +16819,7 @@ var init_v1 = __esm({
   }
 });
 
-// node_modules/uuid/dist/esm-node/parse.js
+// node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/parse.js
 function parse(uuid) {
   if (!validate_default(uuid)) {
     throw TypeError("Invalid UUID");
@@ -16846,13 +16846,13 @@ function parse(uuid) {
 }
 var parse_default;
 var init_parse = __esm({
-  "node_modules/uuid/dist/esm-node/parse.js"() {
+  "node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/parse.js"() {
     init_validate();
     parse_default = parse;
   }
 });
 
-// node_modules/uuid/dist/esm-node/v35.js
+// node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/v35.js
 function stringToBytes(str) {
   str = unescape(encodeURIComponent(str));
   const bytes = [];
@@ -16861,7 +16861,7 @@ function stringToBytes(str) {
   }
   return bytes;
 }
-function v35(name, version2, hashfunc) {
+function v35(name, version3, hashfunc) {
   function generateUUID(value, namespace, buf, offset) {
     var _namespace;
     if (typeof value === "string") {
@@ -16877,7 +16877,7 @@ function v35(name, version2, hashfunc) {
     bytes.set(namespace);
     bytes.set(value, namespace.length);
     bytes = hashfunc(bytes);
-    bytes[6] = bytes[6] & 15 | version2;
+    bytes[6] = bytes[6] & 15 | version3;
     bytes[8] = bytes[8] & 63 | 128;
     if (buf) {
       offset = offset || 0;
@@ -16898,7 +16898,7 @@ function v35(name, version2, hashfunc) {
 }
 var DNS, URL2;
 var init_v35 = __esm({
-  "node_modules/uuid/dist/esm-node/v35.js"() {
+  "node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/v35.js"() {
     init_stringify();
     init_parse();
     DNS = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
@@ -16906,7 +16906,7 @@ var init_v35 = __esm({
   }
 });
 
-// node_modules/uuid/dist/esm-node/md5.js
+// node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/md5.js
 function md5(bytes) {
   if (Array.isArray(bytes)) {
     bytes = Buffer.from(bytes);
@@ -16917,16 +16917,16 @@ function md5(bytes) {
 }
 var import_crypto2, md5_default;
 var init_md5 = __esm({
-  "node_modules/uuid/dist/esm-node/md5.js"() {
+  "node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/md5.js"() {
     import_crypto2 = __toESM(require("crypto"));
     md5_default = md5;
   }
 });
 
-// node_modules/uuid/dist/esm-node/v3.js
+// node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/v3.js
 var v3, v3_default;
 var init_v3 = __esm({
-  "node_modules/uuid/dist/esm-node/v3.js"() {
+  "node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/v3.js"() {
     init_v35();
     init_md5();
     v3 = v35("v3", 48, md5_default);
@@ -16934,10 +16934,10 @@ var init_v3 = __esm({
   }
 });
 
-// node_modules/uuid/dist/esm-node/native.js
+// node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/native.js
 var import_crypto3, native_default;
 var init_native = __esm({
-  "node_modules/uuid/dist/esm-node/native.js"() {
+  "node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/native.js"() {
     import_crypto3 = __toESM(require("crypto"));
     native_default = {
       randomUUID: import_crypto3.default.randomUUID
@@ -16945,7 +16945,7 @@ var init_native = __esm({
   }
 });
 
-// node_modules/uuid/dist/esm-node/v4.js
+// node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/v4.js
 function v4(options, buf, offset) {
   if (native_default.randomUUID && !buf && !options) {
     return native_default.randomUUID();
@@ -16965,7 +16965,7 @@ function v4(options, buf, offset) {
 }
 var v4_default;
 var init_v4 = __esm({
-  "node_modules/uuid/dist/esm-node/v4.js"() {
+  "node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/v4.js"() {
     init_native();
     init_rng();
     init_stringify();
@@ -16973,7 +16973,7 @@ var init_v4 = __esm({
   }
 });
 
-// node_modules/uuid/dist/esm-node/sha1.js
+// node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/sha1.js
 function sha1(bytes) {
   if (Array.isArray(bytes)) {
     bytes = Buffer.from(bytes);
@@ -16984,16 +16984,16 @@ function sha1(bytes) {
 }
 var import_crypto4, sha1_default;
 var init_sha1 = __esm({
-  "node_modules/uuid/dist/esm-node/sha1.js"() {
+  "node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/sha1.js"() {
     import_crypto4 = __toESM(require("crypto"));
     sha1_default = sha1;
   }
 });
 
-// node_modules/uuid/dist/esm-node/v5.js
+// node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/v5.js
 var v5, v5_default;
 var init_v5 = __esm({
-  "node_modules/uuid/dist/esm-node/v5.js"() {
+  "node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/v5.js"() {
     init_v35();
     init_sha1();
     v5 = v35("v5", 80, sha1_default);
@@ -17001,15 +17001,15 @@ var init_v5 = __esm({
   }
 });
 
-// node_modules/uuid/dist/esm-node/nil.js
+// node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/nil.js
 var nil_default;
 var init_nil = __esm({
-  "node_modules/uuid/dist/esm-node/nil.js"() {
+  "node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/nil.js"() {
     nil_default = "00000000-0000-0000-0000-000000000000";
   }
 });
 
-// node_modules/uuid/dist/esm-node/version.js
+// node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/version.js
 function version(uuid) {
   if (!validate_default(uuid)) {
     throw TypeError("Invalid UUID");
@@ -17018,13 +17018,13 @@ function version(uuid) {
 }
 var version_default;
 var init_version = __esm({
-  "node_modules/uuid/dist/esm-node/version.js"() {
+  "node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/version.js"() {
     init_validate();
     version_default = version;
   }
 });
 
-// node_modules/uuid/dist/esm-node/index.js
+// node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/index.js
 var esm_node_exports = {};
 __export(esm_node_exports, {
   NIL: () => nil_default,
@@ -17038,7 +17038,7 @@ __export(esm_node_exports, {
   version: () => version_default
 });
 var init_esm_node = __esm({
-  "node_modules/uuid/dist/esm-node/index.js"() {
+  "node_modules/@aws-sdk/client-dynamodb/node_modules/uuid/dist/esm-node/index.js"() {
     init_v1();
     init_v3();
     init_v4();
@@ -17505,7 +17505,7 @@ var require_dist_cjs37 = __commonJS({
     });
     module2.exports = __toCommonJS2(src_exports);
     var import_protocol_http18 = require_dist_cjs8();
-    var import_uuid = (init_esm_node(), __toCommonJS(esm_node_exports));
+    var import_uuid2 = (init_esm_node(), __toCommonJS(esm_node_exports));
     var import_util_retry3 = require_dist_cjs36();
     var getDefaultRetryQuota = /* @__PURE__ */ __name((initialRetryTokens, options) => {
       const MAX_CAPACITY = initialRetryTokens;
@@ -17580,7 +17580,7 @@ var require_dist_cjs37 = __commonJS({
         const maxAttempts = await this.getMaxAttempts();
         const { request } = args;
         if (import_protocol_http18.HttpRequest.isInstance(request)) {
-          request.headers[import_util_retry3.INVOCATION_ID_HEADER] = (0, import_uuid.v4)();
+          request.headers[import_util_retry3.INVOCATION_ID_HEADER] = (0, import_uuid2.v4)();
         }
         while (true) {
           try {
@@ -17742,7 +17742,7 @@ var require_dist_cjs37 = __commonJS({
         const { request } = args;
         const isRequest = import_protocol_http18.HttpRequest.isInstance(request);
         if (isRequest) {
-          request.headers[import_util_retry3.INVOCATION_ID_HEADER] = (0, import_uuid.v4)();
+          request.headers[import_util_retry3.INVOCATION_ID_HEADER] = (0, import_uuid2.v4)();
         }
         while (true) {
           try {
@@ -20286,7 +20286,7 @@ var require_dist_cjs48 = __commonJS({
     var import_util_buffer_from = require_dist_cjs47();
     var import_util_utf83 = require_dist_cjs16();
     var import_buffer = require("buffer");
-    var import_crypto5 = require("crypto");
+    var import_crypto11 = require("crypto");
     var Hash3 = class {
       static {
         __name(this, "Hash");
@@ -20303,7 +20303,7 @@ var require_dist_cjs48 = __commonJS({
         return Promise.resolve(this.hash.digest());
       }
       reset() {
-        this.hash = this.secret ? (0, import_crypto5.createHmac)(this.algorithmIdentifier, castSourceData(this.secret)) : (0, import_crypto5.createHash)(this.algorithmIdentifier);
+        this.hash = this.secret ? (0, import_crypto11.createHmac)(this.algorithmIdentifier, castSourceData(this.secret)) : (0, import_crypto11.createHash)(this.algorithmIdentifier);
       }
     };
     function castSourceData(toCast, encoding) {
@@ -25417,8 +25417,8 @@ var init_emitWarningIfUnsupportedVersion2 = __esm({
     state2 = {
       warningEmitted: false
     };
-    emitWarningIfUnsupportedVersion2 = (version2) => {
-      if (version2 && !state2.warningEmitted && parseInt(version2.substring(1, version2.indexOf("."))) < 18) {
+    emitWarningIfUnsupportedVersion2 = (version3) => {
+      if (version3 && !state2.warningEmitted && parseInt(version3.substring(1, version3.indexOf("."))) < 18) {
         state2.warningEmitted = true;
         process.emitWarning(`NodeDeprecationWarning: The AWS SDK for JavaScript (v3) will
 no longer support Node.js 16.x on January 6, 2025.
@@ -27725,8 +27725,8 @@ var require_dist_cjs77 = __commonJS({
       }
     }, "loadConfigsForDefaultMode");
     var warningEmitted = false;
-    var emitWarningIfUnsupportedVersion5 = /* @__PURE__ */ __name((version2) => {
-      if (version2 && !warningEmitted && parseInt(version2.substring(1, version2.indexOf("."))) < 16) {
+    var emitWarningIfUnsupportedVersion5 = /* @__PURE__ */ __name((version3) => {
+      if (version3 && !warningEmitted && parseInt(version3.substring(1, version3.indexOf("."))) < 16) {
         warningEmitted = true;
       }
     }, "emitWarningIfUnsupportedVersion");
@@ -30028,14 +30028,14 @@ var require_dist_cjs78 = __commonJS({
     }, "userAgentMiddleware");
     var escapeUserAgent = /* @__PURE__ */ __name((userAgentPair) => {
       const name = userAgentPair[0].split(UA_NAME_SEPARATOR).map((part) => part.replace(UA_NAME_ESCAPE_REGEX, UA_ESCAPE_CHAR)).join(UA_NAME_SEPARATOR);
-      const version2 = userAgentPair[1]?.replace(UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR);
+      const version3 = userAgentPair[1]?.replace(UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR);
       const prefixSeparatorIndex = name.indexOf(UA_NAME_SEPARATOR);
       const prefix = name.substring(0, prefixSeparatorIndex);
       let uaName = name.substring(prefixSeparatorIndex + 1);
       if (prefix === "api") {
         uaName = uaName.toLowerCase();
       }
-      return [prefix, uaName, version2].filter((item) => item && item.length > 0).reduce((acc, item, index) => {
+      return [prefix, uaName, version3].filter((item) => item && item.length > 0).reduce((acc, item, index) => {
         switch (index) {
           case 0:
             return item;
@@ -31109,6 +31109,358 @@ var require_dist_cjs86 = __commonJS({
   }
 });
 
+// node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/rng.js
+function rng2() {
+  if (poolPtr2 > rnds8Pool2.length - 16) {
+    import_crypto5.default.randomFillSync(rnds8Pool2);
+    poolPtr2 = 0;
+  }
+  return rnds8Pool2.slice(poolPtr2, poolPtr2 += 16);
+}
+var import_crypto5, rnds8Pool2, poolPtr2;
+var init_rng2 = __esm({
+  "node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/rng.js"() {
+    import_crypto5 = __toESM(require("crypto"));
+    rnds8Pool2 = new Uint8Array(256);
+    poolPtr2 = rnds8Pool2.length;
+  }
+});
+
+// node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/regex.js
+var regex_default2;
+var init_regex2 = __esm({
+  "node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/regex.js"() {
+    regex_default2 = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
+  }
+});
+
+// node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/validate.js
+function validate2(uuid) {
+  return typeof uuid === "string" && regex_default2.test(uuid);
+}
+var validate_default2;
+var init_validate2 = __esm({
+  "node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/validate.js"() {
+    init_regex2();
+    validate_default2 = validate2;
+  }
+});
+
+// node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/stringify.js
+function unsafeStringify2(arr, offset = 0) {
+  return byteToHex2[arr[offset + 0]] + byteToHex2[arr[offset + 1]] + byteToHex2[arr[offset + 2]] + byteToHex2[arr[offset + 3]] + "-" + byteToHex2[arr[offset + 4]] + byteToHex2[arr[offset + 5]] + "-" + byteToHex2[arr[offset + 6]] + byteToHex2[arr[offset + 7]] + "-" + byteToHex2[arr[offset + 8]] + byteToHex2[arr[offset + 9]] + "-" + byteToHex2[arr[offset + 10]] + byteToHex2[arr[offset + 11]] + byteToHex2[arr[offset + 12]] + byteToHex2[arr[offset + 13]] + byteToHex2[arr[offset + 14]] + byteToHex2[arr[offset + 15]];
+}
+function stringify2(arr, offset = 0) {
+  const uuid = unsafeStringify2(arr, offset);
+  if (!validate_default2(uuid)) {
+    throw TypeError("Stringified UUID is invalid");
+  }
+  return uuid;
+}
+var byteToHex2, stringify_default2;
+var init_stringify2 = __esm({
+  "node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/stringify.js"() {
+    init_validate2();
+    byteToHex2 = [];
+    for (let i3 = 0; i3 < 256; ++i3) {
+      byteToHex2.push((i3 + 256).toString(16).slice(1));
+    }
+    stringify_default2 = stringify2;
+  }
+});
+
+// node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/v1.js
+function v12(options, buf, offset) {
+  let i3 = buf && offset || 0;
+  const b3 = buf || new Array(16);
+  options = options || {};
+  let node = options.node || _nodeId2;
+  let clockseq = options.clockseq !== void 0 ? options.clockseq : _clockseq2;
+  if (node == null || clockseq == null) {
+    const seedBytes = options.random || (options.rng || rng2)();
+    if (node == null) {
+      node = _nodeId2 = [seedBytes[0] | 1, seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]];
+    }
+    if (clockseq == null) {
+      clockseq = _clockseq2 = (seedBytes[6] << 8 | seedBytes[7]) & 16383;
+    }
+  }
+  let msecs = options.msecs !== void 0 ? options.msecs : Date.now();
+  let nsecs = options.nsecs !== void 0 ? options.nsecs : _lastNSecs2 + 1;
+  const dt = msecs - _lastMSecs2 + (nsecs - _lastNSecs2) / 1e4;
+  if (dt < 0 && options.clockseq === void 0) {
+    clockseq = clockseq + 1 & 16383;
+  }
+  if ((dt < 0 || msecs > _lastMSecs2) && options.nsecs === void 0) {
+    nsecs = 0;
+  }
+  if (nsecs >= 1e4) {
+    throw new Error("uuid.v1(): Can't create more than 10M uuids/sec");
+  }
+  _lastMSecs2 = msecs;
+  _lastNSecs2 = nsecs;
+  _clockseq2 = clockseq;
+  msecs += 122192928e5;
+  const tl = ((msecs & 268435455) * 1e4 + nsecs) % 4294967296;
+  b3[i3++] = tl >>> 24 & 255;
+  b3[i3++] = tl >>> 16 & 255;
+  b3[i3++] = tl >>> 8 & 255;
+  b3[i3++] = tl & 255;
+  const tmh = msecs / 4294967296 * 1e4 & 268435455;
+  b3[i3++] = tmh >>> 8 & 255;
+  b3[i3++] = tmh & 255;
+  b3[i3++] = tmh >>> 24 & 15 | 16;
+  b3[i3++] = tmh >>> 16 & 255;
+  b3[i3++] = clockseq >>> 8 | 128;
+  b3[i3++] = clockseq & 255;
+  for (let n3 = 0; n3 < 6; ++n3) {
+    b3[i3 + n3] = node[n3];
+  }
+  return buf || unsafeStringify2(b3);
+}
+var _nodeId2, _clockseq2, _lastMSecs2, _lastNSecs2, v1_default2;
+var init_v12 = __esm({
+  "node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/v1.js"() {
+    init_rng2();
+    init_stringify2();
+    _lastMSecs2 = 0;
+    _lastNSecs2 = 0;
+    v1_default2 = v12;
+  }
+});
+
+// node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/parse.js
+function parse2(uuid) {
+  if (!validate_default2(uuid)) {
+    throw TypeError("Invalid UUID");
+  }
+  let v6;
+  const arr = new Uint8Array(16);
+  arr[0] = (v6 = parseInt(uuid.slice(0, 8), 16)) >>> 24;
+  arr[1] = v6 >>> 16 & 255;
+  arr[2] = v6 >>> 8 & 255;
+  arr[3] = v6 & 255;
+  arr[4] = (v6 = parseInt(uuid.slice(9, 13), 16)) >>> 8;
+  arr[5] = v6 & 255;
+  arr[6] = (v6 = parseInt(uuid.slice(14, 18), 16)) >>> 8;
+  arr[7] = v6 & 255;
+  arr[8] = (v6 = parseInt(uuid.slice(19, 23), 16)) >>> 8;
+  arr[9] = v6 & 255;
+  arr[10] = (v6 = parseInt(uuid.slice(24, 36), 16)) / 1099511627776 & 255;
+  arr[11] = v6 / 4294967296 & 255;
+  arr[12] = v6 >>> 24 & 255;
+  arr[13] = v6 >>> 16 & 255;
+  arr[14] = v6 >>> 8 & 255;
+  arr[15] = v6 & 255;
+  return arr;
+}
+var parse_default2;
+var init_parse2 = __esm({
+  "node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/parse.js"() {
+    init_validate2();
+    parse_default2 = parse2;
+  }
+});
+
+// node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/v35.js
+function stringToBytes2(str) {
+  str = unescape(encodeURIComponent(str));
+  const bytes = [];
+  for (let i3 = 0; i3 < str.length; ++i3) {
+    bytes.push(str.charCodeAt(i3));
+  }
+  return bytes;
+}
+function v352(name, version3, hashfunc) {
+  function generateUUID(value, namespace, buf, offset) {
+    var _namespace;
+    if (typeof value === "string") {
+      value = stringToBytes2(value);
+    }
+    if (typeof namespace === "string") {
+      namespace = parse_default2(namespace);
+    }
+    if (((_namespace = namespace) === null || _namespace === void 0 ? void 0 : _namespace.length) !== 16) {
+      throw TypeError("Namespace must be array-like (16 iterable integer values, 0-255)");
+    }
+    let bytes = new Uint8Array(16 + value.length);
+    bytes.set(namespace);
+    bytes.set(value, namespace.length);
+    bytes = hashfunc(bytes);
+    bytes[6] = bytes[6] & 15 | version3;
+    bytes[8] = bytes[8] & 63 | 128;
+    if (buf) {
+      offset = offset || 0;
+      for (let i3 = 0; i3 < 16; ++i3) {
+        buf[offset + i3] = bytes[i3];
+      }
+      return buf;
+    }
+    return unsafeStringify2(bytes);
+  }
+  try {
+    generateUUID.name = name;
+  } catch (err2) {
+  }
+  generateUUID.DNS = DNS2;
+  generateUUID.URL = URL3;
+  return generateUUID;
+}
+var DNS2, URL3;
+var init_v352 = __esm({
+  "node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/v35.js"() {
+    init_stringify2();
+    init_parse2();
+    DNS2 = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
+    URL3 = "6ba7b811-9dad-11d1-80b4-00c04fd430c8";
+  }
+});
+
+// node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/md5.js
+function md52(bytes) {
+  if (Array.isArray(bytes)) {
+    bytes = Buffer.from(bytes);
+  } else if (typeof bytes === "string") {
+    bytes = Buffer.from(bytes, "utf8");
+  }
+  return import_crypto6.default.createHash("md5").update(bytes).digest();
+}
+var import_crypto6, md5_default2;
+var init_md52 = __esm({
+  "node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/md5.js"() {
+    import_crypto6 = __toESM(require("crypto"));
+    md5_default2 = md52;
+  }
+});
+
+// node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/v3.js
+var v32, v3_default2;
+var init_v32 = __esm({
+  "node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/v3.js"() {
+    init_v352();
+    init_md52();
+    v32 = v352("v3", 48, md5_default2);
+    v3_default2 = v32;
+  }
+});
+
+// node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/native.js
+var import_crypto7, native_default2;
+var init_native2 = __esm({
+  "node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/native.js"() {
+    import_crypto7 = __toESM(require("crypto"));
+    native_default2 = {
+      randomUUID: import_crypto7.default.randomUUID
+    };
+  }
+});
+
+// node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/v4.js
+function v42(options, buf, offset) {
+  if (native_default2.randomUUID && !buf && !options) {
+    return native_default2.randomUUID();
+  }
+  options = options || {};
+  const rnds = options.random || (options.rng || rng2)();
+  rnds[6] = rnds[6] & 15 | 64;
+  rnds[8] = rnds[8] & 63 | 128;
+  if (buf) {
+    offset = offset || 0;
+    for (let i3 = 0; i3 < 16; ++i3) {
+      buf[offset + i3] = rnds[i3];
+    }
+    return buf;
+  }
+  return unsafeStringify2(rnds);
+}
+var v4_default2;
+var init_v42 = __esm({
+  "node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/v4.js"() {
+    init_native2();
+    init_rng2();
+    init_stringify2();
+    v4_default2 = v42;
+  }
+});
+
+// node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/sha1.js
+function sha12(bytes) {
+  if (Array.isArray(bytes)) {
+    bytes = Buffer.from(bytes);
+  } else if (typeof bytes === "string") {
+    bytes = Buffer.from(bytes, "utf8");
+  }
+  return import_crypto8.default.createHash("sha1").update(bytes).digest();
+}
+var import_crypto8, sha1_default2;
+var init_sha12 = __esm({
+  "node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/sha1.js"() {
+    import_crypto8 = __toESM(require("crypto"));
+    sha1_default2 = sha12;
+  }
+});
+
+// node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/v5.js
+var v52, v5_default2;
+var init_v52 = __esm({
+  "node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/v5.js"() {
+    init_v352();
+    init_sha12();
+    v52 = v352("v5", 80, sha1_default2);
+    v5_default2 = v52;
+  }
+});
+
+// node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/nil.js
+var nil_default2;
+var init_nil2 = __esm({
+  "node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/nil.js"() {
+    nil_default2 = "00000000-0000-0000-0000-000000000000";
+  }
+});
+
+// node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/version.js
+function version2(uuid) {
+  if (!validate_default2(uuid)) {
+    throw TypeError("Invalid UUID");
+  }
+  return parseInt(uuid.slice(14, 15), 16);
+}
+var version_default2;
+var init_version2 = __esm({
+  "node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/version.js"() {
+    init_validate2();
+    version_default2 = version2;
+  }
+});
+
+// node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/index.js
+var esm_node_exports2 = {};
+__export(esm_node_exports2, {
+  NIL: () => nil_default2,
+  parse: () => parse_default2,
+  stringify: () => stringify_default2,
+  v1: () => v1_default2,
+  v3: () => v3_default2,
+  v4: () => v4_default2,
+  v5: () => v5_default2,
+  validate: () => validate_default2,
+  version: () => version_default2
+});
+var init_esm_node2 = __esm({
+  "node_modules/@aws-sdk/nested-clients/node_modules/uuid/dist/esm-node/index.js"() {
+    init_v12();
+    init_v32();
+    init_v42();
+    init_v52();
+    init_nil2();
+    init_version2();
+    init_validate2();
+    init_stringify2();
+    init_parse2();
+  }
+});
+
 // node_modules/@aws-sdk/nested-clients/node_modules/@smithy/service-error-classification/dist-cjs/index.js
 var require_dist_cjs87 = __commonJS({
   "node_modules/@aws-sdk/nested-clients/node_modules/@smithy/service-error-classification/dist-cjs/index.js"(exports, module2) {
@@ -31563,7 +31915,7 @@ var require_dist_cjs89 = __commonJS({
     });
     module2.exports = __toCommonJS2(src_exports);
     var import_protocol_http18 = require_dist_cjs54();
-    var import_uuid = (init_esm_node(), __toCommonJS(esm_node_exports));
+    var import_uuid2 = (init_esm_node2(), __toCommonJS(esm_node_exports2));
     var import_util_retry3 = require_dist_cjs88();
     var getDefaultRetryQuota = /* @__PURE__ */ __name((initialRetryTokens, options) => {
       const MAX_CAPACITY = initialRetryTokens;
@@ -31638,7 +31990,7 @@ var require_dist_cjs89 = __commonJS({
         const maxAttempts = await this.getMaxAttempts();
         const { request } = args;
         if (import_protocol_http18.HttpRequest.isInstance(request)) {
-          request.headers[import_util_retry3.INVOCATION_ID_HEADER] = (0, import_uuid.v4)();
+          request.headers[import_util_retry3.INVOCATION_ID_HEADER] = (0, import_uuid2.v4)();
         }
         while (true) {
           try {
@@ -31800,7 +32152,7 @@ var require_dist_cjs89 = __commonJS({
         const { request } = args;
         const isRequest = import_protocol_http18.HttpRequest.isInstance(request);
         if (isRequest) {
-          request.headers[import_util_retry3.INVOCATION_ID_HEADER] = (0, import_uuid.v4)();
+          request.headers[import_util_retry3.INVOCATION_ID_HEADER] = (0, import_uuid2.v4)();
         }
         while (true) {
           try {
@@ -32250,7 +32602,7 @@ var require_dist_cjs92 = __commonJS({
     var import_util_buffer_from = require_dist_cjs91();
     var import_util_utf83 = require_dist_cjs63();
     var import_buffer = require("buffer");
-    var import_crypto5 = require("crypto");
+    var import_crypto11 = require("crypto");
     var Hash3 = class {
       static {
         __name(this, "Hash");
@@ -32267,7 +32619,7 @@ var require_dist_cjs92 = __commonJS({
         return Promise.resolve(this.hash.digest());
       }
       reset() {
-        this.hash = this.secret ? (0, import_crypto5.createHmac)(this.algorithmIdentifier, castSourceData(this.secret)) : (0, import_crypto5.createHash)(this.algorithmIdentifier);
+        this.hash = this.secret ? (0, import_crypto11.createHmac)(this.algorithmIdentifier, castSourceData(this.secret)) : (0, import_crypto11.createHash)(this.algorithmIdentifier);
       }
     };
     function castSourceData(toCast, encoding) {
@@ -36612,7 +36964,7 @@ var require_dist_cjs104 = __commonJS({
     };
     var import_core19 = (init_dist_es2(), __toCommonJS(dist_es_exports2));
     var import_protocol_http18 = require_dist_cjs8();
-    var import_uuid = (init_esm_node(), __toCommonJS(esm_node_exports));
+    var import_uuid2 = (init_esm_node(), __toCommonJS(esm_node_exports));
     var import_smithy_client28 = require_dist_cjs30();
     var DynamoDBServiceException = class _DynamoDBServiceException extends import_smithy_client28.ServiceException {
       static {
@@ -39179,7 +39531,7 @@ var require_dist_cjs104 = __commonJS({
     }, "se_ExecuteStatementInput");
     var se_ExecuteTransactionInput = /* @__PURE__ */ __name((input, context) => {
       return (0, import_smithy_client28.take)(input, {
-        ClientRequestToken: [true, (_2) => _2 ?? (0, import_uuid.v4)()],
+        ClientRequestToken: [true, (_2) => _2 ?? (0, import_uuid2.v4)()],
         ReturnConsumedCapacity: [],
         TransactStatements: (_2) => se_ParameterizedStatements(_2, context)
       });
@@ -39203,7 +39555,7 @@ var require_dist_cjs104 = __commonJS({
     }, "se_ExpectedAttributeValue");
     var se_ExportTableToPointInTimeInput = /* @__PURE__ */ __name((input, context) => {
       return (0, import_smithy_client28.take)(input, {
-        ClientToken: [true, (_2) => _2 ?? (0, import_uuid.v4)()],
+        ClientToken: [true, (_2) => _2 ?? (0, import_uuid2.v4)()],
         ExportFormat: [],
         ExportTime: (_2) => _2.getTime() / 1e3,
         ExportType: [],
@@ -39278,7 +39630,7 @@ var require_dist_cjs104 = __commonJS({
     }, "se_GlobalTableGlobalSecondaryIndexSettingsUpdateList");
     var se_ImportTableInput = /* @__PURE__ */ __name((input, context) => {
       return (0, import_smithy_client28.take)(input, {
-        ClientToken: [true, (_2) => _2 ?? (0, import_uuid.v4)()],
+        ClientToken: [true, (_2) => _2 ?? (0, import_uuid2.v4)()],
         InputCompressionType: [],
         InputFormat: [],
         InputFormatOptions: import_smithy_client28._json,
@@ -39546,7 +39898,7 @@ var require_dist_cjs104 = __commonJS({
     }, "se_TransactWriteItemList");
     var se_TransactWriteItemsInput = /* @__PURE__ */ __name((input, context) => {
       return (0, import_smithy_client28.take)(input, {
-        ClientRequestToken: [true, (_2) => _2 ?? (0, import_uuid.v4)()],
+        ClientRequestToken: [true, (_2) => _2 ?? (0, import_uuid2.v4)()],
         ReturnConsumedCapacity: [],
         ReturnItemCollectionMetrics: [],
         TransactItems: (_2) => se_TransactWriteItemList(_2, context)
@@ -43263,7 +43615,7 @@ var require_bytes = __commonJS({
     "use strict";
     module2.exports = bytes;
     module2.exports.format = format;
-    module2.exports.parse = parse2;
+    module2.exports.parse = parse3;
     var formatThousandsRegExp = /\B(?=(\d{3})+(?!\d))/g;
     var formatDecimalsRegExp = /(?:\.0*|(\.[^0]+)0+)$/;
     var map2 = {
@@ -43277,7 +43629,7 @@ var require_bytes = __commonJS({
     var parseRegExp = /^((-|\+)?(\d+(?:\.\d+)?)) *(kb|mb|gb|tb|pb)$/i;
     function bytes(value, options) {
       if (typeof value === "string") {
-        return parse2(value);
+        return parse3(value);
       }
       if (typeof value === "number") {
         return format(value, options);
@@ -43321,7 +43673,7 @@ var require_bytes = __commonJS({
       }
       return str + unitSeparator + unit;
     }
-    function parse2(val2) {
+    function parse3(val2) {
       if (typeof val2 === "number" && !isNaN(val2)) {
         return val2;
       }
@@ -43357,7 +43709,7 @@ var require_content_type = __commonJS({
     var QUOTE_REGEXP = /([\\"])/g;
     var TYPE_REGEXP = /^[!#$%&'*+.^_`|~0-9A-Za-z-]+\/[!#$%&'*+.^_`|~0-9A-Za-z-]+$/;
     exports.format = format;
-    exports.parse = parse2;
+    exports.parse = parse3;
     function format(obj) {
       if (!obj || typeof obj !== "object") {
         throw new TypeError("argument obj is required");
@@ -43381,7 +43733,7 @@ var require_content_type = __commonJS({
       }
       return string;
     }
-    function parse2(string) {
+    function parse3(string) {
       if (!string) {
         throw new TypeError("argument string is required");
       }
@@ -43828,7 +44180,7 @@ var require_ms2 = __commonJS({
       options = options || {};
       var type = typeof val2;
       if (type === "string" && val2.length > 0) {
-        return parse2(val2);
+        return parse3(val2);
       } else if (type === "number" && isNaN(val2) === false) {
         return options.long ? fmtLong(val2) : fmtShort(val2);
       }
@@ -43836,7 +44188,7 @@ var require_ms2 = __commonJS({
         "val is not a non-empty string or a valid number. val=" + JSON.stringify(val2)
       );
     };
-    function parse2(str) {
+    function parse3(str) {
       str = String(str);
       if (str.length > 100) {
         return;
@@ -48197,7 +48549,7 @@ var require_read = __commonJS({
     var unpipe = require_unpipe();
     var zlib = require("zlib");
     module2.exports = read;
-    function read(req, res, next, parse2, debug, options) {
+    function read(req, res, next, parse3, debug, options) {
       var length;
       var opts = options;
       var stream;
@@ -48256,7 +48608,7 @@ var require_read = __commonJS({
         try {
           debug("parse body");
           str = typeof body !== "string" && encoding !== null ? iconv.decode(body, encoding) : body;
-          req.body = parse2(str);
+          req.body = parse3(str);
         } catch (err2) {
           next(createError(400, err2, {
             body: str,
@@ -48324,7 +48676,7 @@ var require_media_typer = __commonJS({
     var typeNameRegExp = /^[A-Za-z0-9][A-Za-z0-9!#$&^_-]{0,126}$/;
     var typeRegExp = /^ *([A-Za-z0-9][A-Za-z0-9!#$&^_-]{0,126})\/([A-Za-z0-9][A-Za-z0-9!#$&^_.+-]{0,126}) *$/;
     exports.format = format;
-    exports.parse = parse2;
+    exports.parse = parse3;
     function format(obj) {
       if (!obj || typeof obj !== "object") {
         throw new TypeError("argument obj is required");
@@ -48359,7 +48711,7 @@ var require_media_typer = __commonJS({
       }
       return string;
     }
-    function parse2(string) {
+    function parse3(string) {
       if (!string) {
         throw new TypeError("argument string is required");
       }
@@ -57190,7 +57542,7 @@ var require_json = __commonJS({
         throw new TypeError("option verify must be function");
       }
       var shouldParse = typeof type !== "function" ? typeChecker(type) : type;
-      function parse2(body) {
+      function parse3(body) {
         if (body.length === 0) {
           return {};
         }
@@ -57238,7 +57590,7 @@ var require_json = __commonJS({
           }));
           return;
         }
-        read(req, res, next, parse2, debug, {
+        read(req, res, next, parse3, debug, {
           encoding: charset,
           inflate,
           limit,
@@ -57317,7 +57669,7 @@ var require_raw = __commonJS({
         throw new TypeError("option verify must be function");
       }
       var shouldParse = typeof type !== "function" ? typeChecker(type) : type;
-      function parse2(buf) {
+      function parse3(buf) {
         return buf;
       }
       return function rawParser(req, res, next) {
@@ -57338,7 +57690,7 @@ var require_raw = __commonJS({
           next();
           return;
         }
-        read(req, res, next, parse2, debug, {
+        read(req, res, next, parse3, debug, {
           encoding: null,
           inflate,
           limit,
@@ -57375,7 +57727,7 @@ var require_text = __commonJS({
         throw new TypeError("option verify must be function");
       }
       var shouldParse = typeof type !== "function" ? typeChecker(type) : type;
-      function parse2(buf) {
+      function parse3(buf) {
         return buf;
       }
       return function textParser(req, res, next) {
@@ -57397,7 +57749,7 @@ var require_text = __commonJS({
           return;
         }
         var charset = getCharset(req) || defaultCharset;
-        read(req, res, next, parse2, debug, {
+        read(req, res, next, parse3, debug, {
           encoding: charset,
           inflate,
           limit,
@@ -59094,7 +59446,7 @@ var require_stringify = __commonJS({
       return typeof v6 === "string" || typeof v6 === "number" || typeof v6 === "boolean" || typeof v6 === "symbol" || typeof v6 === "bigint";
     };
     var sentinel = {};
-    var stringify2 = function stringify3(object, prefix, generateArrayPrefix, commaRoundTrip, strictNullHandling, skipNulls, encoder, filter, sort, allowDots, serializeDate, format, formatter, encodeValuesOnly, charset, sideChannel) {
+    var stringify3 = function stringify4(object, prefix, generateArrayPrefix, commaRoundTrip, strictNullHandling, skipNulls, encoder, filter, sort, allowDots, serializeDate, format, formatter, encodeValuesOnly, charset, sideChannel) {
       var obj = object;
       var tmpSc = sideChannel;
       var step = 0;
@@ -59170,7 +59522,7 @@ var require_stringify = __commonJS({
         sideChannel.set(object, step);
         var valueSideChannel = getSideChannel();
         valueSideChannel.set(sentinel, sideChannel);
-        pushToArray(values, stringify3(
+        pushToArray(values, stringify4(
           value,
           keyPrefix,
           generateArrayPrefix,
@@ -59273,7 +59625,7 @@ var require_stringify = __commonJS({
         if (options.skipNulls && obj[key] === null) {
           continue;
         }
-        pushToArray(keys, stringify2(
+        pushToArray(keys, stringify3(
           obj[key],
           key,
           generateArrayPrefix,
@@ -59512,13 +59864,13 @@ var require_parse = __commonJS({
 var require_lib2 = __commonJS({
   "node_modules/qs/lib/index.js"(exports, module2) {
     "use strict";
-    var stringify2 = require_stringify();
-    var parse2 = require_parse();
+    var stringify3 = require_stringify();
+    var parse3 = require_parse();
     var formats = require_formats();
     module2.exports = {
       formats,
-      parse: parse2,
-      stringify: stringify2
+      parse: parse3,
+      stringify: stringify3
     };
   }
 });
@@ -59551,7 +59903,7 @@ var require_urlencoded = __commonJS({
       }
       var queryparse = extended ? extendedparser(opts) : simpleparser(opts);
       var shouldParse = typeof type !== "function" ? typeChecker(type) : type;
-      function parse2(body) {
+      function parse3(body) {
         return body.length ? queryparse(body) : {};
       }
       return function urlencodedParser(req, res, next) {
@@ -59581,7 +59933,7 @@ var require_urlencoded = __commonJS({
           }));
           return;
         }
-        read(req, res, next, parse2, debug, {
+        read(req, res, next, parse3, debug, {
           debug,
           encoding: charset,
           inflate,
@@ -59592,7 +59944,7 @@ var require_urlencoded = __commonJS({
     }
     function extendedparser(options) {
       var parameterLimit = options.parameterLimit !== void 0 ? options.parameterLimit : 1e3;
-      var parse2 = parser("qs");
+      var parse3 = parser("qs");
       if (isNaN(parameterLimit) || parameterLimit < 1) {
         throw new TypeError("option parameterLimit must be a positive number");
       }
@@ -59609,7 +59961,7 @@ var require_urlencoded = __commonJS({
         }
         var arrayLimit = Math.max(100, paramCount);
         debug("parse extended urlencoding");
-        return parse2(body, {
+        return parse3(body, {
           allowPrototypes: true,
           arrayLimit,
           depth: Infinity,
@@ -59654,7 +60006,7 @@ var require_urlencoded = __commonJS({
     }
     function simpleparser(options) {
       var parameterLimit = options.parameterLimit !== void 0 ? options.parameterLimit : 1e3;
-      var parse2 = parser("querystring");
+      var parse3 = parser("querystring");
       if (isNaN(parameterLimit) || parameterLimit < 1) {
         throw new TypeError("option parameterLimit must be a positive number");
       }
@@ -59670,7 +60022,7 @@ var require_urlencoded = __commonJS({
           });
         }
         debug("parse urlencoding");
-        return parse2(body, void 0, void 0, { maxKeys: parameterLimit });
+        return parse3(body, void 0, void 0, { maxKeys: parameterLimit });
       };
     }
     function typeChecker(type) {
@@ -59799,7 +60151,7 @@ var require_ms3 = __commonJS({
       options = options || {};
       var type = typeof val2;
       if (type === "string" && val2.length > 0) {
-        return parse2(val2);
+        return parse3(val2);
       } else if (type === "number" && isNaN(val2) === false) {
         return options.long ? fmtLong(val2) : fmtShort(val2);
       }
@@ -59807,7 +60159,7 @@ var require_ms3 = __commonJS({
         "val is not a non-empty string or a valid number. val=" + JSON.stringify(val2)
       );
     };
-    function parse2(str) {
+    function parse3(str) {
       str = String(str);
       if (str.length > 100) {
         return;
@@ -60620,7 +60972,7 @@ var require_content_disposition = __commonJS({
   "node_modules/content-disposition/index.js"(exports, module2) {
     "use strict";
     module2.exports = contentDisposition;
-    module2.exports.parse = parse2;
+    module2.exports.parse = parse3;
     var basename = require("path").basename;
     var Buffer2 = require_safe_buffer().Buffer;
     var ENCODE_URL_ATTR_CHAR_REGEXP = /[\x00-\x20"'()*,/:;<=>?@[\\\]{}\x7f]/g;
@@ -60711,7 +61063,7 @@ var require_content_disposition = __commonJS({
     function getlatin1(val2) {
       return String(val2).replace(NON_LATIN1_REGEXP, "?");
     }
-    function parse2(string) {
+    function parse3(string) {
       if (!string || typeof string !== "string") {
         throw new TypeError("argument string is required");
       }
@@ -60790,7 +61142,7 @@ var require_ms4 = __commonJS({
       options = options || {};
       var type = typeof val2;
       if (type === "string" && val2.length > 0) {
-        return parse2(val2);
+        return parse3(val2);
       } else if (type === "number" && isNaN(val2) === false) {
         return options.long ? fmtLong(val2) : fmtShort(val2);
       }
@@ -60798,7 +61150,7 @@ var require_ms4 = __commonJS({
         "val is not a non-empty string or a valid number. val=" + JSON.stringify(val2)
       );
     };
-    function parse2(str) {
+    function parse3(str) {
       str = String(str);
       if (str.length > 100) {
         return;
@@ -61217,14 +61569,14 @@ var require_etag = __commonJS({
   "node_modules/etag/index.js"(exports, module2) {
     "use strict";
     module2.exports = etag;
-    var crypto5 = require("crypto");
+    var crypto9 = require("crypto");
     var Stats = require("fs").Stats;
     var toString = Object.prototype.toString;
     function entitytag(entity) {
       if (entity.length === 0) {
         return '"0-2jmj7l5rSw0yVb/vlWAYkK/YBwk"';
       }
-      var hash = crypto5.createHash("sha1").update(entity, "utf8").digest("base64").substring(0, 27);
+      var hash = crypto9.createHash("sha1").update(entity, "utf8").digest("base64").substring(0, 27);
       var len = typeof entity === "string" ? Buffer.byteLength(entity, "utf8") : entity.length;
       return '"' + len.toString(16) + "-" + hash + '"';
     }
@@ -61401,7 +61753,7 @@ var require_ms5 = __commonJS({
       options = options || {};
       var type = typeof val2;
       if (type === "string" && val2.length > 0) {
-        return parse2(val2);
+        return parse3(val2);
       } else if (type === "number" && isFinite(val2)) {
         return options.long ? fmtLong(val2) : fmtShort(val2);
       }
@@ -61409,7 +61761,7 @@ var require_ms5 = __commonJS({
         "val is not a non-empty string or a valid number. val=" + JSON.stringify(val2)
       );
     };
-    function parse2(str) {
+    function parse3(str) {
       str = String(str);
       if (str.length > 100) {
         return;
@@ -62148,7 +62500,7 @@ var require_forwarded = __commonJS({
       if (!req) {
         throw new TypeError("argument req is required");
       }
-      var proxyAddrs = parse2(req.headers["x-forwarded-for"] || "");
+      var proxyAddrs = parse3(req.headers["x-forwarded-for"] || "");
       var socketAddr = getSocketAddr(req);
       var addrs = [socketAddr].concat(proxyAddrs);
       return addrs;
@@ -62156,7 +62508,7 @@ var require_forwarded = __commonJS({
     function getSocketAddr(req) {
       return req.socket ? req.socket.remoteAddress : req.connection.remoteAddress;
     }
-    function parse2(header) {
+    function parse3(header) {
       var end = header.length;
       var list2 = [];
       var start = header.length;
@@ -63984,7 +64336,7 @@ var require_request2 = __commonJS({
     var http = require("http");
     var fresh = require_fresh();
     var parseRange = require_range_parser();
-    var parse2 = require_parseurl();
+    var parse3 = require_parseurl();
     var proxyaddr = require_proxy_addr();
     var req = Object.create(http.IncomingMessage.prototype);
     module2.exports = req;
@@ -64094,7 +64446,7 @@ var require_request2 = __commonJS({
       return subdomains2.slice(offset);
     });
     defineGetter(req, "path", function path() {
-      return parse2(this).pathname;
+      return parse3(this).pathname;
     });
     defineGetter(req, "hostname", function hostname() {
       var trust = this.app.get("trust proxy fn");
@@ -64147,13 +64499,13 @@ var require_request2 = __commonJS({
 // node_modules/cookie-signature/index.js
 var require_cookie_signature = __commonJS({
   "node_modules/cookie-signature/index.js"(exports) {
-    var crypto5 = require("crypto");
+    var crypto9 = require("crypto");
     exports.sign = function(val2, secret) {
       if ("string" != typeof val2)
         throw new TypeError("Cookie value must be provided as a string.");
       if ("string" != typeof secret)
         throw new TypeError("Secret string must be provided.");
-      return val2 + "." + crypto5.createHmac("sha256", secret).update(val2).digest("base64").replace(/\=+$/, "");
+      return val2 + "." + crypto9.createHmac("sha256", secret).update(val2).digest("base64").replace(/\=+$/, "");
     };
     exports.unsign = function(val2, secret) {
       if ("string" != typeof val2)
@@ -64161,10 +64513,10 @@ var require_cookie_signature = __commonJS({
       if ("string" != typeof secret)
         throw new TypeError("Secret string must be provided.");
       var str = val2.slice(0, val2.lastIndexOf(".")), mac = exports.sign(str, secret);
-      return sha12(mac) == sha12(val2) ? str : false;
+      return sha13(mac) == sha13(val2) ? str : false;
     };
-    function sha12(str) {
-      return crypto5.createHash("sha1").update(str).digest("hex");
+    function sha13(str) {
+      return crypto9.createHash("sha1").update(str).digest("hex");
     }
   }
 });
@@ -64173,11 +64525,11 @@ var require_cookie_signature = __commonJS({
 var require_cookie = __commonJS({
   "node_modules/cookie/index.js"(exports) {
     "use strict";
-    exports.parse = parse2;
+    exports.parse = parse3;
     exports.serialize = serialize;
     var __toString = Object.prototype.toString;
     var fieldContentRegExp = /^[\u0009\u0020-\u007e\u0080-\u00ff]+$/;
-    function parse2(str, options) {
+    function parse3(str, options) {
       if (typeof str !== "string") {
         throw new TypeError("argument str must be a string");
       }
@@ -64328,7 +64680,7 @@ var require_vary = __commonJS({
       if (!field) {
         throw new TypeError("field argument is required");
       }
-      var fields = !Array.isArray(field) ? parse2(String(field)) : field;
+      var fields = !Array.isArray(field) ? parse3(String(field)) : field;
       for (var j3 = 0; j3 < fields.length; j3++) {
         if (!FIELD_NAME_REGEXP.test(fields[j3])) {
           throw new TypeError("field argument contains an invalid header name");
@@ -64338,7 +64690,7 @@ var require_vary = __commonJS({
         return header;
       }
       var val2 = header;
-      var vals = parse2(header.toLowerCase());
+      var vals = parse3(header.toLowerCase());
       if (fields.indexOf("*") !== -1 || vals.indexOf("*") !== -1) {
         return "*";
       }
@@ -64351,7 +64703,7 @@ var require_vary = __commonJS({
       }
       return val2;
     }
-    function parse2(header) {
+    function parse3(header) {
       var end = 0;
       var list2 = [];
       var start = 0;
@@ -64540,7 +64892,7 @@ var require_response2 = __commonJS({
       var escape2 = app2.get("json escape");
       var replacer = app2.get("json replacer");
       var spaces = app2.get("json spaces");
-      var body = stringify2(val2, replacer, spaces, escape2);
+      var body = stringify3(val2, replacer, spaces, escape2);
       if (!this.get("Content-Type")) {
         this.set("Content-Type", "application/json");
       }
@@ -64562,7 +64914,7 @@ var require_response2 = __commonJS({
       var escape2 = app2.get("json escape");
       var replacer = app2.get("json replacer");
       var spaces = app2.get("json spaces");
-      var body = stringify2(val2, replacer, spaces, escape2);
+      var body = stringify3(val2, replacer, spaces, escape2);
       var callback = this.req.query[app2.get("jsonp callback name")];
       if (!this.get("Content-Type")) {
         this.set("X-Content-Type-Options", "nosniff");
@@ -64925,7 +65277,7 @@ var require_response2 = __commonJS({
       }
       file.pipe(res2);
     }
-    function stringify2(value, replacer, spaces, escape2) {
+    function stringify3(value, replacer, spaces, escape2) {
       var json2 = replacer || spaces ? JSON.stringify(value, replacer, spaces) : JSON.stringify(value);
       if (escape2 && typeof json2 === "string") {
         json2 = json2.replace(/[<>&]/g, function(c3) {
@@ -65830,7 +66182,7 @@ var require_cjs = __commonJS({
       out.publicSuffix = (_a2 = hostnameParts[hostnameParts.length - 1]) !== null && _a2 !== void 0 ? _a2 : null;
     }
     var RESULT = getEmptyResult();
-    function parse2(url, options = {}) {
+    function parse3(url, options = {}) {
       return parseImpl(url, 5, suffixLookup, options, getEmptyResult());
     }
     function getHostname(url, options = {}) {
@@ -65858,7 +66210,7 @@ var require_cjs = __commonJS({
     exports.getHostname = getHostname;
     exports.getPublicSuffix = getPublicSuffix;
     exports.getSubdomain = getSubdomain;
-    exports.parse = parse2;
+    exports.parse = parse3;
   }
 });
 
@@ -66002,7 +66354,7 @@ var require_ms6 = __commonJS({
       options = options || {};
       var type = typeof val2;
       if (type === "string" && val2.length > 0) {
-        return parse2(val2);
+        return parse3(val2);
       } else if (type === "number" && isFinite(val2)) {
         return options.long ? fmtLong(val2) : fmtShort(val2);
       }
@@ -66010,7 +66362,7 @@ var require_ms6 = __commonJS({
         "val is not a non-empty string or a valid number. val=" + JSON.stringify(val2)
       );
     };
-    function parse2(str) {
+    function parse3(str) {
       str = String(str);
       if (str.length > 100) {
         return;
@@ -66521,10 +66873,10 @@ var require_supports_color = __commonJS({
         return 3;
       }
       if ("TERM_PROGRAM" in env) {
-        const version2 = parseInt((env.TERM_PROGRAM_VERSION || "").split(".")[0], 10);
+        const version3 = parseInt((env.TERM_PROGRAM_VERSION || "").split(".")[0], 10);
         switch (env.TERM_PROGRAM) {
           case "iTerm.app":
-            return version2 >= 3 ? 3 : 2;
+            return version3 >= 3 ? 3 : 2;
           case "Apple_Terminal":
             return 2;
         }
@@ -68386,8 +68738,8 @@ var require_URL = __commonJS({
     var utils = require_utils4();
     var Impl = require_URL_impl();
     var impl = utils.implSymbol;
-    function URL3(url) {
-      if (!this || this[impl] || !(this instanceof URL3)) {
+    function URL4(url) {
+      if (!this || this[impl] || !(this instanceof URL4)) {
         throw new TypeError("Failed to construct 'URL': Please use the 'new' operator, this DOM object constructor cannot be called as a function.");
       }
       if (arguments.length < 1) {
@@ -68403,7 +68755,7 @@ var require_URL = __commonJS({
       }
       module2.exports.setup(this, args);
     }
-    URL3.prototype.toJSON = function toJSON() {
+    URL4.prototype.toJSON = function toJSON() {
       if (!this || !module2.exports.is(this)) {
         throw new TypeError("Illegal invocation");
       }
@@ -68413,7 +68765,7 @@ var require_URL = __commonJS({
       }
       return this[impl].toJSON.apply(this[impl], args);
     };
-    Object.defineProperty(URL3.prototype, "href", {
+    Object.defineProperty(URL4.prototype, "href", {
       get() {
         return this[impl].href;
       },
@@ -68424,20 +68776,20 @@ var require_URL = __commonJS({
       enumerable: true,
       configurable: true
     });
-    URL3.prototype.toString = function() {
+    URL4.prototype.toString = function() {
       if (!this || !module2.exports.is(this)) {
         throw new TypeError("Illegal invocation");
       }
       return this.href;
     };
-    Object.defineProperty(URL3.prototype, "origin", {
+    Object.defineProperty(URL4.prototype, "origin", {
       get() {
         return this[impl].origin;
       },
       enumerable: true,
       configurable: true
     });
-    Object.defineProperty(URL3.prototype, "protocol", {
+    Object.defineProperty(URL4.prototype, "protocol", {
       get() {
         return this[impl].protocol;
       },
@@ -68448,7 +68800,7 @@ var require_URL = __commonJS({
       enumerable: true,
       configurable: true
     });
-    Object.defineProperty(URL3.prototype, "username", {
+    Object.defineProperty(URL4.prototype, "username", {
       get() {
         return this[impl].username;
       },
@@ -68459,7 +68811,7 @@ var require_URL = __commonJS({
       enumerable: true,
       configurable: true
     });
-    Object.defineProperty(URL3.prototype, "password", {
+    Object.defineProperty(URL4.prototype, "password", {
       get() {
         return this[impl].password;
       },
@@ -68470,7 +68822,7 @@ var require_URL = __commonJS({
       enumerable: true,
       configurable: true
     });
-    Object.defineProperty(URL3.prototype, "host", {
+    Object.defineProperty(URL4.prototype, "host", {
       get() {
         return this[impl].host;
       },
@@ -68481,7 +68833,7 @@ var require_URL = __commonJS({
       enumerable: true,
       configurable: true
     });
-    Object.defineProperty(URL3.prototype, "hostname", {
+    Object.defineProperty(URL4.prototype, "hostname", {
       get() {
         return this[impl].hostname;
       },
@@ -68492,7 +68844,7 @@ var require_URL = __commonJS({
       enumerable: true,
       configurable: true
     });
-    Object.defineProperty(URL3.prototype, "port", {
+    Object.defineProperty(URL4.prototype, "port", {
       get() {
         return this[impl].port;
       },
@@ -68503,7 +68855,7 @@ var require_URL = __commonJS({
       enumerable: true,
       configurable: true
     });
-    Object.defineProperty(URL3.prototype, "pathname", {
+    Object.defineProperty(URL4.prototype, "pathname", {
       get() {
         return this[impl].pathname;
       },
@@ -68514,7 +68866,7 @@ var require_URL = __commonJS({
       enumerable: true,
       configurable: true
     });
-    Object.defineProperty(URL3.prototype, "search", {
+    Object.defineProperty(URL4.prototype, "search", {
       get() {
         return this[impl].search;
       },
@@ -68525,7 +68877,7 @@ var require_URL = __commonJS({
       enumerable: true,
       configurable: true
     });
-    Object.defineProperty(URL3.prototype, "hash", {
+    Object.defineProperty(URL4.prototype, "hash", {
       get() {
         return this[impl].hash;
       },
@@ -68541,7 +68893,7 @@ var require_URL = __commonJS({
         return !!obj && obj[impl] instanceof Impl.implementation;
       },
       create(constructorArgs, privateData) {
-        let obj = Object.create(URL3.prototype);
+        let obj = Object.create(URL4.prototype);
         this.setup(obj, constructorArgs, privateData);
         return obj;
       },
@@ -68552,10 +68904,10 @@ var require_URL = __commonJS({
         obj[impl] = new Impl.implementation(constructorArgs, privateData);
         obj[impl][utils.wrapperSymbol] = obj;
       },
-      interface: URL3,
+      interface: URL4,
       expose: {
-        Window: { URL: URL3 },
-        Worker: { URL: URL3 }
+        Window: { URL: URL4 },
+        Worker: { URL: URL4 }
       }
     };
   }
@@ -69406,12 +69758,12 @@ var require_lib5 = __commonJS({
       configurable: true
     });
     var INTERNALS$2 = Symbol("Request internals");
-    var URL3 = Url.URL || whatwgUrl.URL;
+    var URL4 = Url.URL || whatwgUrl.URL;
     var parse_url = Url.parse;
     var format_url = Url.format;
     function parseURL(urlStr) {
       if (/^[a-zA-Z][a-zA-Z\d+\-.]*:/.exec(urlStr)) {
-        urlStr = new URL3(urlStr).toString();
+        urlStr = new URL4(urlStr).toString();
       }
       return parse_url(urlStr);
     }
@@ -69961,8 +70313,8 @@ var require_utils5 = __commonJS({
       }
     };
     exports.doFetch = doFetch;
-    function getLargestVersionFromIntersection(v12, v22) {
-      let intersection = v12.filter((value) => v22.indexOf(value) !== -1);
+    function getLargestVersionFromIntersection(v13, v22) {
+      let intersection = v13.filter((value) => v22.indexOf(value) !== -1);
       if (intersection.length === 0) {
         return void 0;
       }
@@ -69973,23 +70325,23 @@ var require_utils5 = __commonJS({
       return maxVersionSoFar;
     }
     exports.getLargestVersionFromIntersection = getLargestVersionFromIntersection;
-    function maxVersion(version1, version2) {
+    function maxVersion(version1, version22) {
       let splittedv1 = version1.split(".");
-      let splittedv2 = version2.split(".");
+      let splittedv2 = version22.split(".");
       let minLength = Math.min(splittedv1.length, splittedv2.length);
       for (let i3 = 0; i3 < minLength; i3++) {
-        let v12 = Number(splittedv1[i3]);
+        let v13 = Number(splittedv1[i3]);
         let v22 = Number(splittedv2[i3]);
-        if (v12 > v22) {
+        if (v13 > v22) {
           return version1;
-        } else if (v22 > v12) {
-          return version2;
+        } else if (v22 > v13) {
+          return version22;
         }
       }
       if (splittedv1.length >= splittedv2.length) {
         return version1;
       }
-      return version2;
+      return version22;
     }
     exports.maxVersion = maxVersion;
     function normaliseInputAppInfoOrThrowError(appInfo) {
@@ -70150,13 +70502,13 @@ var require_utils5 = __commonJS({
       return maxVersionStr;
     }
     exports.getLatestFDIVersionFromFDIList = getLatestFDIVersionFromFDIList;
-    function hasGreaterThanEqualToFDI(req, version2) {
+    function hasGreaterThanEqualToFDI(req, version3) {
       let requestFDI = req.getHeaderValue(constants_1.HEADER_FDI);
       if (requestFDI === void 0) {
         return true;
       }
       requestFDI = getLatestFDIVersionFromFDIList(requestFDI);
-      if (requestFDI === version2 || maxVersion(version2, requestFDI) !== version2) {
+      if (requestFDI === version3 || maxVersion(version3, requestFDI) !== version3) {
         return true;
       }
       return false;
@@ -71735,9 +72087,9 @@ var require_webcrypto = __commonJS({
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.isCryptoKey = void 0;
-    var crypto5 = require("crypto");
+    var crypto9 = require("crypto");
     var util2 = require("util");
-    var webcrypto = crypto5.webcrypto;
+    var webcrypto = crypto9.webcrypto;
     exports.default = webcrypto;
     exports.isCryptoKey = util2.types.isCryptoKey ? (key) => util2.types.isCryptoKey(key) : (key) => false;
   }
@@ -72780,7 +73132,7 @@ var require_jwk_to_key = __commonJS({
     var check_modulus_length_js_1 = require_check_modulus_length();
     var asn1_sequence_encoder_js_1 = require_asn1_sequence_encoder();
     var flags_js_1 = require_flags();
-    var parse2 = (jwk) => {
+    var parse3 = (jwk) => {
       if (flags_js_1.jwkImport && jwk.kty !== "oct") {
         return jwk.d ? (0, crypto_1.createPrivateKey)({ format: "jwk", key: jwk }) : (0, crypto_1.createPublicKey)({ format: "jwk", key: jwk });
       }
@@ -72884,7 +73236,7 @@ var require_jwk_to_key = __commonJS({
           throw new errors_js_1.JOSENotSupported('Invalid or unsupported JWK "kty" (Key Type) Parameter value');
       }
     };
-    exports.default = parse2;
+    exports.default = parse3;
   }
 });
 
@@ -74388,22 +74740,22 @@ var require_sign = __commonJS({
   "node_modules/supertokens-node/node_modules/jose/dist/node/cjs/runtime/sign.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var crypto5 = require("crypto");
+    var crypto9 = require("crypto");
     var util_1 = require("util");
     var dsa_digest_js_1 = require_dsa_digest();
     var hmac_digest_js_1 = require_hmac_digest();
     var node_key_js_1 = require_node_key();
     var get_sign_verify_key_js_1 = require_get_sign_verify_key();
     var oneShotSign;
-    if (crypto5.sign.length > 3) {
-      oneShotSign = (0, util_1.promisify)(crypto5.sign);
+    if (crypto9.sign.length > 3) {
+      oneShotSign = (0, util_1.promisify)(crypto9.sign);
     } else {
-      oneShotSign = crypto5.sign;
+      oneShotSign = crypto9.sign;
     }
     var sign = async (alg, key, data) => {
       const keyObject = (0, get_sign_verify_key_js_1.default)(alg, key, "sign");
       if (alg.startsWith("HS")) {
-        const hmac = crypto5.createHmac((0, hmac_digest_js_1.default)(alg), keyObject);
+        const hmac = crypto9.createHmac((0, hmac_digest_js_1.default)(alg), keyObject);
         hmac.update(data);
         return hmac.digest();
       }
@@ -74418,7 +74770,7 @@ var require_verify = __commonJS({
   "node_modules/supertokens-node/node_modules/jose/dist/node/cjs/runtime/verify.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var crypto5 = require("crypto");
+    var crypto9 = require("crypto");
     var util_1 = require("util");
     var dsa_digest_js_1 = require_dsa_digest();
     var node_key_js_1 = require_node_key();
@@ -74426,10 +74778,10 @@ var require_verify = __commonJS({
     var get_sign_verify_key_js_1 = require_get_sign_verify_key();
     var flags_js_1 = require_flags();
     var oneShotVerify;
-    if (crypto5.verify.length > 4 && flags_js_1.oneShotCallback) {
-      oneShotVerify = (0, util_1.promisify)(crypto5.verify);
+    if (crypto9.verify.length > 4 && flags_js_1.oneShotCallback) {
+      oneShotVerify = (0, util_1.promisify)(crypto9.verify);
     } else {
-      oneShotVerify = crypto5.verify;
+      oneShotVerify = crypto9.verify;
     }
     var verify = async (alg, key, signature, data) => {
       const keyObject = (0, get_sign_verify_key_js_1.default)(alg, key, "verify");
@@ -74437,7 +74789,7 @@ var require_verify = __commonJS({
         const expected = await (0, sign_js_1.default)(alg, keyObject, data);
         const actual = signature;
         try {
-          return crypto5.timingSafeEqual(actual, expected);
+          return crypto9.timingSafeEqual(actual, expected);
         } catch {
           return false;
         }
@@ -76168,39 +76520,39 @@ var require_core = __commonJS({
       }
     })(exports, function() {
       var CryptoJS = CryptoJS || function(Math2, undefined2) {
-        var crypto5;
+        var crypto9;
         if (typeof window !== "undefined" && window.crypto) {
-          crypto5 = window.crypto;
+          crypto9 = window.crypto;
         }
         if (typeof self !== "undefined" && self.crypto) {
-          crypto5 = self.crypto;
+          crypto9 = self.crypto;
         }
         if (typeof globalThis !== "undefined" && globalThis.crypto) {
-          crypto5 = globalThis.crypto;
+          crypto9 = globalThis.crypto;
         }
-        if (!crypto5 && typeof window !== "undefined" && window.msCrypto) {
-          crypto5 = window.msCrypto;
+        if (!crypto9 && typeof window !== "undefined" && window.msCrypto) {
+          crypto9 = window.msCrypto;
         }
-        if (!crypto5 && typeof global !== "undefined" && global.crypto) {
-          crypto5 = global.crypto;
+        if (!crypto9 && typeof global !== "undefined" && global.crypto) {
+          crypto9 = global.crypto;
         }
-        if (!crypto5 && typeof require === "function") {
+        if (!crypto9 && typeof require === "function") {
           try {
-            crypto5 = require("crypto");
+            crypto9 = require("crypto");
           } catch (err2) {
           }
         }
         var cryptoSecureRandomInt = function() {
-          if (crypto5) {
-            if (typeof crypto5.getRandomValues === "function") {
+          if (crypto9) {
+            if (typeof crypto9.getRandomValues === "function") {
               try {
-                return crypto5.getRandomValues(new Uint32Array(1))[0];
+                return crypto9.getRandomValues(new Uint32Array(1))[0];
               } catch (err2) {
               }
             }
-            if (typeof crypto5.randomBytes === "function") {
+            if (typeof crypto9.randomBytes === "function") {
               try {
-                return crypto5.randomBytes(4).readInt32LE();
+                return crypto9.randomBytes(4).readInt32LE();
               } catch (err2) {
               }
             }
@@ -79463,7 +79815,7 @@ var require_response3 = __commonJS({
 var require_cookie2 = __commonJS({
   "node_modules/supertokens-node/node_modules/cookie/index.js"(exports) {
     "use strict";
-    exports.parse = parse2;
+    exports.parse = parse3;
     exports.serialize = serialize;
     var __toString = Object.prototype.toString;
     var __hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -79471,7 +79823,7 @@ var require_cookie2 = __commonJS({
     var cookieValueRegExp = /^("?)[\u0021\u0023-\u002B\u002D-\u003A\u003C-\u005B\u005D-\u007E]*\1$/;
     var domainValueRegExp = /^([.]?[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)([.][a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)*$/i;
     var pathValueRegExp = /^[\u0020-\u003A\u003D-\u007E]*$/;
-    function parse2(str, opt) {
+    function parse3(str, opt) {
       if (typeof str !== "string") {
         throw new TypeError("argument str must be a string");
       }
@@ -85953,7 +86305,7 @@ var require_jwt = __commonJS({
         throw new Error("Invalid JWT");
       }
       const latestVersion = 3;
-      let version2 = 2;
+      let version3 = 2;
       let kid = void 0;
       if (!HEADERS.has(splittedInput[0])) {
         const parsedHeader = JSON.parse(utils_1.decodeBase64(splittedInput[0]));
@@ -85961,21 +86313,21 @@ var require_jwt = __commonJS({
           if (typeof parsedHeader.version !== "string") {
             throw new Error("JWT header mismatch");
           }
-          version2 = Number.parseInt(parsedHeader.version);
-          logger_1.logDebugMessage("parseJWTWithoutSignatureVerification: version from header: " + version2);
+          version3 = Number.parseInt(parsedHeader.version);
+          logger_1.logDebugMessage("parseJWTWithoutSignatureVerification: version from header: " + version3);
         } else {
           logger_1.logDebugMessage(
             "parseJWTWithoutSignatureVerification: assuming latest version (3) because version header is missing"
           );
-          version2 = latestVersion;
+          version3 = latestVersion;
         }
         kid = parsedHeader.kid;
-        if (parsedHeader.typ !== "JWT" || !Number.isInteger(version2) || version2 < 3 || kid === void 0) {
+        if (parsedHeader.typ !== "JWT" || !Number.isInteger(version3) || version3 < 3 || kid === void 0) {
           throw new Error("JWT header mismatch");
         }
       }
       return {
-        version: version2,
+        version: version3,
         kid,
         rawTokenString: jwt,
         rawPayload: splittedInput[1],
@@ -86162,26 +86514,26 @@ var require_accessToken = __commonJS({
       }
     }
     exports.getInfoFromAccessToken = getInfoFromAccessToken;
-    function validateAccessTokenStructure(payload, version2) {
+    function validateAccessTokenStructure(payload, version3) {
       if (payload.stt !== 0 && payload.stt !== void 0) {
         throw Error("Wrong token type");
       }
-      if (version2 >= 5) {
+      if (version3 >= 5) {
         if (typeof payload.sub !== "string" || typeof payload.exp !== "number" || typeof payload.iat !== "number" || typeof payload.sessionHandle !== "string" || typeof payload.refreshTokenHash1 !== "string" || typeof payload.rsub !== "string") {
           logger_1.logDebugMessage("validateAccessTokenStructure: Access token is using version >= 4");
           throw Error("Access token does not contain all the information. Maybe the structure has changed?");
         }
-      } else if (version2 >= 4) {
+      } else if (version3 >= 4) {
         if (typeof payload.sub !== "string" || typeof payload.exp !== "number" || typeof payload.iat !== "number" || typeof payload.sessionHandle !== "string" || typeof payload.refreshTokenHash1 !== "string") {
           logger_1.logDebugMessage("validateAccessTokenStructure: Access token is using version >= 4");
           throw Error("Access token does not contain all the information. Maybe the structure has changed?");
         }
-      } else if (version2 >= 3) {
+      } else if (version3 >= 3) {
         if (typeof payload.sub !== "string" || typeof payload.exp !== "number" || typeof payload.iat !== "number" || typeof payload.sessionHandle !== "string" || typeof payload.refreshTokenHash1 !== "string") {
           logger_1.logDebugMessage("validateAccessTokenStructure: Access token is using version >= 3");
           throw Error("Access token does not contain all the information. Maybe the structure has changed?");
         }
-        if (version2 >= 4) {
+        if (version3 >= 4) {
           if (typeof payload.tId !== "string") {
             throw Error("Access token does not contain all the information. Maybe the structure has changed?");
           }
@@ -90909,7 +91261,7 @@ var require_set_cookie2 = __commonJS({
       }
       return { name, value };
     }
-    function parse2(input, options) {
+    function parse3(input, options) {
       options = options ? Object.assign({}, defaultParseOptions, options) : defaultParseOptions;
       if (!input) {
         if (!options.map) {
@@ -91006,8 +91358,8 @@ var require_set_cookie2 = __commonJS({
       }
       return cookiesStrings;
     }
-    module2.exports = parse2;
-    module2.exports.parse = parse2;
+    module2.exports = parse3;
+    module2.exports.parse = parse3;
     module2.exports.parseString = parseString;
     module2.exports.splitCookiesString = splitCookiesString;
   }
@@ -94489,18 +94841,18 @@ var require_metadata = __commonJS({
       return metadata.countries.hasOwnProperty(country2);
     }
     function setVersion(metadata) {
-      var version2 = metadata.version;
-      if (typeof version2 === "number") {
-        this.v1 = version2 === 1;
-        this.v2 = version2 === 2;
-        this.v3 = version2 === 3;
-        this.v4 = version2 === 4;
+      var version3 = metadata.version;
+      if (typeof version3 === "number") {
+        this.v1 = version3 === 1;
+        this.v2 = version3 === 2;
+        this.v3 = version3 === 3;
+        this.v4 = version3 === 4;
       } else {
-        if (!version2) {
+        if (!version3) {
           this.v1 = true;
-        } else if ((0, _semverCompare["default"])(version2, V3) === -1) {
+        } else if ((0, _semverCompare["default"])(version3, V3) === -1) {
           this.v2 = true;
-        } else if ((0, _semverCompare["default"])(version2, V4) === -1) {
+        } else if ((0, _semverCompare["default"])(version3, V4) === -1) {
           this.v3 = true;
         } else {
           this.v4 = true;
@@ -96349,7 +96701,7 @@ var require_parse2 = __commonJS({
     Object.defineProperty(exports, "__esModule", {
       value: true
     });
-    exports["default"] = parse2;
+    exports["default"] = parse3;
     var _constants = require_constants11();
     var _ParseError = _interopRequireDefault(require_ParseError());
     var _metadata = _interopRequireDefault(require_metadata());
@@ -96410,7 +96762,7 @@ var require_parse2 = __commonJS({
     var PHONE_NUMBER_START_PATTERN = new RegExp("[" + _constants.PLUS_CHARS + _constants.VALID_DIGITS + "]");
     var AFTER_PHONE_NUMBER_END_PATTERN = new RegExp("[^" + _constants.VALID_DIGITS + "#]+$");
     var USE_NON_GEOGRAPHIC_COUNTRY_CODE = false;
-    function parse2(text, options, metadata) {
+    function parse3(text, options, metadata) {
       options = options || {};
       metadata = new _metadata["default"](metadata);
       if (options.defaultCountry && !metadata.hasCountry(options.defaultCountry)) {
@@ -98497,7 +98849,7 @@ var require_AsYouTypeFormatter_PatternParser = __commonJS({
       }
       _createClass(PatternParser2, [{
         key: "parse",
-        value: function parse2(pattern) {
+        value: function parse3(pattern) {
           this.context = [{
             or: true,
             instructions: []
@@ -112261,10 +112613,13 @@ var schema = new import_dynamoose2.default.Schema(
     tgSk: { type: String, required: true, rangeKey: true },
     // COURSE
     courseName: { type: String },
-    courseRating: { type: Number },
-    courseSlope: { type: Number },
     coursePar: { type: Number },
-    score: { type: Number }
+    courseLength: { type: Number },
+    roundDate: { type: String },
+    roundScore: { type: Number },
+    roundPutts: { type: Number },
+    fairwayPercentage: { type: Number },
+    greenPercentage: { type: Number }
   },
   {
     timestamps: true
@@ -112300,9 +112655,8 @@ var init = () => {
       // We use try.supertokens for demo purposes.
       // At the end of the tutorial we will show you how to create
       // your own SuperTokens core instance and then update your config.
-      connectionURI: "https://st-dev-3b67cde0-e2a3-11ef-869a-3b51ebca2395.aws.supertokens.io",
-      apiKey: "dpRnlAMJ7Uxu-y8Ha6nvV6Nvxi"
-      // apiKey: <YOUR_API_KEY>
+      connectionURI: process.env.SUPERTOKENS_CONNECTION_URI || "",
+      apiKey: process.env.SUPERTOKENS_API_KEY
     },
     appInfo: {
       // learn more about this on https://supertokens.com/docs/session/appinfo
@@ -112353,15 +112707,70 @@ var init = () => {
 var import_express = __toESM(require_express6());
 var import_express2 = __toESM(require_express2());
 
+// node_modules/uuid/dist/esm/stringify.js
+var byteToHex3 = [];
+for (let i3 = 0; i3 < 256; ++i3) {
+  byteToHex3.push((i3 + 256).toString(16).slice(1));
+}
+function unsafeStringify3(arr, offset = 0) {
+  return (byteToHex3[arr[offset + 0]] + byteToHex3[arr[offset + 1]] + byteToHex3[arr[offset + 2]] + byteToHex3[arr[offset + 3]] + "-" + byteToHex3[arr[offset + 4]] + byteToHex3[arr[offset + 5]] + "-" + byteToHex3[arr[offset + 6]] + byteToHex3[arr[offset + 7]] + "-" + byteToHex3[arr[offset + 8]] + byteToHex3[arr[offset + 9]] + "-" + byteToHex3[arr[offset + 10]] + byteToHex3[arr[offset + 11]] + byteToHex3[arr[offset + 12]] + byteToHex3[arr[offset + 13]] + byteToHex3[arr[offset + 14]] + byteToHex3[arr[offset + 15]]).toLowerCase();
+}
+
+// node_modules/uuid/dist/esm/rng.js
+var import_crypto9 = require("crypto");
+var rnds8Pool3 = new Uint8Array(256);
+var poolPtr3 = rnds8Pool3.length;
+function rng3() {
+  if (poolPtr3 > rnds8Pool3.length - 16) {
+    (0, import_crypto9.randomFillSync)(rnds8Pool3);
+    poolPtr3 = 0;
+  }
+  return rnds8Pool3.slice(poolPtr3, poolPtr3 += 16);
+}
+
+// node_modules/uuid/dist/esm/native.js
+var import_crypto10 = require("crypto");
+var native_default3 = { randomUUID: import_crypto10.randomUUID };
+
+// node_modules/uuid/dist/esm/v4.js
+function v43(options, buf, offset) {
+  if (native_default3.randomUUID && !buf && !options) {
+    return native_default3.randomUUID();
+  }
+  options = options || {};
+  const rnds = options.random ?? options.rng?.() ?? rng3();
+  if (rnds.length < 16) {
+    throw new Error("Random bytes length must be >= 16");
+  }
+  rnds[6] = rnds[6] & 15 | 64;
+  rnds[8] = rnds[8] & 63 | 128;
+  if (buf) {
+    offset = offset || 0;
+    if (offset < 0 || offset + 16 > buf.length) {
+      throw new RangeError(`UUID byte range ${offset}:${offset + 15} is out of buffer bounds`);
+    }
+    for (let i3 = 0; i3 < 16; ++i3) {
+      buf[offset + i3] = rnds[i3];
+    }
+    return buf;
+  }
+  return unsafeStringify3(rnds);
+}
+var v4_default3 = v43;
+
 // src/api/routes/round/create.ts
-var create = (req, res) => {
-  console.log("hello!");
-  res.status(200).json({ message: "hello!" });
+var create = async (req, res) => {
+  const round = await Table_default.create({
+    tgPk: `user#${req.session.getUserId()}`,
+    tgSk: `round#${v4_default3()}`,
+    ...req.body
+  });
+  res.status(200).json({ success: true, round });
 };
 
 // src/api/routes/round/list.ts
 var list = async (req, res) => {
-  const rounds = await Table_default.scan().exec();
+  const rounds = await Table_default.query().where("tgPk").eq(`user#${req.session.getUserId()}`).and().where("tgSk").beginsWith("round#").exec();
   res.status(200).json({ rows: rounds });
 };
 
@@ -112379,8 +112788,8 @@ var get3 = async (req, res) => {
 var routes_default = () => {
   const router = (0, import_express2.Router)();
   router.use((0, import_express.verifySession)());
-  router.post("/round/create", create);
-  router.get("/round/list", list);
+  router.post("/round", create);
+  router.get("/rounds", list);
   router.get("/user", get3);
   return router;
 };

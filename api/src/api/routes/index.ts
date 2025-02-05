@@ -9,8 +9,8 @@ export default () => {
   
   router.use(verifySession())
 
-  router.post('/round/create', createRound)
-  router.get('/round/list', listRounds)
+  router.post('/round', createRound)
+  router.get('/rounds', listRounds)
   
   router.get('/user', getUser)
 

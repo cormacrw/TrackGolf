@@ -1,7 +1,6 @@
 import { Response } from 'express'
 import { SessionRequest } from 'supertokens-node/framework/express'
 import Table from '../../../data/Table'
-import { Condition } from 'dynamoose'
 
 export const get = async (req: SessionRequest, res: Response) => {
     

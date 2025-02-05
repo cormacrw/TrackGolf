@@ -6,11 +6,14 @@ const schema = new dynamoose.Schema({
   
   // COURSE
   courseName: { type: String },
-  courseRating: { type: Number },
-  courseSlope: { type: Number },
   coursePar: { type: Number },
-  score: { type: Number },
+  courseLength: { type: Number },
 
+  roundDate: { type: String },
+  roundScore: { type: Number },
+  roundPutts: { type: Number },
+  fairwayPercentage: { type: Number },
+  greenPercentage: { type: Number },
 }, {
     timestamps: true,
   }

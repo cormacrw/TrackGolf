@@ -17,7 +17,7 @@
 <Navbar>
   <NavBrand href="/s/dashboard">
     <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">TrackGolf</span>
-    <Button size="sm" class="ml-4">Track Round +</Button>
+    <Button href="/s/new-round" size="sm" class="ml-4">Track Round +</Button>
   </NavBrand>
   <div class="flex items-center md:order-1">
     <Avatar id="avatar-menu" src="/images/user.jpg" />
