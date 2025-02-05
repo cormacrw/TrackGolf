@@ -4,11 +4,12 @@
   import { signUp } from "supertokens-web-js/recipe/emailpassword";
 
   let email = ''
+  let username = ''
   let password = ''
   let confirmPassword = ''
 
   const handleSubmit = async () => {
-    console.log('Sign up:', { email, password, confirmPassword })
+    console.log('Sign up:', { email, username, password, confirmPassword })
     try {
       console.log('Signing up...')
       const response = await signUp({
@@ -43,17 +44,18 @@
 
 </script>
 
-<div class="min-h-screen bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600">
+<div class="min-h-screen bg-gradient-to-br from-green-400 via-green-500 to-green-600">
   <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen lg:py-0">
     <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
       <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
         <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
           Sign up for TrackGolf
         </h1>
-        <form class="space-y-4 md:space-y-6" on:submit|preventDefault={handleSubmit}>
+        <form on:submit|preventDefault={handleSubmit}>
           <div>
-            <Label for="email" class="mb-2">Your email</Label>
-            <Input
+            <label for="email" class="label">Your email</label>
+            <input
+              class="input input-bordered w-full"
               bind:value={email}
               type="email"
               name="email"
@@ -62,9 +64,22 @@
               required
             />
           </div>
-          <div>
-            <Label for="password" class="mb-2">Password</Label>
-            <Input
+          <div class="mt-2">
+            <label for="username" class="label">Platform Username</label>
+            <input
+              class="input input-bordered w-full"
+              bind:value={username}
+              type="text"
+              name="username"
+              id="username"
+              placeholder="username"
+              required
+            />
+          </div>
+          <div class="mt-2">
+            <label for="password" class="label">Password</label>
+            <input
+              class="input input-bordered w-full"
               bind:value={password}
               type="password"
               name="password"
@@ -74,9 +89,10 @@
             />
           </div>
 
-          <div>
-            <Label for="confirmPassword" class="mb-2">Confirm password</Label>
-            <Input
+          <div class="mt-2">
+            <label for="confirmPassword" class="label">Confirm password</label>
+            <input
+              class="input input-bordered w-full"
               bind:value={confirmPassword}
               type="password"
               name="confirmPassword"
@@ -85,12 +101,13 @@
               required
             />
           </div>
-          <Button
+          <button
             type="submit"
-            class="w-full"
+            class="btn btn-primary w-full mt-8"
           >
             Sign up
-          </Button>
+          </button>
+          <a href="/auth/sign-in" class="link-primary text-center block w-full mt-4 text-sm">Already have an account? Sign in</a>
         </form>
       </div>
     </div>

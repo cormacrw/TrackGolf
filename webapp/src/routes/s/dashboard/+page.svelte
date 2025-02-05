@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { makeRequest } from '$lib/api';
-  import { Card, Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell } from 'flowbite-svelte'
+  import moment from 'moment'
 	import { onMount } from 'svelte';
   
   let rounds = []
@@ -30,42 +30,47 @@
   
   
 </script>
-<h1 class="text-2xl font-bold">Dashboard</h1>
+<h1 class="text-4xl font-bold mt-6">Dashboard</h1>
 <div class="flex flex-row gap-4">
-  <Card>
-    <p>10</p>
-    <h3>Rounds Played</h3>
-  </Card>
-  <Card>
-    <p>10</p>
-    <h3>Average Score</h3>
-  </Card>
-  <Card>
-    <p>10</p>
-    <h3>Best Score</h3>
-  </Card>
+
+  <div class="stats shadow my-4">
+    <div class="stat">
+      <div class="stat-title">Total Rounds</div>
+      <div class="stat-value text-primary">{rounds.length}</div>
+    </div>
+    <div class="stat">
+      <div class="stat-title">Average Score</div>
+      <div class="stat-value text-primary">0</div>
+    </div>
+    <div class="stat">
+      <div class="stat-title">Best Score</div>
+      <div class="stat-value text-primary">0</div>
+    </div>
+  </div>
 </div>
 
 <h2 class="text-xl font-bold mt-4">All Rounds</h2>
 <div class="mt-4">
-  <Table>
-    <TableHead>
-      <TableHeadCell>Date</TableHeadCell>
-      <TableHeadCell>Course</TableHeadCell>
-      <TableHeadCell>Length</TableHeadCell>
-      <TableHeadCell>Score</TableHeadCell>
-      <TableHeadCell>Putts</TableHeadCell>
-  </TableHead>
-  <TableBody tableBodyClass="divide-y">
-    {#each rounds as round}
-      <TableBodyRow>
-        <TableBodyCell>{round.roundDate}</TableBodyCell>
-        <TableBodyCell>{round.courseName}</TableBodyCell>
-        <TableBodyCell>{round.courseLength}</TableBodyCell>
-        <TableBodyCell>{getRoundScore(round)}</TableBodyCell>
-        <TableBodyCell>{round.roundPutts}</TableBodyCell>
-      </TableBodyRow>
-    {/each}
-    </TableBody>
-  </Table>
+  <table class="table table-lg">
+    <thead class="">
+      <tr>
+        <th>Date</th>
+        <th>Course</th>
+        <th>Length</th>
+        <th>Score</th>
+        <th>Putts</th>
+      </tr>
+    </thead>
+    <tbody>
+      {#each rounds as round}
+        <tr class="hover">
+          <td>{moment(round.roundDate).format('MM/DD/YYYY')}</td>
+          <td>{round.courseName}</td>
+          <td>{round.courseLength}</td>
+          <td>{getRoundScore(round)}</td>
+          <td>{round.roundPutts}</td>
+        </tr>
+      {/each}
+    </tbody>
+  </table>
 </div>

@@ -13,3 +13,6 @@
   })
 
 </script>
+
+<div class="min-h-screen bg-gradient-to-br from-green-400 via-green-500 to-green-600">
+</div>

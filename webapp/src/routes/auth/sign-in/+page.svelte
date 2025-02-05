@@ -1,6 +1,5 @@
 <script lang="ts">
   import { signIn } from 'supertokens-web-js/recipe/emailpassword'
-  import { Label, Input, Button } from 'flowbite-svelte'
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { authGuard } from '$lib/authMiddleware';
@@ -10,7 +9,6 @@
 
   const handleSubmit = async () => {
     try {
-      console.log('Sign in:', { email, password })
       let response = await signIn({
         formFields: [{
           id: 'email',
@@ -55,17 +53,18 @@
   })
 </script>
 
-<div class="min-h-screen bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600">
+<div class="min-h-screen bg-gradient-to-br from-green-400 via-green-500 to-green-600">
   <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen lg:py-0">
-    <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+    <div class="card bg-base-100 min-w-96">
       <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+        <h1 class="text-xl font-bold leading-tight tracking-tight md:text-2xl">
           TrackGolf
         </h1>
-        <form class="space-y-4 md:space-y-6" on:submit|preventDefault={handleSubmit}>
+        <form on:submit|preventDefault={handleSubmit}>
           <div>
-            <Label for="email" class="mb-2">Your email</Label>
-            <Input
+            <label for="email" class="label">Your email</label>
+            <input
+              class="input input-bordered w-full"
               bind:value={email}
               type="email"
               name="email"
@@ -75,8 +74,9 @@
             />
           </div>
           <div>
-            <Label for="password" class="mb-2">Password</Label>
-            <Input
+            <label for="password" class="label">Password</label>
+            <input
+              class="input input-bordered w-full"
               bind:value={password}
               type="password"
               name="password"
@@ -85,17 +85,17 @@
               required
             />
           </div>
-          <div class="flex items-center justify-between">
-            <a href="/forgot-password" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
+          <div class="flex items-center justify-between mt-4">
+            <a href="/auth/reset-password" class="link-primary text-sm">Forgot password?</a>
           </div>
-          <Button
+          <button
             type="submit"
-            class="w-full"
+            class="btn btn-primary w-full mt-4"
           >
             Sign in
-          </Button>
-          <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-            Don't have an account yet? <a href="/auth/sign-up" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
+          </button>
+          <p class="text-sm font-light mt-4">
+            Don't have an account yet? <a href="/auth/sign-up" class="link-primary">Sign up</a>
           </p>
         </form>
       </div>

@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { makeRequest } from '$lib/api';
-  import { Navbar, NavBrand, Button, Dropdown, DropdownHeader, DropdownItem, DropdownDivider, Avatar } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
   
   let email = ''
@@ -14,20 +12,27 @@
   })
 
 </script>
-<Navbar>
-  <NavBrand href="/s/dashboard">
-    <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">TrackGolf</span>
-    <Button href="/s/new-round" size="sm" class="ml-4">Track Round +</Button>
-  </NavBrand>
-  <div class="flex items-center md:order-1">
-    <Avatar id="avatar-menu" src="/images/user.jpg" />
+<div class="navbar bg-base-100">
+  <div class="flex-1">
+    <a href="/s/dashboard" class="btn btn-ghost text-xl">TrackGolf</a>
+    <a href="/s/new-round" class="ml-2 btn btn-primary">Track Round +</a>
   </div>
-  <Dropdown placement="bottom-end" triggeredBy="#avatar-menu" class="mr-3">
-    <DropdownHeader>
-      <span class="block text-sm">{email}</span>
-    </DropdownHeader>
-    <DropdownItem>Settings</DropdownItem>
-    <DropdownDivider />
-    <DropdownItem on:click={() => goto('/auth/sign-out')}>Sign out</DropdownItem>
-  </Dropdown>
-</Navbar>
+  <div class="flex-none">
+    <div class="dropdown dropdown-end">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+        <div class="w-10 rounded-full">
+          <img
+            alt="Tailwind CSS Navbar component"
+            src="/images/user.jpg" />
+        </div>
+      </div>
+      <ul
+        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+        <li>
+          {email}
+        </li>
+        <li><a href="/auth/sign-out">Sign out</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

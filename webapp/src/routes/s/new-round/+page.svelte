@@ -1,17 +1,17 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { makeRequest } from '$lib/api';
-  import { Label, Input, Button } from 'flowbite-svelte'
+  import moment from 'moment'
   import { FloppyDiskSolid } from 'flowbite-svelte-icons'
   
   let courseName = ''
-  let coursePar = 0
-  let courseLength = 0
-  let roundDate = ''
-  let roundScore = 0
-  let roundPutts = 0
-  let fairwayPercentage = 0
-  let greenPercentage = 0
+  let coursePar = 72
+  let courseLength = 7000
+  let roundDate = moment().format('YYYY-MM-DD')
+  let roundScore = 72
+  let roundPutts = 36
+  let fairwayPercentage = 100
+  let greenPercentage = 100
 
   const handleSave = async () => {
     const formData = {
@@ -37,52 +37,53 @@
   }
 </script>
 
-<h1 class="text-2xl font-bold">New Round</h1>
+<h1 class="text-4xl font-bold mt-6">New Round</h1>
 
-<form class="max-w-2xl" on:submit|preventDefault={handleSave}>
+<form class="" on:submit|preventDefault={handleSave}>
   <h2 class="text-xl font-bold mt-7 mb-4">Course Details</h2>
   <div class="my-4">
-    <Label for="course-name" class="block mb-2">Course Name</Label>
-    <Input id="course-name" bind:value={courseName} placeholder="Course Name" />
+    <label for="course-name" class="label">Course Name</label>
+    <input class="input input-bordered w-full" id="course-name" bind:value={courseName} placeholder="Course Name" />
   </div>
 
   <div class="flex flex-row gap-4">
     <div>
-      <Label for="course-par" class="block mb-2">Course Par</Label>
-      <Input id="course-par" bind:value={coursePar} placeholder="Course Par" type="number" />
+      <label for="course-par" class="label">Course Par</label>
+      <input class="input input-bordered" id="course-par" bind:value={coursePar} placeholder="Course Par" type="number" />
     </div>
     <div>
-      <Label for="course-length" class="block mb-2">Course Length</Label>
-      <Input id="course-length" bind:value={courseLength} placeholder="Course Length" type="number" />
+      <label for="course-length" class="label">Course Length</label>
+      <input class="input input-bordered" id="course-length" bind:value={courseLength} placeholder="Course Length" type="number" />
     </div>
   </div>
 
   <h2 class="text-xl font-bold mt-7 mb-4">Round Details</h2>
   <div class="my-4">
-    <Label for="round-date" class="block mb-2">Round Date</Label>
-    <Input id="round-date" bind:value={roundDate} type="date" />
+    <label for="round-date" class="label">Round Date</label>
+    <input class="input input-bordered" id="round-date" bind:value={roundDate} type="date" />
   </div>
 
   <div class="flex flex-row gap-4 mb-4">
     <div>
-      <Label for="round-score" class="block mb-2">Round Score</Label>
-      <Input id="round-score" bind:value={roundScore} placeholder="Round Score" type="number" />
+      <label for="round-score" class="label">Round Score</label>
+      <input class="input input-bordered" id="round-score" bind:value={roundScore} placeholder="Round Score" type="number" />
     </div>
     <div>
-      <Label for="round-putts" class="block mb-2">Putts</Label>
-      <Input id="round-putts" bind:value={roundPutts} placeholder="Putts" type="number" />
+      <label for="round-putts" class="label">Putts</label>
+      <input class="input input-bordered" id="round-putts" bind:value={roundPutts} placeholder="Putts" type="number" />
     </div>
   </div>
 
-  <div class="flex flex-row gap-4">
-    <div>
-      <Label for="fairway-percentage" class="block mb-2">Fairway %</Label>
-      <Input id="fairway-percentage" bind:value={fairwayPercentage} placeholder="Fairways" type="number" />
-    </div>
-    <div>
-      <Label for="green-percentage" class="block mb-2">Green %</Label>
-      <Input id="green-percentage" bind:value={greenPercentage} placeholder="Green %" type="number" />
-    </div>
+  <div>
+    <label for="fairway-percentage" class="label">Fairway %</label>
+
+    <input id="fairway-percentage" type="range" min="0" max="100" bind:value={fairwayPercentage} class="range" />
+    <span class="text-sm text-center w-full block">{fairwayPercentage}%</span>
   </div>
-  <Button type="submit" class="mt-4">Save<FloppyDiskSolid class="ml-1" /></Button>
+  <div>
+    <label for="green-percentage" class="label">Green %</label>
+    <input id="green-percentage" type="range" min="0" max="100" bind:value={greenPercentage} class="range" />
+    <span class="text-sm text-center w-full block">{greenPercentage}%</span>
+  </div>
+  <button type="submit" class="btn btn-primary mt-4 float-end">Save<FloppyDiskSolid class="ml-1" /></button>
 </form>
