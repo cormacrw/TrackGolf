@@ -17,6 +17,7 @@
   const handleVerify = () => {
     // TODO: Implement verification logic
     console.log('Verifying email...')
+    goto('/s/dashboard')
   }
 
   const handleResend = () => {

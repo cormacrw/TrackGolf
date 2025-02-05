@@ -17,7 +17,7 @@ export const authGuard = async () => {
       for (const err of validationErrors) {
           if (err.id === EmailVerificationClaim.id) {
               // email is not verified
-              goto('/auth/verify-email')
+              goto('/auth/verify')
           }
       }
     }
