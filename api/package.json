@@ -17,8 +17,7 @@
     "commit": "cz",
     "test": "jest",
     "test:dev": "start-server-and-test dev http://127.0.0.1:4000 'curl --head http://127.0.0.1:4000'",
-    "prepare": "husky install",
-    "postinstall": "prisma generate"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.741.0",
@@ -79,6 +78,5 @@
     "commitizen": {
       "path": "@commitlint/cz-commitlint"
     }
-  },
-  "author": "Ixartz (https://github.com/ixartz)"
+  }
 }
