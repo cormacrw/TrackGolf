@@ -29,8 +29,6 @@ provider:
     # metrics: true # Enable if you need
     cors: false
   environment:
-    AWS_ACCESS_KEY_ID: ${env:AWS_ACCESS_KEY_ID}
-    AWS_SECRET_ACCESS_KEY: ${env:AWS_SECRET_ACCESS_KEY}
     CLIENT_CORS_ORIGIN: ${env:CLIENT_CORS_ORIGIN}
     SUPERTOKENS_CONNECTION_URI: ${env:SUPERTOKENS_CONNECTION_URI}
     SUPERTOKENS_API_KEY: ${env:SUPERTOKENS_API_KEY}
