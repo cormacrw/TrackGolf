@@ -2,6 +2,7 @@ import dynamoose from 'dynamoose'
 
 const REGION = 'us-east-1'
 
+// Uses IAM for non local
 if (process.env.ENV === 'local') {
   const ddb = new dynamoose.aws.ddb.DynamoDB({
     credentials: {
