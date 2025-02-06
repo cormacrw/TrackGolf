@@ -10,7 +10,7 @@ App to track match statistics on PGA 2k25. TGC is great for competitive golf, bu
 - [ ] Link to TGC
 
 ## App
-The client side is written using Svelte, while the backend uses Go.
+The client side is written using Svelte, while the backend uses Node.js and express.
 
 ## Database
 
@@ -25,3 +25,7 @@ Round:
   SK: match:{id}
 
 ```
+
+## CI/CD and Deployment
+
+The app is deployed onto AWS s3. The backend is a serverless API.
