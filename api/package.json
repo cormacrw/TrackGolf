@@ -2,6 +2,7 @@
   "name": "track-golf-api",
   "version": "0.0.1",
   "description": "API for Track Golf",
+  "author": "Cormac Williamson",
   "scripts": {
     "dev:server": "sls offline start --stage offline",
     "dev": "run-p dev:*",
