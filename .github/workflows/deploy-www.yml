@@ -1,4 +1,4 @@
-name: Deploy Frontend
+name: Deploy WWW Site
 
 on: workflow_dispatch
 
