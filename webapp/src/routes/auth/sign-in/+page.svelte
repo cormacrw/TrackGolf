@@ -6,9 +6,11 @@
 
   let email = ''
   let password = ''
+  let isLoading = false
 
   const handleSubmit = async () => {
     try {
+      isLoading = true
       let response = await signIn({
         formFields: [{
           id: 'email',
@@ -18,7 +20,7 @@
           value: password
         }]
       })
-
+      isLoading = false
       if (response.status === 'FIELD_ERROR') {
         response.formFields.forEach(formField => {
           if (formField.id === 'email') {
@@ -91,8 +93,13 @@
           <button
             type="submit"
             class="btn btn-primary w-full mt-4"
+            disabled={isLoading}
           >
+
             Sign in
+            {#if isLoading}
+              <span class="loading loading-spinner loading-xs"></span>
+            {/if}
           </button>
           <p class="text-sm font-light mt-4">
             Don't have an account yet? <a href="/auth/sign-up" class="link-primary">Sign up</a>

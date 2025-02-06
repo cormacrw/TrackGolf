@@ -12,6 +12,7 @@
   let roundPutts = 36
   let fairwayPercentage = 100
   let greenPercentage = 100
+  let isLoading = false
 
   const handleSave = async () => {
     const formData = {
@@ -25,10 +26,12 @@
       greenPercentage
     }
     
+    isLoading = true
     const response = await makeRequest('/round', {
       method: 'POST',
       body: JSON.stringify(formData)
     })
+    isLoading = false
     
     console.log(response)
     
@@ -85,5 +88,11 @@
     <input id="green-percentage" type="range" min="0" max="100" bind:value={greenPercentage} class="range" />
     <span class="text-sm text-center w-full block">{greenPercentage}%</span>
   </div>
-  <button type="submit" class="btn btn-primary mt-4 float-end">Save<FloppyDiskSolid class="ml-1" /></button>
+  <button type="submit" class="btn btn-primary mt-4 float-end" disabled={isLoading}>
+    Save
+    {#if isLoading}
+      <span class="loading loading-spinner loading-xs"></span>
+    {/if}
+    <FloppyDiskSolid class="ml-1" />
+  </button>
 </form>

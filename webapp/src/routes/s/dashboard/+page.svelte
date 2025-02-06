@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
   
   let rounds = []
+  let isLoading = false
   
   const getRounds = async () => {
     const response = await makeRequest('/rounds', {
@@ -24,8 +25,10 @@
     return `${round.roundScore} (${sign}${Math.abs(round.roundScore - round.coursePar)})`
   }
   
-  onMount(() => {
-    getRounds()
+  onMount(async () => {
+    isLoading = true
+    await getRounds()
+    isLoading = false
   })
   
   
@@ -36,15 +39,29 @@
   <div class="stats shadow my-4">
     <div class="stat">
       <div class="stat-title">Total Rounds</div>
-      <div class="stat-value text-primary">{rounds.length}</div>
+      {#if isLoading}
+        <div class="skeleton h-8 w-10"></div>
+      {:else}
+        <div class="stat-value text-primary">{rounds.length}</div>
+      {/if}
     </div>
+
     <div class="stat">
       <div class="stat-title">Average Score</div>
-      <div class="stat-value text-primary">0</div>
+      {#if isLoading}
+        <div class="skeleton h-8 w-10"></div>
+      {:else}
+        <div class="stat-value text-primary">{rounds.length}</div>
+      {/if}
     </div>
+
     <div class="stat">
       <div class="stat-title">Best Score</div>
-      <div class="stat-value text-primary">0</div>
+      {#if isLoading}
+        <div class="skeleton h-8 w-10"></div>
+      {:else}
+        <div class="stat-value text-primary">{rounds.length}</div>
+      {/if}
     </div>
   </div>
 </div>
@@ -62,15 +79,27 @@
       </tr>
     </thead>
     <tbody>
-      {#each rounds as round}
-        <tr class="hover">
-          <td>{moment(round.roundDate).format('MM/DD/YYYY')}</td>
-          <td>{round.courseName}</td>
-          <td>{round.courseLength}</td>
-          <td>{getRoundScore(round)}</td>
-          <td>{round.roundPutts}</td>
+      {#if !isLoading}
+        {#each rounds as round}
+          <tr class="hover">
+            <td>{moment(round.roundDate).format('MM/DD/YYYY')}</td>
+            <td>{round.courseName}</td>
+            <td>{round.courseLength}</td>
+            <td>{getRoundScore(round)}</td>
+            <td>{round.roundPutts}</td>
+          </tr>
+        {/each}
+      {:else}
+        <tr>
+          <td colspan="5"><div class="skeleton h-6 w-full"></div></td>
         </tr>
-      {/each}
+        <tr>
+          <td colspan="5"><div class="skeleton h-6 w-full"></div></td>
+        </tr>
+        <tr>
+          <td colspan="5"><div class="skeleton h-6 w-full"></div></td>
+        </tr>
+      {/if}
     </tbody>
   </table>
 </div>
