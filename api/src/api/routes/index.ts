@@ -13,6 +13,12 @@ export default () => {
   router.get('/rounds', listRounds)
   
   router.get('/user', getUser)
+  
+  router.get('/test', (req, res) => {
+    res.json({
+      message: 'Hello, world!'
+    })
+  })
 
   return router
 }
