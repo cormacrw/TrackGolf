@@ -58,7 +58,7 @@
     <div class="card bg-base-100 min-w-96">
       <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
         <h1 class="text-xl font-bold leading-tight tracking-tight md:text-2xl">
-          TrackGolf
+          eGolf Tracker
         </h1>
         <form on:submit|preventDefault={handleSubmit}>
           <div>
