@@ -3,7 +3,7 @@
 	import '$lib/auth'
 	import { authGuard } from '$lib/authMiddleware'
 	import { onMount } from 'svelte'
-	import NavBar from '../../components/NavBar.svelte'
+	import NavBar from '$lib/components/ui/nav/NavBar.svelte'
 
 	let { children } = $props()
 

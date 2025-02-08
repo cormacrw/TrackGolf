@@ -9,5 +9,5 @@ export const list = async (req: SessionRequest, res: Response) => {
     .where('tgSk').beginsWith('round#')
     .exec()
 
-  res.status(200).json({ rows: rounds })
+  res.status(200).json({ rows: rounds, count: rounds.length })
 }

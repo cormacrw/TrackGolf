@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-  import { Label, Input, Button } from 'flowbite-svelte'
   import { signUp } from "supertokens-web-js/recipe/emailpassword";
 
   let email = ''

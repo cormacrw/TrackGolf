@@ -5,7 +5,6 @@ import { goto } from '$app/navigation'
 export const authGuard = async () => {
   if (await Session.doesSessionExist()) {
     const validationErrors = await Session.validateClaims()
-    console.log(validationErrors)
 
     if (validationErrors.length === 0) {
       if (window.location.pathname === '/auth/sign-in') {

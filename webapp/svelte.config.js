@@ -4,7 +4,7 @@ const config = {
 		adapter: adapter({
 			fallback: '200.html',
 		})
-	}
+	},
 }
 
 export default config

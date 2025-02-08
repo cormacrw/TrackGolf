@@ -1,6 +1,5 @@
 <script lang='ts'>
   import { onMount } from 'svelte'
-  import { Button } from 'flowbite-svelte'
   import { sendVerificationEmail } from "supertokens-web-js/recipe/emailverification"
 	import { goto } from '$app/navigation';
 
@@ -46,13 +45,13 @@
           </p>
 
           <div class="space-y-3">
-            <Button
+            <button
               type="button"
               class="w-full"
               on:click={handleVerify}
             >
               Done
-            </Button>
+            </button>
 
             <button
               type="button"

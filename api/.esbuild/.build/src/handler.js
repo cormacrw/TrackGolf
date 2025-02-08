@@ -112773,7 +112773,7 @@ var create = async (req, res) => {
 // src/api/routes/round/list.ts
 var list = async (req, res) => {
   const rounds = await Table_default.query().where("tgPk").eq(`user#${req.session.getUserId()}`).and().where("tgSk").beginsWith("round#").exec();
-  res.status(200).json({ rows: rounds });
+  res.status(200).json({ rows: rounds, count: rounds.length });
 };
 
 // src/api/routes/user/get.ts
