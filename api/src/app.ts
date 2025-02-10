@@ -1,5 +1,4 @@
 import 'express-async-errors'
-import './data/db'
 import express, { json, Request, Response } from 'express'
 import cors from 'cors'
 import supertokens from 'supertokens-node'
@@ -7,6 +6,7 @@ import { middleware, errorHandler } from 'supertokens-node/framework/express'
 import { init as initAuth } from './lib/auth/auth'
 import router from './api/routes'
 import helmet from 'helmet'
+import logger from '@/logger'
 
 initAuth()
 
@@ -14,7 +14,7 @@ const app = express()
 
 app.use(
 	cors({
-		origin: [process.env.CLIENT_CORS_ORIGIN],
+		origin: [process.env.CLIENT_CORS_ORIGIN!],
 		allowedHeaders: ['content-type', ...supertokens.getAllCORSHeaders()],
 		credentials: true,
 	}),
@@ -26,6 +26,11 @@ app.use(errorHandler())
 
 app.use(json())
 app.use(helmet())
+
+app.use('/', (req, _, next) => {
+	logger.info(`REQUEST: ${req.method} ${req.url}`)
+	next()
+})
 
 app.use('/api', router())
 

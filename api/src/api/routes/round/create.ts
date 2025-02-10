@@ -1,14 +1,15 @@
 import { Response } from 'express'
 import { SessionRequest } from 'supertokens-node/framework/express'
-import Table from '../../../data/Table'
-import { v4 as uuidv4 } from 'uuid'
+import { PutItemCommand } from 'dynamodb-toolbox'
+import Round from '@/data/entities/Round'
 
 export const create = async (req: SessionRequest, res: Response) => {
-  const round = await Table.create({
-    tgPk: `user#${req.session!.getUserId()}`,
-    tgSk: `round#${uuidv4()}`,
-    ...req.body
-  })
+  await Round.build(PutItemCommand)
+    .item({
+      ...req.body,
+      userId: req.session!.getUserId(),
+    })
+    .send()
 
-  res.status(200).json({ success: true, round })
+  res.status(200).json({ success: true })
 }

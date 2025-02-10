@@ -29,11 +29,13 @@
     "allowJs": false,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "strictPropertyInitialization": false
   },
   "exclude": ["./dist/**/*", "./node_modules/**/*"]
 }

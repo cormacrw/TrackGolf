@@ -3,10 +3,12 @@ import Session from "supertokens-node/recipe/session"
 import EmailPassword from "supertokens-node/recipe/emailpassword"
 import Dashboard from "supertokens-node/recipe/dashboard"
 import EmailVerification from "supertokens-node/recipe/emailverification"
-import Table from '@/data/Table'
+import User from "@/data/entities/User"
+import { PutItemCommand } from 'dynamodb-toolbox'
+import logger from "@/logger"
 
 export const init = () => {
-  console.log('Initializing Supertokens...')
+  logger.info('Initializing Supertokens...')
   supertokens.init({
     framework: "express",
     supertokens: {
@@ -34,14 +36,13 @@ export const init = () => {
                 const response = await original.signUpPOST!(input)
 
                 if (response.status === "OK" && response.user.loginMethods.length === 1 && input.session === undefined) {
-                  console.log(response.user)
-                  await Table.create({
-                    tgPk: `user#${response.user.id}`,
-                    tgSk: `user#${response.user.id}`,
-                    userId: response.user.id,
-                    username: response.user.emails[0],
-                    email: response.user.emails[0]
-                  })
+                  await User.build(PutItemCommand)
+                    .item({
+                      userId: response.user.id,
+                      email: response.user.loginMethods[0]!.email!,
+                      username: '',
+                      isActive: true,
+                    }).send()
                 }
 
                 return response

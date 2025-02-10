@@ -1,13 +1,16 @@
 import { Response } from 'express'
 import { SessionRequest } from 'supertokens-node/framework/express'
-import Table from '../../../data/Table'
+import { QueryCommand } from 'dynamodb-toolbox'
+
+import Table from '@/data/Table'
+import Round from '@/data/entities/Round'
 
 export const list = async (req: SessionRequest, res: Response) => {
-  const rounds = await Table.query()
-    .where('tgPk').eq(`user#${req.session!.getUserId()}`)
-    .and()
-    .where('tgSk').beginsWith('round#')
-    .exec()
-
-  res.status(200).json({ rows: rounds, count: rounds.length })
+  const { Items } = await Table.build(QueryCommand)
+    .query({ partition: `user#${req.session!.getUserId()}`, range: { beginsWith: 'round#' } })
+    .entities(Round)
+    .options({})
+    .send()
+  
+  res.status(200).json({ rows: Items, count: Items?.length })
 }

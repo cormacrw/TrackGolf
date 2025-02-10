@@ -1,5 +1,15 @@
-import dynamoose from 'dynamoose'
-import Round from './schemas/Round'
-import User from './schemas/User'
+import { Table } from 'dynamodb-toolbox'
+import client from './client'
 
-export default dynamoose.model('trackgolf-dev-ddb', [Round, User])
+export default new Table({
+  name: process.env.DYNAMODB_TABLE_NAME!,
+  documentClient: client,
+  partitionKey: {
+    name: 'tgPk',
+    type: 'string',
+  },
+  sortKey: {
+    name: 'tgSk',
+    type: 'string',
+  },
+})
