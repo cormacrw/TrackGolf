@@ -1,72 +1,88 @@
 <script lang='ts'>
   import { onMount } from 'svelte'
-  import { sendVerificationEmail } from "supertokens-web-js/recipe/emailverification"
-	import { goto } from '$app/navigation';
-
+  import { sendVerificationEmail } from 'supertokens-web-js/recipe/emailverification'
+  import { goto } from '$app/navigation'
+  import * as Card from '$lib/components/ui/card'
+  import { Button } from '$lib/components/ui/button'
+  import LoaderCircle from 'lucide-svelte/icons/loader-circle'
+  
+  let isLoading = false
+  let error = ''
   
   const sendEmail = async () => {
     try {
-      const response = await sendVerificationEmail()
-      console.log(response)
+      await sendVerificationEmail()
     } catch (e: any) {
+      error = 'Failed to send verification email'
       goto('/auth/sign-in')
-      console.log(e)
     }
   }
+
   const handleVerify = () => {
+    isLoading = true
     // TODO: Implement verification logic
-    console.log('Verifying email...')
     goto('/s/dashboard')
   }
 
-  const handleResend = () => {
-    // TODO: Implement resend logic
-    console.log('Resending verification email...')
-    sendEmail()
+  const handleResend = async () => {
+    isLoading = true
+    await sendEmail()
+    isLoading = false
   }
   
   onMount(async () => {
     await sendEmail()
-
   })
 </script>
 
-<div class="min-h-screen bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600">
-  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen lg:py-0">
-    <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
-          Verify Your Email
-        </h1>
-        
-        <div class="space-y-4 text-center">
-          <p class="text-gray-600 dark:text-gray-400">
-            We've sent a verification email to your inbox. Please click the link in the email or click the verify button below to confirm your email address.
-          </p>
+<div class="min-h-screen bg-gradient-to-br from-green-400 via-green-500 to-green-600">
+  <div class="container flex h-screen w-screen flex-col items-center justify-center">
+    <Card.Root class="w-[400px]">
+      <Card.Header>
+        <Card.Title>Verify Your Email</Card.Title>
+        <Card.Description>
+          We've sent a verification email to your inbox. Please click the link in the email to confirm your email address.
+        </Card.Description>
+      </Card.Header>
 
-          <div class="space-y-3">
-            <button
-              type="button"
-              class="w-full"
-              on:click={handleVerify}
-            >
-              Done
-            </button>
+      <Card.Content>
+        <div class="space-y-4">
+          <Button 
+            class="w-full" 
+            on:click={handleVerify}
+            disabled={isLoading}
+          >
+            {#if isLoading}
+              <LoaderCircle class="h-4 w-4 animate-spin" />
+            {:else}
+              I've Verified My Email
+            {/if}
+          </Button>
 
-            <button
-              type="button"
-              class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500 mt-4"
-              on:click={handleResend}
-            >
+          <Button 
+            variant="link"
+            class="w-full"
+            on:click={handleResend}
+            disabled={isLoading}
+          >
+            {#if isLoading}
+              <LoaderCircle class="h-4 w-4 animate-spin" />
+            {:else}
               Resend Verification Email
-            </button>
-          </div>
+            {/if}
+          </Button>
 
-          <p class="text-sm text-gray-500 dark:text-gray-400">
-            Didn't receive an email? Check your spam folder or click resend above.
-          </p>
+          {#if error}
+            <span class="block text-center text-sm text-red-500">{error}</span>
+          {/if}
         </div>
-      </div>
-    </div>
+      </Card.Content>
+
+      <Card.Footer>
+        <p class="text-muted-foreground text-center text-sm">
+          Didn't receive an email? Check your spam folder or click resend above.
+        </p>
+      </Card.Footer>
+    </Card.Root>
   </div>
 </div>

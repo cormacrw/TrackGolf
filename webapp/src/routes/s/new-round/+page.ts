@@ -3,7 +3,11 @@ import type { PageLoad } from './$types';
 const ROUND_TYPES = [
   {
     value: 'tgc',
-    label: 'TGC Round'
+    label: 'TGC'
+  },
+  {
+    value: 'tgc-special',
+    label: 'TGC Special'
   },
   {
     value: 'practice',

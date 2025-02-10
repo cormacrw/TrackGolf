@@ -2,6 +2,13 @@
   import { page } from '$app/state'
   import { Button } from '$lib/components/ui/button'
 	import Plus from 'lucide-svelte/icons/plus';
+  import * as Avatar from "$lib/components/ui/avatar";
+  import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
+  import Settings from "lucide-svelte/icons/settings";
+  import Sun from "lucide-svelte/icons/sun";
+  import LogOut from "lucide-svelte/icons/log-out";
+
+  let email = 'cormac@cormac.is'
 </script>
 
 <div class="border-b">
@@ -39,6 +46,32 @@
         Track Round
         <Plus class="h-4 w-4 ml-2" />
       </Button>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger>
+          <Avatar.Root>
+            <Avatar.Image src="/images/user.jpg" />
+          </Avatar.Root>
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content class="w-52">
+          <DropdownMenu.Label>{email}</DropdownMenu.Label>
+          <DropdownMenu.Separator />
+          <DropdownMenu.Group>
+            <DropdownMenu.Item>
+              <Settings class="h-4 w-4 mr-2" />
+              <span class="text-sm">Settings</span>
+            </DropdownMenu.Item>
+            <DropdownMenu.Item>
+              <Sun class="h-4 w-4 mr-2" />
+              <span class="text-sm">Toggle Dark Mode</span>
+            </DropdownMenu.Item>
+            <DropdownMenu.Separator />
+            <DropdownMenu.Item>
+              <LogOut class="h-4 w-4 mr-2" />
+              <a href="/auth/sign-out" class="text-sm cursor-default">Sign Out</a>
+            </DropdownMenu.Item>
+          </DropdownMenu.Group>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
     </div>
   </div>
 </div>

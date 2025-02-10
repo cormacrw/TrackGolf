@@ -29,5 +29,9 @@ export const makeRequest = async (path: string, options: RequestInit) => {
     throw new Error('Failed to fetch data')
   }
 
+  if (!response.body) {
+    return
+  }
+
   return response.json()
 }

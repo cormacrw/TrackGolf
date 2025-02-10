@@ -1,60 +1,73 @@
 <script lang='ts'>
   import { onMount } from 'svelte'
-  import { Button } from 'flowbite-svelte'
-	import { goto } from '$app/navigation';
-  import { verifyEmail } from "supertokens-web-js/recipe/emailverification";
+  import { goto } from '$app/navigation'
+  import { verifyEmail } from 'supertokens-web-js/recipe/emailverification'
+  import * as Card from '$lib/components/ui/card'
+  import { Button } from '$lib/components/ui/button'
+  import LoaderCircle from 'lucide-svelte/icons/loader-circle'
+
+  let isLoading = true
+  let isError = false
+  let errorMessage = ''
 
   const doVerify = async () => {
     try {
-        let response = await verifyEmail();
-        if (response.status === "EMAIL_VERIFICATION_INVALID_TOKEN_ERROR") {
-        console.log('error!')
-        } else {
-        console.log('success!')
-        }
+      let response = await verifyEmail()
+      if (response.status === 'EMAIL_VERIFICATION_INVALID_TOKEN_ERROR') {
+        isError = true
+        errorMessage = 'Invalid or expired verification link'
+      }
     } catch (err: any) {
-        if (err.isSuperTokensGeneralError === true) {
-            // this may be a custom error message sent from the API by you.
-            console.log(err.message);
-        } else {
-            console.log("Oops! Something went wrong.");
-        }
+      isError = true
+      if (err.isSuperTokensGeneralError === true) {
+        errorMessage = err.message
+      } else {
+        errorMessage = 'Oops! Something went wrong'
+      }
+    } finally {
+      isLoading = false
     }
   }
   
   onMount(async () => {
     await doVerify()
-
   })
 </script>
 
-<div class="min-h-screen bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600">
-  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen lg:py-0">
-    <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
-          Email Verification
-        </h1>
-        
-        <div class="space-y-4 text-center">
-          <p class="text-gray-600 dark:text-gray-400">Email successfully verified!</p>
-
-          <div class="space-y-3">
-            <Button
-              type="button"
-              class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
-              color="none"
-              on:click={() => goto('/s/dashboard')}
-            >
-              Go to App
+<div class="min-h-screen bg-gradient-to-br from-green-400 via-green-500 to-green-600">
+  <div class="container flex h-screen w-screen flex-col items-center justify-center">
+    <Card.Root class="w-[400px]">
+      <Card.Header>
+        <Card.Title>Email Verification</Card.Title>
+        <Card.Description>
+          {#if isLoading}
+            Verifying your email address...
+          {:else if isError}
+            Verification Failed
+          {:else}
+            Email Successfully Verified
+          {/if}
+        </Card.Description>
+      </Card.Header>
+      <Card.Content>
+        <div class="flex flex-col items-center space-y-4">
+          {#if isLoading}
+            <LoaderCircle class="h-8 w-8 animate-spin" />
+          {:else if isError}
+            <p class="text-red-500 text-center">{errorMessage}</p>
+            <Button variant="outline" on:click={() => goto('/auth/sign-in')}>
+              Return to Sign In
             </Button>
-
-          </div>
-
-          <p class="text-sm text-gray-500 dark:text-gray-400">
-          </p>
+          {:else}
+            <p class="text-green-600 dark:text-green-400 text-center">
+              Your email has been verified successfully!
+            </p>
+            <Button on:click={() => goto('/s/dashboard')}>
+              Go to Dashboard
+            </Button>
+          {/if}
         </div>
-      </div>
-    </div>
+      </Card.Content>
+    </Card.Root>
   </div>
 </div>

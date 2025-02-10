@@ -12,6 +12,7 @@
     const response = await makeRequest('/rounds', {
       method: 'GET'
     })
+    console.log(response)
 
     rounds = response.rows
   }

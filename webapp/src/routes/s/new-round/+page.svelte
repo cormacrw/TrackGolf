@@ -14,32 +14,28 @@
 	import { Datepicker } from '$lib/components/ui/datepicker';
 	import { Combobox } from '$lib/components/ui/combobox';
 	import { Slider } from '$lib/components/ui/slider';
-  import { Textarea } from "$lib/components/ui/textarea";
+	import { Textarea } from '$lib/components/ui/textarea';
 	import { PUBLIC_ENVIRONMENT } from '$env/static/public';
 	import { today, CalendarDate } from '@internationalized/date';
 	import type { PageProps } from './$types';
+  import { toast } from "svelte-sonner";
+
 
 	let { data }: PageProps = $props();
 
 	const formSchema = z.object({
-		roundType: z.string(),
-		courseName: z.string().min(1, 'Course Name is required'),
-		coursePar: z.number().min(1, 'Course Par is required'),
-		courseLength: z.number().min(1, 'Course Length is required'),
-		roundDate: z.instanceof(CalendarDate),
-		roundScore: z.number().min(1, 'Round Score is required'),
-		roundPutts: z.number().optional(),
+		type: z.string(),
+		courseName: z.string().min(1, 'required'),
+		coursePar: z.number().min(1, 'required'),
+		courseLength: z.number().min(1, 'required'),
+		date: z.instanceof(CalendarDate),
+		score: z.number().min(1, 'required'),
+		putts: z.number().optional(),
 		fairwayPercentage: z.array(
-			z
-				.number()
-				.min(0, 'Must be at least 0')
-				.max(100, 'Must be equal to or less than 100')
+			z.number().min(0, 'Must be at least 0').max(100, 'Must be equal to or less than 100')
 		),
 		greenPercentage: z.array(
-			z
-				.number()
-				.min(0, 'Must be at least 0')
-				.max(100, 'Must be equal to or less than 100')
+			z.number().min(0, 'Must be at least 0').max(100, 'Must be equal to or less than 100')
 		),
 		notes: z.string().optional()
 	});
@@ -49,12 +45,12 @@
 			courseName: '',
 			coursePar: 72,
 			courseLength: 7000,
-			roundDate: today('America/New_York'),
-			roundScore: 72,
-			roundPutts: 36,
+			date: today('America/New_York'),
+			score: 72,
+			putts: 36,
 			fairwayPercentage: [100],
 			greenPercentage: [100],
-			roundType: 'tgc',
+			type: 'tgc',
 			notes: ''
 		},
 		{
@@ -63,7 +59,28 @@
 			dataType: 'json',
 			multipleSubmits: 'prevent',
 			clearOnSubmit: 'errors-and-message',
-			onUpdate: async ({ form }) => {}
+			onUpdate: async ({ form }) => {
+				console.log('form', form.valid, form.errors);
+				if (!form.valid) {
+					return;
+				}
+				try {
+				await makeRequest('/round', {
+					method: 'POST',
+						body: JSON.stringify({
+							...form.data,
+							fairwayPercentage: form.data.fairwayPercentage[0],
+							greenPercentage: form.data.greenPercentage[0],
+							date: form.data.date.toDate('America/New_York').getTime()
+						})
+					});
+					toast.success('Round saved successfully');
+					goto('/s/dashboard');
+				} catch (e) {
+					console.error(e);
+				}
+				
+			}
 		}
 	);
 
@@ -94,84 +111,91 @@
 				<Form.FieldErrors />
 			</Form.Field>
 
-			<!-- Course Par -->
-			<Form.Field {form} name="coursePar">
-				<Form.Control let:attrs>
-					<Form.Label>Course Par</Form.Label>
-					<Input
-						{...attrs}
-						name="coursePar"
-						placeholder="Course Par"
-						bind:value={$formData.coursePar}
-					/>
-				</Form.Control>
-				<Form.FieldErrors />
-			</Form.Field>
+			<div class="flex flex-row gap-4">
+				<!-- Course Par -->
+				<Form.Field class="max-w-32" {form} name="coursePar">
+					<Form.Control let:attrs>
+						<Form.Label>Course Par</Form.Label>
+						<Input
+							{...attrs}
+							name="coursePar"
+							type="number"
+							placeholder="Course Par"
+							bind:value={$formData.coursePar}
+						/>
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
 
-			<!-- Course Length -->
-			<Form.Field {form} name="courseLength">
-				<Form.Control let:attrs>
-					<Form.Label>Course Length</Form.Label>
-					<Input
-						{...attrs}
-						name="courseLength"
-						placeholder="Course Length"
-						bind:value={$formData.courseLength}
-					/>
-				</Form.Control>
-				<Form.FieldErrors />
-			</Form.Field>
+				<!-- Course Length -->
+				<Form.Field class="max-w-32" {form} name="courseLength">
+					<Form.Control let:attrs>
+						<Form.Label>Course Length</Form.Label>
+						<Input
+							{...attrs}
+							name="courseLength"
+							type="number"
+							placeholder="Course Length"
+							bind:value={$formData.courseLength}
+						/>
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+			</div>
 
 			<h3 class="text-xl font-bold">Round</h3>
 
-			<!-- Type -->
-			<Form.Field {form} name="roundType">
-				<Form.Control let:attrs>
-					<Form.Label>Type</Form.Label>
-					<Combobox {...attrs} items={data.ROUND_TYPES} bind:value={$formData.roundType} />
-				</Form.Control>
-				<Form.FieldErrors />
-			</Form.Field>
+			<div class="flex flex-row gap-4">
+				<!-- Type -->
+				<Form.Field {form} name="type">
+					<Form.Control let:attrs>
+						<Form.Label>Type</Form.Label>
+						<Combobox {...attrs} items={data.ROUND_TYPES} bind:value={$formData.type} />
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
 
-			<!-- Round Date -->
-			<Form.Field {form} name="roundDate">
-				<Form.Control let:attrs>
-					<Form.Label>Round Date</Form.Label>
-					<div>
-						<Datepicker {...attrs} name="roundDate" bind:value={$formData.roundDate} />
-					</div>
-				</Form.Control>
-			</Form.Field>
+				<!-- Round Date -->
+				<Form.Field {form} name="date">
+					<Form.Control let:attrs>
+						<Form.Label>Round Date</Form.Label>
+						<div>
+							<Datepicker {...attrs} name="date" bind:value={$formData.date} />
+						</div>
+					</Form.Control>
+				</Form.Field>
+			</div>
+			<div class="flex flex-row gap-4">
+				<!-- Round Score -->
+				<Form.Field class="max-w-32" {form} name="score">
+					<Form.Control let:attrs>
+						<Form.Label>Round Score</Form.Label>
+						<Input
+							{...attrs}
+							type="number"
+							name="score"
+							placeholder="Round Score"
+							bind:value={$formData.score}
+						/>
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
 
-			<!-- Round Score -->
-			<Form.Field class="max-w-32" {form} name="roundScore">
-				<Form.Control let:attrs>
-					<Form.Label>Round Score</Form.Label>
-					<Input
-						{...attrs}
-						type="number"
-						name="roundScore"
-						placeholder="Round Score"
-						bind:value={$formData.roundScore}
-					/>
-				</Form.Control>
-				<Form.FieldErrors />
-			</Form.Field>
-
-			<!-- Round Putts -->
-			<Form.Field class="max-w-32" {form} name="roundPutts">
-				<Form.Control let:attrs>
-					<Form.Label>Round Putts</Form.Label>
-					<Input
-						{...attrs}
-						type="number"
-						name="roundPutts"
-						placeholder="Round Putts"
-						bind:value={$formData.roundPutts}
-					/>
-				</Form.Control>
-				<Form.FieldErrors />
-			</Form.Field>
+				<!-- Round Putts -->
+				<Form.Field class="max-w-32" {form} name="putts">
+					<Form.Control let:attrs>
+						<Form.Label>Round Putts</Form.Label>
+						<Input
+							{...attrs}
+							type="number"
+							name="putts"
+							placeholder="Round Putts"
+							bind:value={$formData.putts}
+						/>
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+			</div>
 
 			<!-- Fairway Percentage -->
 			<Form.Field class="max-w-xl" {form} name="fairwayPercentage">
@@ -195,13 +219,10 @@
 			<Form.Field {form} name="greenPercentage">
 				<Form.Control let:attrs>
 					<Form.Label>Notes</Form.Label>
-					<Textarea {...attrs} bind:value={$formData.notes}/>
+					<Textarea {...attrs} bind:value={$formData.notes} />
 				</Form.Control>
 				<Form.FieldErrors />
 			</Form.Field>
-
-
-
 
 			<div class="flex justify-end">
 				<Button type="submit" class="" disabled={$submitting || $allErrors?.length > 0}>
@@ -217,7 +238,7 @@
 </Card.Root>
 
 {#if PUBLIC_ENVIRONMENT === 'local'}
-	<div class="mt-6">
+	<div class="my-6">
 		<SuperDebug data={$formData} />
 	</div>
 {/if}
