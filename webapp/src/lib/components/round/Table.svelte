@@ -2,21 +2,10 @@
 	import * as Table from '$lib/components/ui/table';
 	import * as Pagination from '$lib/components/ui/pagination';
 	import moment from 'moment';
-
-	type Round = {
-		roundId: string;
-		date: string;
-		type: string;
-		courseName: string;
-		coursePar: number;
-		score: number;
-	};
-
-	const typeMap = {
-		tgc: 'TGC',
-		'tgc-special': 'TGC Special',
-		practice: 'Practice'
-	};
+	import type { Round } from '$lib/types/Round';
+	import roundTypes from '$lib/constants/roundTypes';
+	import { PUBLIC_ENVIRONMENT } from '$env/static/public';
+	import SuperDebug from 'sveltekit-superforms';
 
 	let pageNumber = $state(1);
 
@@ -53,7 +42,7 @@
 						{moment(round.date).format('MMM D, YYYY')}
 					</Table.Cell>
 					<Table.Cell>
-						{typeMap[round.type] || 'Unknown'}
+						{roundTypes.find((type) => type.value === round.type)?.label || 'Unknown'}
 					</Table.Cell>
 					<Table.Cell>
 						{round.courseName}
@@ -94,3 +83,9 @@
 		</Pagination.Item>
 	</Pagination.Content>
 </Pagination.Root>
+
+{#if PUBLIC_ENVIRONMENT === 'local'}
+	<div class="my-6">
+		<SuperDebug data={paginatedRounds} label="Rounds" />
+	</div>
+{/if}

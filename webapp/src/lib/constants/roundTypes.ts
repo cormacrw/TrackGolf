@@ -1,6 +1,4 @@
-import type { PageLoad } from './$types';
-
-const ROUND_TYPES = [
+export default [
   {
     value: 'tgc',
     label: 'TGC'
@@ -21,10 +19,4 @@ const ROUND_TYPES = [
     value: 'ranked',
     label: 'Ranked'
   }
-] 
-
-export const load: PageLoad = async ({ parent }) => {
-  await parent()
- 
-  return { ROUND_TYPES };
-};
+]

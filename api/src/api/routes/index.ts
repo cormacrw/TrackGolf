@@ -6,14 +6,14 @@ import { get as getUser } from './user/get'
 
 export default () => {
   const router = Router()
-  
+
   router.use(verifySession())
 
   router.post('/round', createRound)
   router.get('/rounds', listRounds)
-  
+
   router.get('/user', getUser)
-  
+
   router.get('/test', (req, res) => {
     res.json({
       message: 'Hello, world!'
