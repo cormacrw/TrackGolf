@@ -77,6 +77,7 @@
 			{/if}
 		</Card.Content>
 	</Card.Root>
+
 	<Card.Root class="min-w-60 flex-1">
 		<Card.Content>
 			<p>Average Greens In Regulation</p>
