@@ -90,7 +90,7 @@
 	</Card.Root>
 </div>
 
-<div class="mt-6 flex flex-row gap-4">
+<div class="mt-4 flex flex-row gap-4">
 	<Card.Root class="flex-1">
 		<Card.Header>
 			<Card.Title>Round Types</Card.Title>
@@ -124,7 +124,7 @@
 	</Card.Root>
 </div>
 
-<Card.Root class="mt-6">
+<Card.Root class="mt-4">
 	<Card.Header>
 		<Card.Title>Average Score Over Time</Card.Title>
 	</Card.Header>

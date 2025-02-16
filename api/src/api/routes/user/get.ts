@@ -7,12 +7,14 @@ import User from '@/data/entities/User'
 
 export const get = async (req: SessionRequest, res: Response) => {
   const { Items } = await Table.build(QueryCommand)
-    .query({ partition: `user#${req.session!.getUserId()}` })
+    .query({ partition: `user#${req.session!.getUserId()}`, range: { eq: 'data' } })
     .entities(User)
     .options({
       limit: 1,
     })
     .send()
+
+  console.log(req.session!.getUserId())
 
   if (!Items?.length) {
     res.status(404).json({ error: 'User not found' })

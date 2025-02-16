@@ -8,17 +8,26 @@
 	import { useRoundsStore } from '$lib/stores/rounds';
 	import { useLoadingStore } from '$lib/stores/loading';
 	import { fetchRounds } from '$lib/requests/rounds';
+	import { fetchUser } from '$lib/requests/user';
+	import { useUserStore } from '$lib/stores/user';
 
 	let { children } = $props();
 
 	const roundsStore = useRoundsStore();
+	const userStore = useUserStore();
 	const loading = useLoadingStore();
 
 	onMount(async () => {
 		loading.set(true);
+
 		await authGuard();
+
+		const user = await fetchUser();
+		userStore.set(user);
+
 		const rounds = await fetchRounds();
 		roundsStore.set(rounds);
+
 		loading.set(false);
 	});
 </script>
