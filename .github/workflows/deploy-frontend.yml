@@ -28,6 +28,7 @@ jobs:
       working-directory: ./webapp
       env:
         PUBLIC_API_URL: ${{ vars.PUBLIC_API_URL_DEV }}
+        PUBLIC_ENVIRONMENT: dev
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
