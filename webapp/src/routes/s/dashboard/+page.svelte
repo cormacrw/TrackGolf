@@ -124,7 +124,7 @@
 	</Card.Root>
 </div>
 
-<Card.Root class="mt-4">
+<Card.Root class="mb-8 mt-4">
 	<Card.Header>
 		<Card.Title>Average Score Over Time</Card.Title>
 	</Card.Header>
@@ -141,7 +141,7 @@
 </Card.Root>
 
 {#if PUBLIC_ENVIRONMENT === 'local'}
-	<div class="my-6">
+	<div class="mb-6">
 		<SuperDebug data={analytics} label="Analytics" />
 	</div>
 {/if}
