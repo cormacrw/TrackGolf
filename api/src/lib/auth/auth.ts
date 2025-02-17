@@ -20,7 +20,7 @@ export const init = () => {
     },
     appInfo: {
       // learn more about this on https://supertokens.com/docs/session/appinfo
-      appName: "TrackGolf",
+      appName: "eGolfTracker",
       apiDomain: process.env.PUBLIC_API_URL!,
       websiteDomain: process.env.CLIENT_CORS_ORIGIN!,
       apiBasePath: "/auth",
