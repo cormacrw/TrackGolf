@@ -36,53 +36,62 @@
 			</Table.Row>
 		</Table.Header>
 		<Table.Body>
-			{#each paginatedRounds as round}
+			{#if paginatedRounds.length === 0}
 				<Table.Row>
-					<Table.Cell>
-						{moment(round.date).format('MMM D, YYYY')}
-					</Table.Cell>
-					<Table.Cell>
-						{roundTypes.find((type) => type.value === round.type)?.label || 'Unknown'}
-					</Table.Cell>
-					<Table.Cell>
-						{round.courseName}
-					</Table.Cell>
-					<Table.Cell>
-						{round.score} ({round.score - round.coursePar})
-					</Table.Cell>
-					<Table.Cell></Table.Cell>
+					<Table.Cell colspan={5} class="text-center">No rounds found!</Table.Cell>
 				</Table.Row>
-			{/each}
+			{:else}
+				{#each paginatedRounds as round}
+					<Table.Row>
+						<Table.Cell>
+							{moment(round.date).format('MMM D, YYYY')}
+						</Table.Cell>
+						<Table.Cell>
+							{roundTypes.find((type) => type.value === round.type)?.label || 'Unknown'}
+						</Table.Cell>
+						<Table.Cell>
+							{round.courseName}
+						</Table.Cell>
+						<Table.Cell>
+							{round.score} ({round.score - round.coursePar})
+						</Table.Cell>
+						<Table.Cell></Table.Cell>
+					</Table.Row>
+				{/each}
+			{/if}
 		</Table.Body>
 	</Table.Root>
 </div>
-<Pagination.Root count={rounds.length} perPage={10} let:pages let:currentPage>
-	<Pagination.Content>
-		<Pagination.Item>
-			<Pagination.PrevButton on:click={() => pageNumber--} />
-		</Pagination.Item>
-		{#each pages as page (page.key)}
-			{#if page.type === 'ellipsis'}
-				<Pagination.Item>
-					<Pagination.Ellipsis />
-				</Pagination.Item>
-			{:else}
-				<Pagination.Item isVisible={currentPage == page.value}>
-					<Pagination.Link
-						{page}
-						isActive={currentPage == page.value}
-						on:click={() => (pageNumber = page.value)}
-					>
-						{page.value}
-					</Pagination.Link>
-				</Pagination.Item>
-			{/if}
-		{/each}
-		<Pagination.Item>
-			<Pagination.NextButton on:click={() => pageNumber++} />
-		</Pagination.Item>
-	</Pagination.Content>
-</Pagination.Root>
+
+{#if rounds.length > 10}
+	<Pagination.Root count={rounds.length} perPage={10} let:pages let:currentPage>
+		<Pagination.Content>
+			<Pagination.Item>
+				<Pagination.PrevButton on:click={() => pageNumber--} />
+			</Pagination.Item>
+			{#each pages as page (page.key)}
+				{#if page.type === 'ellipsis'}
+					<Pagination.Item>
+						<Pagination.Ellipsis />
+					</Pagination.Item>
+				{:else}
+					<Pagination.Item isVisible={currentPage == page.value}>
+						<Pagination.Link
+							{page}
+							isActive={currentPage == page.value}
+							on:click={() => (pageNumber = page.value)}
+						>
+							{page.value}
+						</Pagination.Link>
+					</Pagination.Item>
+				{/if}
+			{/each}
+			<Pagination.Item>
+				<Pagination.NextButton on:click={() => pageNumber++} />
+			</Pagination.Item>
+		</Pagination.Content>
+	</Pagination.Root>
+{/if}
 
 {#if PUBLIC_ENVIRONMENT === 'local'}
 	<div class="my-6">

@@ -1,5 +1,8 @@
 <script lang="ts">
+	import * as Alert from '$lib/components/ui/alert';
 	import * as Card from '$lib/components/ui/card';
+	import Info from 'lucide-svelte/icons/info';
+
 	import { Skeleton } from '$lib/components/ui/skeleton';
 	import DonutChart from '$lib/components/ui/chart/donut.svelte';
 	import { getAnalytics } from '$lib/analytics/analytics';
@@ -20,128 +23,140 @@
 </script>
 
 <h1 class="mt-6 text-4xl font-bold">Analytics</h1>
-<div class="mt-6 flex flex-row flex-wrap gap-4">
-	<Card.Root class="min-w-60 flex-1">
-		<Card.Content>
-			<p>Total Rounds</p>
-			{#if $loading}
-				<Skeleton class="h-16 w-20 rounded-full" />
-			{:else}
-				<h3 class="text-6xl font-bold">{analytics.totalRounds}</h3>
-			{/if}
-		</Card.Content>
-	</Card.Root>
 
-	<Card.Root class="min-w-60 flex-1">
-		<Card.Content>
-			<p>Average Score</p>
-			{#if $loading}
-				<Skeleton class="h-16 w-20 rounded-full" />
-			{:else}
-				<h3 class="text-6xl font-bold">{analytics.averageScore}</h3>
-			{/if}
-		</Card.Content>
-	</Card.Root>
+{#if $rounds.length === 0}
+	<Alert.Root class="mt-6">
+		<Info class="h-4 w-4" />
+		<Alert.Title>No rounds!</Alert.Title>
+		<Alert.Description
+			>To see statistics, you can add rounds by clicking the "Add Round" button in the navigation
+			bar.</Alert.Description
+		>
+	</Alert.Root>
+{:else}
+	<div class="mt-6 flex flex-row flex-wrap gap-4">
+		<Card.Root class="min-w-60 flex-1">
+			<Card.Content>
+				<p>Total Rounds</p>
+				{#if $loading}
+					<Skeleton class="h-16 w-20 rounded-full" />
+				{:else}
+					<h3 class="text-6xl font-bold">{analytics.totalRounds}</h3>
+				{/if}
+			</Card.Content>
+		</Card.Root>
 
-	<Card.Root class="min-w-60 flex-1">
-		<Card.Content>
-			<p>Best / Worst Score</p>
-			{#if $loading}
-				<Skeleton class="h-16 w-20 rounded-full" />
-			{:else}
-				<h3 class="text-6xl font-bold">{analytics.bestRound} / {analytics.worstRound}</h3>
-			{/if}
-		</Card.Content>
-	</Card.Root>
+		<Card.Root class="min-w-60 flex-1">
+			<Card.Content>
+				<p>Average Score</p>
+				{#if $loading}
+					<Skeleton class="h-16 w-20 rounded-full" />
+				{:else}
+					<h3 class="text-6xl font-bold">{analytics.averageScore}</h3>
+				{/if}
+			</Card.Content>
+		</Card.Root>
 
-	<Card.Root class="min-w-60 flex-1">
-		<Card.Content>
-			<p>Average Putts</p>
-			{#if $loading}
-				<Skeleton class="h-16 w-20 rounded-full" />
-			{:else}
-				<h3 class="text-6xl font-bold">{analytics.averagePutts}</h3>
-			{/if}
-		</Card.Content>
-	</Card.Root>
+		<Card.Root class="min-w-60 flex-1">
+			<Card.Content>
+				<p>Best / Worst Score</p>
+				{#if $loading}
+					<Skeleton class="h-16 w-20 rounded-full" />
+				{:else}
+					<h3 class="text-6xl font-bold">{analytics.bestRound} / {analytics.worstRound}</h3>
+				{/if}
+			</Card.Content>
+		</Card.Root>
 
-	<Card.Root class="min-w-60 flex-1">
-		<Card.Content>
-			<p>Average Fairways In Regulation</p>
-			{#if $loading}
-				<Skeleton class="h-16 w-20 rounded-full" />
-			{:else}
-				<h3 class="text-6xl font-bold">
-					{analytics.averageFairwayPercentage}%
-				</h3>
-			{/if}
-		</Card.Content>
-	</Card.Root>
+		<Card.Root class="min-w-60 flex-1">
+			<Card.Content>
+				<p>Average Putts</p>
+				{#if $loading}
+					<Skeleton class="h-16 w-20 rounded-full" />
+				{:else}
+					<h3 class="text-6xl font-bold">{analytics.averagePutts}</h3>
+				{/if}
+			</Card.Content>
+		</Card.Root>
 
-	<Card.Root class="min-w-60 flex-1">
-		<Card.Content>
-			<p>Average Greens In Regulation</p>
-			{#if $loading}
-				<Skeleton class="h-16 w-20 rounded-full" />
-			{:else}
-				<h3 class="text-6xl font-bold">{analytics.averageGreenInRegulationPercentage}%</h3>
-			{/if}
-		</Card.Content>
-	</Card.Root>
-</div>
+		<Card.Root class="min-w-60 flex-1">
+			<Card.Content>
+				<p>Average Fairways In Regulation</p>
+				{#if $loading}
+					<Skeleton class="h-16 w-20 rounded-full" />
+				{:else}
+					<h3 class="text-6xl font-bold">
+						{analytics.averageFairwayPercentage}%
+					</h3>
+				{/if}
+			</Card.Content>
+		</Card.Root>
 
-<div class="mt-4 flex flex-row gap-4">
-	<Card.Root class="flex-1">
+		<Card.Root class="min-w-60 flex-1">
+			<Card.Content>
+				<p>Average Greens In Regulation</p>
+				{#if $loading}
+					<Skeleton class="h-16 w-20 rounded-full" />
+				{:else}
+					<h3 class="text-6xl font-bold">{analytics.averageGreenInRegulationPercentage}%</h3>
+				{/if}
+			</Card.Content>
+		</Card.Root>
+	</div>
+
+	<div class="mt-4 flex flex-row gap-4">
+		<Card.Root class="flex-1">
+			<Card.Header>
+				<Card.Title>Round Types</Card.Title>
+			</Card.Header>
+			<Card.Content>
+				{#if $loading}
+					<Skeleton class="h-80 w-full rounded-full" />
+				{:else}
+					<DonutChart data={createRoundTypesChartData(analytics.roundTypesCount)} options={{}} />
+				{/if}
+			</Card.Content>
+		</Card.Root>
+		<Card.Root class="flex-1">
+			<Card.Header>
+				<Card.Title>Under/Over Par</Card.Title>
+			</Card.Header>
+			<Card.Content>
+				{#if $loading}
+					<Skeleton class="h-80 w-full rounded-full" />
+				{:else}
+					<DonutChart
+						data={createUnderOverParChartData(
+							analytics.underParCount,
+							analytics.overParCount,
+							analytics.levelParCount,
+						)}
+						options={{}}
+					/>
+				{/if}
+			</Card.Content>
+		</Card.Root>
+	</div>
+
+	<Card.Root class="mb-8 mt-4">
 		<Card.Header>
-			<Card.Title>Round Types</Card.Title>
+			<Card.Title>Average Score Over Time</Card.Title>
 		</Card.Header>
 		<Card.Content>
 			{#if $loading}
 				<Skeleton class="h-80 w-full rounded-full" />
 			{:else}
-				<DonutChart data={createRoundTypesChartData(analytics.roundTypesCount)} options={{}} />
-			{/if}
-		</Card.Content>
-	</Card.Root>
-	<Card.Root class="flex-1">
-		<Card.Header>
-			<Card.Title>Under/Over Par</Card.Title>
-		</Card.Header>
-		<Card.Content>
-			{#if $loading}
-				<Skeleton class="h-80 w-full rounded-full" />
-			{:else}
-				<DonutChart
-					data={createUnderOverParChartData(
-						analytics.underParCount,
-						analytics.overParCount,
-						analytics.levelParCount,
-					)}
-					options={{}}
+				<Line
+					data={createAverageScoreOverTimeChartData(analytics.scoresByWeek)}
+					options={{ plugins: { legend: { display: false } } }}
 				/>
 			{/if}
 		</Card.Content>
 	</Card.Root>
-</div>
 
-<Card.Root class="mb-8 mt-4">
-	<Card.Header>
-		<Card.Title>Average Score Over Time</Card.Title>
-	</Card.Header>
-	<Card.Content>
-		{#if $loading}
-			<Skeleton class="h-80 w-full rounded-full" />
-		{:else}
-			<Line
-				data={createAverageScoreOverTimeChartData(analytics.scoresByWeek)}
-				options={{ plugins: { legend: { display: false } } }}
-			/>
-		{/if}
-	</Card.Content>
-</Card.Root>
-
-{#if PUBLIC_ENVIRONMENT === 'local'}
-	<div class="mb-6">
-		<SuperDebug data={analytics} label="Analytics" />
-	</div>
+	{#if PUBLIC_ENVIRONMENT === 'local'}
+		<div class="mb-6 mt-4">
+			<SuperDebug data={analytics} label="Analytics" />
+		</div>
+	{/if}
 {/if}

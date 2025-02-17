@@ -9,7 +9,7 @@ export const getAnalytics = (rounds: Round[]) => {
     averageGreenInRegulationPercentage: 0,
     averagePutts: 0,
     bestRound: 0,
-    worstRound: rounds[0]?.score,
+    worstRound: rounds[0]?.score || 0,
     roundTypesCount: {} as Record<string, number>,
     underParCount: 0,
     overParCount: 0,
@@ -57,10 +57,10 @@ export const getAnalytics = (rounds: Round[]) => {
     }
   }
 
-  analytics.averageScore = Number((totalScore / rounds.length).toFixed(1))
-  analytics.averageFairwayPercentage = Number((totalFairwaysInRegulation / rounds.length).toFixed(1))
-  analytics.averageGreenInRegulationPercentage = Number((totalGreensInRegulation / rounds.length).toFixed(1))
-  analytics.averagePutts = Number((totalPutts / rounds.length).toFixed(1))
+  analytics.averageScore = Number((totalScore / rounds.length).toFixed(1)) || 0
+  analytics.averageFairwayPercentage = Number((totalFairwaysInRegulation / rounds.length).toFixed(1)) || 0
+  analytics.averageGreenInRegulationPercentage = Number((totalGreensInRegulation / rounds.length).toFixed(1)) || 0
+  analytics.averagePutts = Number((totalPutts / rounds.length).toFixed(1)) || 0
 
   return analytics
 }
