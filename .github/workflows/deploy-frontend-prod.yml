@@ -25,7 +25,7 @@ jobs:
       run: npm run build
       working-directory: ./webapp
       env:
-        PUBLIC_API_URL: ${{ vars.PUBLIC_API_URL_PROD }}
+        PUBLIC_API_URL: ${{ vars.PUBLIC_API_URL }}
         PUBLIC_ENVIRONMENT: prod
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
