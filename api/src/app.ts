@@ -12,6 +12,11 @@ initAuth()
 
 const app = express()
 
+app.use('/', (req, _, next) => {
+	logger.info(`REQUEST: ${req.method} ${req.url}`)
+	next()
+})
+
 app.use(
 	cors({
 		origin: [process.env.CLIENT_CORS_ORIGIN!],
@@ -26,11 +31,6 @@ app.use(errorHandler())
 
 app.use(json())
 app.use(helmet())
-
-app.use('/', (req, _, next) => {
-	logger.info(`REQUEST: ${req.method} ${req.url}`)
-	next()
-})
 
 app.use('/api', router())
 

@@ -9,7 +9,6 @@ import logger from "@/logger"
 
 export const init = () => {
   logger.info('Initializing Supertokens...')
-  logger.info('CORS: ' + process.env.CLIENT_CORS_ORIGIN)
   supertokens.init({
     framework: "express",
     supertokens: {
@@ -30,19 +29,28 @@ export const init = () => {
             return {
               ...original,
               signUpPOST: async (input) => {
-                const response = await original.signUpPOST!(input)
+                try {
+                  const response = await original.signUpPOST!(input)
 
-                if (response.status === "OK" && response.user.loginMethods.length === 1 && input.session === undefined) {
-                  await User.build(PutItemCommand)
-                    .item({
-                      userId: response.user.id,
-                      email: response.user.loginMethods[0]!.email!,
-                      username: '',
-                      isActive: true,
-                    }).send()
+                  if (response.status === "OK" && response.user.loginMethods.length === 1 && input.session === undefined) {
+                    await User.build(PutItemCommand)
+                      .item({
+                        userId: response.user.id,
+                        email: response.user.loginMethods[0]!.email!,
+                        username: '',
+                        isActive: true,
+                      }).send()
+                  }
+
+                  return response
+                } catch (error: any) {
+                  logger.error(error.message)
+
+                  return {
+                    status: 'GENERAL_ERROR',
+                    message: error.message
+                  }
                 }
-
-                return response
               }
             }
           }
