@@ -34,12 +34,13 @@ app.use('/', (req, _, next) => {
 
 app.use('/api', router())
 
+app.get('/hello', (_: Request, res: Response) => {
+	res.status(200).json({ message: 'hello world!' })
+})
+
 app.use((_: Request, res: Response) => {
 	res.status(404).json({ error: 'NOT FOUND' })
 })
 
-app.get('/hello', (_: Request, res: Response) => {
-	res.json({ message: 'hello world!' })
-})
 
 export { app }
