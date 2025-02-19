@@ -24,7 +24,7 @@
 
 <h1 class="mt-6 text-4xl font-bold">Analytics</h1>
 
-{#if $rounds.length === 0}
+{#if !$loading && $rounds.length === 0}
 	<Alert.Root class="mt-6">
 		<Info class="h-4 w-4" />
 		<Alert.Title>No rounds!</Alert.Title>
