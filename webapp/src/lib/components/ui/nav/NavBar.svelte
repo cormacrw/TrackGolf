@@ -10,6 +10,7 @@
 	import { useUserStore } from '$lib/stores/user';
 	import { Badge } from '$lib/components/ui/badge';
 	import { PUBLIC_ENVIRONMENT } from '$env/static/public';
+	import { toggleMode } from 'mode-watcher';
 
 	const user = useUserStore();
 </script>
@@ -72,7 +73,7 @@
 							<Settings class="mr-2 h-4 w-4" />
 							<span class="text-sm">Settings</span>
 						</DropdownMenu.Item>
-						<DropdownMenu.Item>
+						<DropdownMenu.Item on:click={toggleMode}>
 							<Sun class="mr-2 h-4 w-4" />
 							<span class="text-sm">Toggle Dark Mode</span>
 						</DropdownMenu.Item>

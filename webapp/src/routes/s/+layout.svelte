@@ -10,6 +10,7 @@
 	import { fetchRounds } from '$lib/requests/rounds';
 	import { fetchUser } from '$lib/requests/user';
 	import { useUserStore } from '$lib/stores/user';
+	import { ModeWatcher } from 'mode-watcher';
 
 	let { children } = $props();
 
@@ -31,6 +32,8 @@
 		loading.set(false);
 	});
 </script>
+
+<ModeWatcher />
 
 <NavBar />
 <main class="container mx-auto max-w-screen-lg">
