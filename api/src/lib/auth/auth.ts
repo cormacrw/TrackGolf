@@ -9,17 +9,14 @@ import logger from "@/logger"
 
 export const init = () => {
   logger.info('Initializing Supertokens...')
+  logger.info('CORS: ' + process.env.CLIENT_CORS_ORIGIN)
   supertokens.init({
     framework: "express",
     supertokens: {
-      // We use try.supertokens for demo purposes.
-      // At the end of the tutorial we will show you how to create
-      // your own SuperTokens core instance and then update your config.
       connectionURI: process.env.SUPERTOKENS_CONNECTION_URI!,
       apiKey: process.env.SUPERTOKENS_API_KEY!
     },
     appInfo: {
-      // learn more about this on https://supertokens.com/docs/session/appinfo
       appName: "eGolfTracker",
       apiDomain: process.env.PUBLIC_API_URL!,
       websiteDomain: process.env.CLIENT_CORS_ORIGIN!,
