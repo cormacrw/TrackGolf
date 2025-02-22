@@ -8,14 +8,36 @@ export default new Entity({
   schema: schema({
     roundId: attribute.string().key().default(() => uuidv4()),
     userId: attribute.string().key(),
+
     courseName: attribute.string().required(),
     courseLength: attribute.number().required(),
     coursePar: attribute.number().required(),
+
     notes: attribute.string().optional(),
+
     greenPercentage: attribute.number().optional(),
     fairwayPercentage: attribute.number().optional(),
+
     score: attribute.number().required(),
-    putts: attribute.number().optional(),
+    putts: attribute.number().optional(), // deprecated
+
+    shortPuttAccuracy: attribute.number().optional(),
+    mediumPuttAccuracy: attribute.number().optional(),
+    longPuttAccuracy: attribute.number().optional(),
+
+    aces: attribute.number().optional(),
+    albatrosses: attribute.number().optional(),
+    eagles: attribute.number().optional(),
+    birdies: attribute.number().optional(),
+    pars: attribute.number().optional(),
+    bogeys: attribute.number().optional(),
+    bogeysPlus: attribute.number().optional(),
+
+    proximityToHole: attribute.number().optional(),
+    birdieConversion: attribute.number().optional(),
+
+    enableStats: attribute.boolean().default(true).optional(),
+
     date: attribute.number().required(),
     type: attribute.string().required()
   }),
