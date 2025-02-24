@@ -6,11 +6,20 @@
 	import roundTypes from '$lib/constants/roundTypes';
 	import { PUBLIC_ENVIRONMENT } from '$env/static/public';
 	import SuperDebug from 'sveltekit-superforms';
+	import Trash from 'lucide-svelte/icons/trash';
+	import Button from '../ui/button/button.svelte';
+	import DeleteDialog from './DeleteDialog.svelte';
+	import { makeRequest } from '$lib/api';
+	import { useRoundsStore } from '$lib/stores/rounds';
+	import { fetchRounds } from '$lib/requests/rounds';
+	import { toast } from 'svelte-sonner';
+
+	const rounds = useRoundsStore();
 
 	let pageNumber = $state(1);
 
 	let sortedRounds = $derived.by(() => {
-		return rounds.sort((a, b) => {
+		return $rounds.sort((a, b) => {
 			return b.date - a.date;
 		});
 	});
@@ -19,15 +28,34 @@
 		return sortedRounds.slice((pageNumber - 1) * 10, pageNumber * 10);
 	});
 
-	const { rounds } = $props<{
-		rounds: Round[];
-	}>();
+	const getRoundRelativeScore = (round: Round) => {
+		let prefix = '';
+		if (round.coursePar > round.score) {
+			prefix = '-';
+		} else if (round.coursePar < round.score) {
+			prefix = '+';
+		}
+
+		return prefix + Math.abs(round.coursePar - round.score);
+	};
+
+	const deleteRound = async (round: Round) => {
+		await makeRequest(`/round/${round.roundId}`, {
+			method: 'DELETE',
+		});
+
+		const _rounds = await fetchRounds();
+		rounds.set(_rounds);
+
+		toast.success('Round deleted successfully!');
+	};
 </script>
 
 <div class="mb-4 rounded-md border">
 	<Table.Root>
 		<Table.Header>
 			<Table.Row>
+				<Table.Head>Created</Table.Head>
 				<Table.Head>Date</Table.Head>
 				<Table.Head>Type</Table.Head>
 				<Table.Head>Course</Table.Head>
@@ -44,6 +72,9 @@
 				{#each paginatedRounds as round}
 					<Table.Row>
 						<Table.Cell>
+							{moment(round.createdAt).fromNow()}
+						</Table.Cell>
+						<Table.Cell>
 							{moment(round.date).format('MMM D, YYYY')}
 						</Table.Cell>
 						<Table.Cell>
@@ -53,9 +84,15 @@
 							{round.courseName}
 						</Table.Cell>
 						<Table.Cell>
-							{round.score} ({round.score - round.coursePar})
+							{round.score} ({getRoundRelativeScore(round)})
 						</Table.Cell>
-						<Table.Cell></Table.Cell>
+						<Table.Cell class="flex justify-end gap-2 p-2">
+							<DeleteDialog submit={() => deleteRound(round)}>
+								<Button variant="ghost" size="icon">
+									<Trash class="h-4 w-4 text-red-600" />
+								</Button>
+							</DeleteDialog>
+						</Table.Cell>
 					</Table.Row>
 				{/each}
 			{/if}
@@ -63,8 +100,8 @@
 	</Table.Root>
 </div>
 
-{#if rounds.length > 10}
-	<Pagination.Root count={rounds.length} perPage={10} let:pages let:currentPage>
+{#if $rounds.length > 10}
+	<Pagination.Root count={$rounds.length} perPage={10} let:pages let:currentPage>
 		<Pagination.Content>
 			<Pagination.Item>
 				<Pagination.PrevButton on:click={() => pageNumber--} />
