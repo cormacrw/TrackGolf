@@ -25,20 +25,39 @@
 	const rounds = useRoundsStore();
 
 	const formSchema = z.object({
-		type: z.string(),
-		courseName: z.string().min(1, 'required'),
-		coursePar: z.number().min(1, 'required'),
-		courseLength: z.number().min(1, 'required'),
+		type: z.string().max(50),
+		courseName: z.string().min(1, 'required').max(100),
+		coursePar: z.number().min(1, 'required').max(100),
+		courseLength: z.number().min(1, 'required').max(10000),
 		date: z.instanceof(CalendarDate),
-		score: z.number().min(1, 'required'),
-		putts: z.number().optional(),
-		fairwayPercentage: z.array(
-			z.number().min(0, 'Must be at least 0').max(100, 'Must be equal to or less than 100'),
-		),
-		greenPercentage: z.array(
-			z.number().min(0, 'Must be at least 0').max(100, 'Must be equal to or less than 100'),
-		),
-		notes: z.string().optional(),
+		score: z.number().min(1, 'required').max(130),
+		fairwayPercentage: z
+			.number()
+			.min(0, 'Must be at least 0')
+			.max(100, 'Must be equal to or less than 100')
+			.optional(),
+		greenPercentage: z
+			.number()
+			.min(0, 'Must be at least 0')
+			.max(100, 'Must be equal to or less than 100')
+			.optional(),
+
+		aces: z.number().min(0).max(18).optional(),
+		albatrosses: z.number().min(0).max(18).optional(),
+		eagles: z.number().min(0).max(18).optional(),
+		birdies: z.number().min(0).max(18).optional(),
+		pars: z.number().min(0).max(18).optional(),
+		bogies: z.number().min(0).max(18).optional(),
+		bogiesPlus: z.number().min(0).max(18).optional(),
+
+		shortPuttAccuracy: z.number().min(0).max(100).optional(),
+		mediumPuttAccuracy: z.number().min(0).max(100).optional(),
+		longPuttAccuracy: z.number().min(0).max(100).optional(),
+
+		birdieConversion: z.number().min(0).max(100).optional(),
+		proximityToHole: z.number().min(0).max(200).optional(),
+
+		notes: z.string().max(250).optional(),
 	});
 
 	const form = superForm(
@@ -48,9 +67,20 @@
 			courseLength: 7000,
 			date: today('America/New_York'),
 			score: 72,
-			putts: 36,
-			fairwayPercentage: [100],
-			greenPercentage: [100],
+			fairwayPercentage: 100,
+			greenPercentage: 100,
+			aces: 0,
+			birdies: 0,
+			albatrosses: 0,
+			eagles: 0,
+			pars: 0,
+			bogeys: 0,
+			bogeysPlus: 0,
+			proximityToHole: 0,
+			birdieConversion: 0,
+			shortPuttAccuracy: 0,
+			mediumPuttAccuracy: 0,
+			longPuttAccuracy: 0,
 			type: 'tgc',
 			notes: '',
 		},
@@ -149,6 +179,7 @@
 				</Form.Field>
 			</div>
 
+			<div class="w-full border border-x-0 border-t-0"></div>
 			<h3 class="text-xl font-bold">Round</h3>
 
 			<div class="flex flex-row gap-4">
@@ -171,6 +202,10 @@
 					</Form.Control>
 				</Form.Field>
 			</div>
+
+			<div class="w-full border border-x-0 border-t-0"></div>
+			<h3 class="text-xl font-bold">Score</h3>
+
 			<div class="flex flex-row gap-4">
 				<!-- Round Score -->
 				<Form.Field class="max-w-32" {form} name="score">
@@ -186,42 +221,220 @@
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
-
-				<!-- Round Putts -->
-				<Form.Field class="max-w-32" {form} name="putts">
+			</div>
+			<div class="flex flex-row gap-4">
+				<Form.Field class="max-w-20" {form} name="aces">
 					<Form.Control let:attrs>
-						<Form.Label>Round Putts</Form.Label>
+						<Form.Label>Aces</Form.Label>
 						<Input
 							{...attrs}
 							type="number"
-							name="putts"
-							placeholder="Round Putts"
-							bind:value={$formData.putts}
+							name="aces"
+							placeholder="0"
+							bind:value={$formData.aces}
+						/>
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+
+				<Form.Field class="max-w-20" {form} name="albatrosses">
+					<Form.Control let:attrs>
+						<Form.Label>Alba's</Form.Label>
+						<Input
+							{...attrs}
+							type="number"
+							name="albatrosses"
+							placeholder="0"
+							bind:value={$formData.albatrosses}
+						/>
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+
+				<Form.Field class="max-w-20" {form} name="eagles">
+					<Form.Control let:attrs>
+						<Form.Label>Eagles</Form.Label>
+						<Input
+							{...attrs}
+							type="number"
+							name="eagles"
+							placeholder="0"
+							bind:value={$formData.eagles}
+						/>
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+
+				<Form.Field class="max-w-20" {form} name="birdies">
+					<Form.Control let:attrs>
+						<Form.Label>Birdies</Form.Label>
+						<Input
+							{...attrs}
+							type="number"
+							name="score"
+							placeholder="0"
+							bind:value={$formData.birdies}
+						/>
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+
+				<Form.Field class="max-w-20" {form} name="pars">
+					<Form.Control let:attrs>
+						<Form.Label>Pars</Form.Label>
+						<Input
+							{...attrs}
+							type="number"
+							name="pars"
+							placeholder="0"
+							bind:value={$formData.pars}
+						/>
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+
+				<Form.Field class="max-w-20" {form} name="bogeys">
+					<Form.Control let:attrs>
+						<Form.Label>Bogeys</Form.Label>
+						<Input
+							{...attrs}
+							type="number"
+							name="bogeys"
+							placeholder="0"
+							bind:value={$formData.bogeys}
+						/>
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+
+				<Form.Field class="max-w-20" {form} name="bogeysPlus">
+					<Form.Control let:attrs>
+						<Form.Label>Bogeys+</Form.Label>
+						<Input
+							{...attrs}
+							type="number"
+							name="bogeysPlus"
+							placeholder="0"
+							bind:value={$formData.bogeysPlus}
 						/>
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
 			</div>
 
-			<!-- Fairway Percentage -->
-			<Form.Field class="max-w-xl" {form} name="fairwayPercentage">
-				<Form.Control let:attrs>
-					<Form.Label>Fairway Percentage</Form.Label>
-					<Slider {...attrs} bind:value={$formData.fairwayPercentage} max={100} min={0} step={1} />
-				</Form.Control>
-				<Form.FieldErrors />
-			</Form.Field>
+			<div class="w-full border border-x-0 border-t-0"></div>
+			<h3 class="text-xl font-bold">General Stats</h3>
 
-			<!-- Green Percentage -->
-			<Form.Field class="max-w-xl" {form} name="greenPercentage">
-				<Form.Control let:attrs>
-					<Form.Label>Green Percentage</Form.Label>
-					<Slider {...attrs} bind:value={$formData.greenPercentage} max={100} min={0} step={1} />
-				</Form.Control>
-				<Form.FieldErrors />
-			</Form.Field>
+			<div class="flex flex-row gap-4">
+				<Form.Field class="max-w-20" {form} name="fairwayPercentage">
+					<Form.Control let:attrs>
+						<Form.Label>Fairway %</Form.Label>
+						<Input
+							{...attrs}
+							type="number"
+							name="fairwayPercentage"
+							placeholder="0"
+							bind:value={$formData.fairwayPercentage}
+						/>
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
 
-			<!-- Green Percentage -->
+				<Form.Field class="max-w-20" {form} name="greenPercentage">
+					<Form.Control let:attrs>
+						<Form.Label>Green %</Form.Label>
+						<Input
+							{...attrs}
+							type="number"
+							name="greenPercentage"
+							placeholder="0"
+							bind:value={$formData.greenPercentage}
+						/>
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+			</div>
+
+			<div class="flex flex-row gap-4">
+				<Form.Field {form} name="proximityToHole">
+					<Form.Control let:attrs>
+						<Form.Label>Proximity to hole (ft)</Form.Label>
+						<Input
+							{...attrs}
+							type="number"
+							name="proximityToHole"
+							placeholder="0"
+							class="max-w-20"
+							bind:value={$formData.proximityToHole}
+						/>
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+
+				<Form.Field {form} name="birdieConversion">
+					<Form.Control let:attrs>
+						<Form.Label>Birdie Conversion %</Form.Label>
+						<Input
+							{...attrs}
+							type="number"
+							name="birdieConversion"
+							placeholder="0"
+							class="max-w-20"
+							bind:value={$formData.birdieConversion}
+						/>
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+			</div>
+
+			<div class="w-full border border-x-0 border-t-0"></div>
+			<h3 class="text-xl font-bold">Putting Stats</h3>
+
+			<div class="flex flex-row gap-4">
+				<Form.Field class="max-w-20" {form} name="shortPuttAccuracy">
+					<Form.Control let:attrs>
+						<Form.Label>Short %</Form.Label>
+						<Input
+							{...attrs}
+							type="number"
+							name="shortPuttAccuracy"
+							placeholder="0"
+							bind:value={$formData.shortPuttAccuracy}
+						/>
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+
+				<Form.Field class="max-w-20" {form} name="mediumPuttAccuracy">
+					<Form.Control let:attrs>
+						<Form.Label>Medium %</Form.Label>
+						<Input
+							{...attrs}
+							type="number"
+							name="mediumPuttAccuracy"
+							placeholder="0"
+							bind:value={$formData.mediumPuttAccuracy}
+						/>
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+				<Form.Field class="max-w-20" {form} name="longPuttAccuracy">
+					<Form.Control let:attrs>
+						<Form.Label>Long %</Form.Label>
+						<Input
+							{...attrs}
+							type="number"
+							name="longPuttAccuracy"
+							placeholder="0"
+							bind:value={$formData.longPuttAccuracy}
+						/>
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+			</div>
+
+			<div class="w-full border border-x-0 border-t-0"></div>
+
 			<Form.Field {form} name="greenPercentage">
 				<Form.Control let:attrs>
 					<Form.Label>Notes</Form.Label>

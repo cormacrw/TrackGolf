@@ -16,6 +16,14 @@ export default [
     label: 'Society'
   },
   {
+    value: 'career',
+    label: 'Career'
+  },
+  {
+    value: 'friendly',
+    label: 'Friendly'
+  },
+  {
     value: 'ranked',
     label: 'Ranked'
   }
