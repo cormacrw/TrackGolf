@@ -7,4 +7,4 @@
 <h1 class="my-6 text-4xl font-bold">
 	Rounds <span class=" text-gray-400">{$rounds.length}</span>
 </h1>
-<RoundTable rounds={$rounds} />
+<RoundTable />

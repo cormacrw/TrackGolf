@@ -110,7 +110,7 @@
 					const _rounds = await fetchRounds();
 					rounds.set(_rounds);
 
-					toast.success('Round saved successfully');
+					toast.success('Round saved successfully!');
 
 					goto('/s/dashboard');
 				} catch (e) {

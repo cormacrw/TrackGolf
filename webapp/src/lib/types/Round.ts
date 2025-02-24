@@ -11,4 +11,5 @@ export type Round = {
   putts: number
   date: number
   type: string
+  createdAt: string
 }
