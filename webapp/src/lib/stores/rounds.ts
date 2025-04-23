@@ -1,4 +1,3 @@
-import { makeRequest } from '$lib/api'
 import type { Round } from '$lib/types/Round'
 import { useWritable } from "./store"
 

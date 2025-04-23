@@ -21,6 +21,8 @@
 	import { useRoundsStore } from '$lib/stores/rounds';
 	import { fetchRounds } from '$lib/requests/rounds';
 	import roundTypes from '$lib/constants/roundTypes';
+	import difficulties from '$lib/constants/difficulties';
+	import tgcTours from '$lib/constants/tgcTours';
 
 	const rounds = useRoundsStore();
 
@@ -41,6 +43,8 @@
 			.min(0, 'Must be at least 0')
 			.max(100, 'Must be equal to or less than 100')
 			.optional(),
+		tour: z.string().optional(),
+		difficulty: z.string().optional(),
 
 		aces: z.number().min(0).max(18).optional(),
 		albatrosses: z.number().min(0).max(18).optional(),
@@ -83,6 +87,8 @@
 			longPuttAccuracy: 0,
 			type: 'tgc',
 			notes: '',
+			difficulty: '',
+			tour: '',
 		},
 		{
 			SPA: true,
@@ -182,6 +188,15 @@
 			<div class="w-full border border-x-0 border-t-0"></div>
 			<h3 class="text-xl font-bold">Round</h3>
 
+			<!-- Round Date -->
+			<Form.Field {form} name="date">
+				<Form.Control let:attrs>
+					<Form.Label>Date</Form.Label>
+					<div>
+						<Datepicker {...attrs} name="date" bind:value={$formData.date} />
+					</div>
+				</Form.Control>
+			</Form.Field>
 			<div class="flex flex-row gap-4">
 				<!-- Type -->
 				<Form.Field {form} name="type">
@@ -192,15 +207,25 @@
 					<Form.FieldErrors />
 				</Form.Field>
 
-				<!-- Round Date -->
-				<Form.Field {form} name="date">
-					<Form.Control let:attrs>
-						<Form.Label>Round Date</Form.Label>
-						<div>
-							<Datepicker {...attrs} name="date" bind:value={$formData.date} />
-						</div>
-					</Form.Control>
-				</Form.Field>
+				{#if $formData.type === 'tgc'}
+					<!-- Difficulty -->
+					<Form.Field {form} name="tour">
+						<Form.Control let:attrs>
+							<Form.Label>Tour</Form.Label>
+							<Combobox {...attrs} items={tgcTours} bind:value={$formData.tour} />
+						</Form.Control>
+						<Form.FieldErrors />
+					</Form.Field>
+				{:else}
+					<!-- Difficulty -->
+					<Form.Field {form} name="difficulty">
+						<Form.Control let:attrs>
+							<Form.Label>Difficulty</Form.Label>
+							<Combobox {...attrs} items={difficulties} bind:value={$formData.difficulty} />
+						</Form.Control>
+						<Form.FieldErrors />
+					</Form.Field>
+				{/if}
 			</div>
 
 			<div class="w-full border border-x-0 border-t-0"></div>
