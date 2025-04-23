@@ -39,7 +39,9 @@ export default new Entity({
     enableStats: attribute.boolean().default(true).optional(),
 
     date: attribute.number().required(),
-    type: attribute.string().required()
+    type: attribute.string().required(),
+    tour: attribute.string().optional(),
+    difficulty: attribute.string().optional()
   }),
   computeKey: (keyInput) => {
     return {
